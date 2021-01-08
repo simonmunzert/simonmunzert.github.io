@@ -53,7 +53,7 @@
 ================================================== */
 	body {
 		background: #fff;
-		font: 13px/21px "Raleway","HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font: 13px/21px "Helvetica", "HelveticaNeue","Helvetica Neue", "Arial", sans-serif;
 		color: #333;
 		-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
 		-webkit-text-size-adjust: 100%;
@@ -63,8 +63,8 @@
 /* #Typography
 ================================================== */
 	h1, h2, h3, h4, h5, h6 {
-		color: #333333;
-		font-family: "Trocchi","HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: #b2182b;
+		font-family: "Garamond","HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 		/*"Copse", "Roboto Slab", "Headland One", "Garamond", "Georgia", serif; */
 		font-weight: normal; }
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
@@ -96,8 +96,8 @@
 
 /* #Links
 ================================================== */
-	a, a:visited { color: #666; text-decoration: underline; outline: 0; }
-	a:hover, a:focus { color: #000; }
+	a, a:visited { color: #2166ac; outline: 0; text-decoration: none;}
+	a:hover, a:focus { color: #000; text-decoration: underline; }
 	p a, p a:visited { line-height: inherit; }
 
 
