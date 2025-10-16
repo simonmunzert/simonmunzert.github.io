@@ -1,0 +1,367 @@
+# load packages, functions, and helper objects --------
+
+source("code/packages.R")
+source("code/functions.R")
+source("code/helper-objects.R")
+
+
+# load data ---------------------------
+
+load("data/cooked/data_survey_resp.RData")
+load("data/cooked/data_survey_combined.RData")
+
+names(data_survey_combined)
+
+# heat map of perceived hatefulness vs. preferred actions -------
+
+vig_scores_actions <- 
+  data_survey_combined %>% 
+  filter(!is.na(vig_hate_fct)) %>%
+  group_by(vig_hate_fct) %>%
+  summarize(n_scores = n(),
+            mean_remove = mean(vig_remove, na.rm = TRUE),
+            mean_ban = mean(vig_ban, na.rm = TRUE),
+            mean_legal = mean(vig_legal, na.rm = TRUE),
+            mean_job = mean(vig_job, na.rm = TRUE)
+  )
+vig_scores_actions_long <- vig_scores_actions %>% pivot_longer(starts_with("mean"), names_to = "action_var", values_to = "value")
+vig_scores_actions_long$action_var_fct <- rep(vig_actions_labels, length(unique(vig_scores_actions$vig_hate_fct))) %>% factor(levels = vig_actions_labels)
+
+# generate perception totals
+vig_scores_perceptions_total <- 
+  data_survey_combined %>% 
+  filter(!is.na(vig_hate_fct)) %>%
+  group_by(vig_hate_fct) %>%
+  summarize(n_scores = n())
+vig_scores_perceptions_total$action_var <- "Total"
+vig_scores_perceptions_total$value <- vig_scores_perceptions_total$n_scores / sum(vig_scores_actions$n_scores)
+vig_scores_perceptions_total$action_var_fct <- "Total"
+
+# generate action totals
+vig_scores_actions_total <- 
+  vig_scores_actions_long %>%
+  mutate(n_actions = n_scores*value) %>% 
+  group_by(action_var) %>%
+  summarize(n_scores = sum(n_actions))
+vig_scores_actions_total$vig_hate_fct <- "Total"
+vig_scores_actions_total$value <- vig_scores_actions_total$n_scores / sum(vig_scores_actions$n_scores)
+
+sub <- filter(vig_scores_actions_long, vig_hate_fct == "Hate speech") %>% dplyr::select(action_var, action_var_fct)
+vig_scores_actions_total <- left_join(vig_scores_actions_total, sub, by = "action_var")
+
+vig_scores_long <- bind_rows(vig_scores_actions_long, vig_scores_perceptions_total, vig_scores_actions_total)
+vig_scores_long$vig_hate_fct <- factor(vig_scores_long$vig_hate_fct, levels = unique(vig_scores_long$vig_hate_fct)[c(3, 2, 1, 4)])
+  
+ggplot(mapping =  aes(x = vig_hate_fct, y = action_var_fct, fill = value*100)) +
+  geom_tile(data = filter(vig_scores_long, vig_hate_fct != "Total", action_var_fct != "Total"), aes(color = "black")) +
+  geom_point(data = filter(vig_scores_long, vig_hate_fct == "Total" | action_var_fct == "Total"), aes(color = "black"), size = 12, shape = 21) + 
+  geom_text(data = vig_scores_long, aes(label = round(value*100, 0), color = ifelse(value < .6, "white", "black"))) +
+  scale_color_manual(values = c("white", "black")) + 
+  scale_fill_gradientn(colors = hcl.colors(20, "Reds3", rev = TRUE)) +
+  scale_x_discrete(labels = str_wrap(as.character(unique(vig_scores_long$vig_hate_fct))[c(3, 2, 1, 4)], 10), position = "top") +
+  scale_y_discrete(limits = c("Total", as.character(unique(vig_scores_actions_long$action_var_fct)))) +
+  theme_minimal() + 
+  coord_fixed(clip = "off") +
+  ylab("") + 
+  xlab("") + 
+  theme(text = element_text(family = "Fira Sans"),
+        plot.title.position = "plot",
+        plot.title = element_markdown(face = "bold", size = 16),
+        plot.subtitle = element_text(size = 12),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10),
+        legend.position = "none",
+        legend.title = element_blank(),
+        plot.margin = unit(c(0.5,0.1,0.5,0.1),"cm")) +
+  annotation_custom(grob = linesGrob(), xmin = -1.2, xmax = -1.2, ymin = 1.8, ymax = 5.2) +
+  annotation_custom(grob = linesGrob(), xmin = .5, xmax = 3.5, ymin = 6.75, ymax = 6.75) +
+  annotation_custom(grob = grid::textGrob(label = "Perception", gp = gpar(fontface = "bold", family = "Fira Sans")), xmin = -.7, ymin = 7, ymax = 7)  + 
+  annotation_custom(grob = grid::textGrob(label = "Preferred actions", gp = gpar(fontface = "bold", family = "Fira Sans"), hjust = 0, rot = 90), xmin = -1.45, xmax = -1.45, ymin = -1.2) 
+ggsave("figures/heatplot-actions-by-perceptions.png", width = 4, height = 4, dpi = 300)
+
+
+
+# distribution of preferred sanctions, by country -------
+
+colors <- c('#d7191c','#fdae61', '#a6d96a','#1a9641')
+color_palette <- colorRampPalette(colors)(5)
+
+vig_outcomes_by_country <- 
+  data_survey_combined %>%
+  group_by(resp_country2_lab) %>%  
+  summarize(across(all_of(vig_outcomes_variables), \(x) mean(x, na.rm = TRUE)), .groups = "drop") %>% 
+  arrange(desc(vig_perc_none)) 
+
+# gt table
+vig_outcomes_by_country %>%
+  gt() %>%
+  fmt_percent(columns = starts_with("vig_"), decimals = 0) %>%
+  data_color(
+    columns = vig_outcomes_variables,
+    domain = c(min(dplyr::select(vig_outcomes_by_country, where(is.numeric))), max(dplyr::select(vig_outcomes_by_country, where(is.numeric)))),
+    palette = color_palette,
+    reverse = TRUE
+  ) %>%
+  cols_label(
+    !!!vig_outcomes_labels_set,
+    resp_country2_lab = "Country",
+    .fn = md
+  ) %>%
+  fmt_percent(columns = starts_with("vig_"), decimals = 0) %>%
+  tab_spanner(label = "Preferred actions", columns = vig_actions_variables) |>
+  tab_spanner(label = "Perceptions", columns = vig_perceptions_variables) |>
+  tab_options(
+    table.font.names = "Fira Sans",
+    table.font.size = "9px",
+    data_row.padding = px(1)
+  ) %>%
+  # make spanner labels bold
+  tab_style(
+    style = list(
+      cell_text(weight = "bold") 
+    ),
+    locations = cells_column_spanners()
+  ) %>%
+  # set equal column width
+  cols_width(
+    starts_with("vig_") ~ px(50)  # Apply equal width to all columns except the first
+  ) %>%
+  # center-align cell content
+  tab_style(
+    style = list(
+      cell_text(align = "center") 
+    ),
+    locations = cells_column_labels(-1)
+  ) %>%
+  # make column headers bold
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels(columns = 1)
+  ) %>%
+  # add whitespace
+  tab_style(
+    style = cell_borders(sides = "left", color = "white", weight = px(5), style = "solid"),
+    locations = cells_body(
+      columns = vig_actions_variables[1])
+  ) %>% 
+  gtsave("figures/table-perceptions-actions-by-country.png", zoom = 20)
+
+
+
+
+# table of most hateful messages ------------------------
+
+data_survey_combined$vig_num_selected <- rowSums(dplyr::select(data_survey_combined, all_of(vig_actions_variables)), na.rm = TRUE)
+
+# summarize hatefulness by vignette messages
+vig_messages_sum <- data_survey_combined %>% 
+  group_by(message_combination) %>% 
+  summarize(num_ratings = n(),
+            across(all_of(vig_outcomes_variables), \(x) mean(x, na.rm = TRUE)), 
+            data_actions = list(vig_num_selected),
+            .groups = "drop") %>% 
+  arrange(desc(vig_perc_hate)) 
+
+# add meta information
+vig_meta_df <- dplyr::select(data_survey_combined, resp_country, message_combination, sender_message, sender_category, target_position) %>% filter(resp_country == "usa") %>% distinct(message_combination, .keep_all = TRUE)
+vig_messages_df <- left_join(vig_messages_sum, vig_meta_df, by = join_by(message_combination))
+
+# gt
+vig_messages_df %>%
+  dplyr::select(sender_message, sender_category, target_position, vig_outcomes_variables, data_actions) %>%
+  arrange(desc(vig_perc_hate)) %>%
+  slice_head(n = 15) %>%
+  gt() %>%
+  fmt_percent(columns = starts_with("vig_"), decimals = 0) %>%
+  gt_plt_dist(data_actions, type = "histogram", line_color = "white",  fill_color = "black", bw = 1) %>%
+  data_color(
+    columns = vig_perceptions_variables,
+    palette = "inferno",
+    reverse = TRUE,
+    domain = c(min(dplyr::select(vig_messages_df, starts_with("vig_perc"))), max(dplyr::select(vig_messages_df, starts_with("vig_perc"))))
+  ) %>%
+  tab_options(
+    table.font.names = "Fira Sans",
+    table.font.size = "9px",
+    data_row.padding = px(1)
+  ) %>%
+  cols_label(
+    sender_message = "Message (US version)",
+    sender_category = "Sender",
+    target_position = "Position",
+    !!!vig_outcomes_labels_set,
+    data_actions = "Number of<br>selected actions",
+    .fn = md
+  ) %>%
+  tab_spanner(label = "Message features", columns = c(starts_with("sender"), starts_with("target"))) %>%
+  tab_spanner(label = "Perceptions", columns = vig_perceptions_variables) %>%
+  tab_spanner(label = "Preferred actions", columns = c(vig_actions_variables, data_actions)) %>%
+  # make spanner labels bold
+  tab_style(
+    style = list(
+      cell_text(weight = "bold") 
+    ),
+    locations = cells_column_spanners()
+  ) %>%
+  # set equal column width
+  cols_width(vig_outcomes_variables ~ px(50)  # Apply equal width to all columns except the first
+  ) %>%
+  tab_options(
+    table.font.size = "9px",
+    data_row.padding = px(1)
+  ) %>%
+  gtsave("figures/table-messages-ranked.png", zoom = 3)
+
+
+
+
+# table of most hateful memes ------------------------
+
+vig_messages_df_memes <- filter(vig_messages_df, sender_category == "Meme")
+vig_messages_df_memes$sender_message <- str_replace(vig_messages_df_memes$sender_message, ".jpeg", "_usa.jpeg")
+
+
+# gt
+vig_messages_df_memes %>%
+  dplyr::select(sender_message, target_position, vig_outcomes_variables, data_actions) %>%
+  arrange(desc(vig_perc_hate)) %>%
+  { bind_rows(head(., n = 5), tail(., n = 5)) } %>%
+  distinct() %>%
+  gt() %>%
+  fmt_image(
+    columns = sender_message,
+    height = px(35),
+    path = "build-vignettes/memes/usa",
+    file_pattern = "{x}"
+  ) %>%
+  fmt_percent(columns = starts_with("vig_"), decimals = 0) %>%
+  gt_plt_dist(data_actions, type = "histogram", line_color = "white",  fill_color = "black", bw = 1) %>%
+  data_color(
+    columns = vig_perceptions_variables,
+    palette = "inferno",
+    reverse = TRUE,
+    domain = c(min(dplyr::select(vig_messages_df, starts_with("vig_perc"))), max(dplyr::select(vig_messages_df, starts_with("vig_perc"))))
+  ) %>%
+  tab_options(
+    table.font.names = "Fira Sans",
+    table.font.size = "9px",
+    data_row.padding = px(1)
+  ) %>%
+  cols_label(
+    sender_message = "Meme (US version)",
+    target_position = "Position",
+    !!!vig_outcomes_labels_set,
+    data_actions = "Number of<br>selected actions",
+    .fn = md
+  ) %>%
+  tab_spanner(label = "Message features", columns = c(starts_with("sender"), starts_with("target"))) %>%
+  tab_spanner(label = "Perceptions", columns = vig_perceptions_variables) %>%
+  tab_spanner(label = "Preferred actions", columns = c(vig_actions_variables, data_actions)) %>%
+  # make spanner labels bold
+  tab_style(
+    style = list(
+      cell_text(weight = "bold") 
+    ),
+    locations = cells_column_spanners()
+  ) %>%
+  # set equal column width
+  cols_width(vig_outcomes_variables ~ px(50)  # Apply equal width to all columns except the first
+  ) %>%
+  tab_options(
+    table.font.size = "9px",
+    data_row.padding = px(1)
+  ) %>%
+  gtsave("figures/table-memes-ranked.png", zoom = 3)
+
+
+
+
+
+# table of messages with biggest heterogeneity in perceptions across countries ----------------
+
+colors <- c('#d7191c','#ffefd6', '#dcf0d1','#1a9641')
+color_palette <- colorRampPalette(colors)(10)
+
+data_messages_select <- 
+data_survey_combined %>%
+  group_by(resp_country2_lab, message_combination) %>%
+  summarize(n = n(), .groups = "drop") %>%
+  pivot_wider(names_from = resp_country2_lab, values_from = n) %>%
+  # keep observations if all values in row are >= 5
+  filter(rowSums(select(., -message_combination) >= 10) == ncol(.) - 1)
+
+data_messages_sub <- filter(data_survey_combined, message_combination %in% data_messages_select$message_combination)
+
+
+# summarize hatefulness by vignette messages
+vig_messages_sum <- data_messages_sub %>% 
+  group_by(resp_country2_lab, message_combination) %>% 
+  summarize(mean_hate_perc = mean(vig_perc_hate, na.rm = TRUE),
+            .groups = "drop") 
+
+vig_messages_sum_country <- vig_messages_sum %>%
+  group_by(message_combination) %>%
+  summarize(mean_hate_perc_country = mean(mean_hate_perc, na.rm = TRUE),
+            sd_hate_perc_country = sd(mean_hate_perc, na.rm = TRUE),
+            .groups = "drop")
+
+vig_messages_heterogeneity <- 
+  vig_messages_sum %>%
+  pivot_wider(names_from = resp_country2_lab, values_from = mean_hate_perc) %>%
+  left_join(vig_messages_sum_country, by = join_by(message_combination)) %>%
+  left_join(vig_meta_df, by = join_by(message_combination))
+
+# gt
+vig_messages_heterogeneity %>%
+  dplyr::select(-message_combination, -resp_country, -sender_category, -target_position) %>%
+  relocate(sender_message, .before = Brazil) %>%
+  arrange(desc(sd_hate_perc_country)) %>%
+  #(function(x){bind_rows(slice_head(x, n = 10), slice_tail(x, n = 10))}) %>%
+  slice_head(n = 25) %>%
+  gt() %>%
+  fmt_percent(
+    columns = where(is.numeric),
+    decimals = 0              
+  ) %>%
+  data_color(
+    columns = sd_hate_perc_country,
+    palette = "inferno",
+    reverse = TRUE
+  ) %>%
+  data_color(
+    columns = Brazil:`United States`,
+    palette = color_palette,
+    reverse = TRUE,
+    domain = c(0, 1)
+  ) %>%
+  tab_options(
+    table.font.names = "Fira Sans",
+    table.font.size = "9px",
+    data_row.padding = px(1)
+  ) %>%
+  cols_label(
+    sender_message = "Message (US version)",
+    mean_hate_perc_country = "Mean<br>across<br>countries",
+    sd_hate_perc_country = "Sd<br>across<br>countries",
+    .fn = md
+  ) %>%
+  tab_spanner(label = 'Country shares, perception as "hate"', columns = Brazil:`United States`) %>%
+  tab_spanner(label = "Summary statistics", columns = c(mean_hate_perc_country, sd_hate_perc_country)) %>%
+  # make spanner labels bold
+  tab_style(
+    style = list(
+      cell_text(weight = "bold") 
+    ),
+    locations = cells_column_spanners()
+  ) %>%
+  # set equal column width
+  cols_width(sender_message ~ px(200),
+             everything() ~ px(50)
+             ) %>%
+  tab_options(
+    table.font.size = "9px",
+    data_row.padding = px(1)
+  ) %>%
+  gtsave("figures/table-messages-heterogeneity-ranked.png", zoom = 3)

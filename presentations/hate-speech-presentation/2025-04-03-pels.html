@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Global Preferences for Online Hate Speech Moderation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Simon Munzert, Julia Ellingwood, Lisa Oswald, Richard Traunmüller" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+    <link rel="stylesheet" href="simons-touch.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Global Preferences for Online Hate Speech Moderation
+]
+.author[
+### Simon Munzert, Julia Ellingwood, Lisa Oswald, Richard Traunmüller
+]
+.date[
+### <br>April 3, 2025<br><br><br> <br> <img src='hertieschool-neg.svg' style='height:25px; margin-right: 10px'> <img src='kcl-logo.png' style='height:25px; margin-right: 10px'> <img src='mpi-logo.png' style='height:25px; margin-right: 10px'> <img src='mannheim-logo.png' style='height:25px; margin-right: 285px'> Co-funded by: <img src='facebook-research-logo.png' style='height:25px'>
+]
+
+---
+
+
+class: inverse, center, middle
+
+&lt;style type="text/css"&gt;
+@media print { # print out incremental slides; see https://stackoverflow.com/questions/56373198/get-xaringan-incremental-animations-to-print-to-pdf/56374619#56374619
+  .has-continuation {
+    display: block !important;
+  }
+}
+&lt;/style&gt;
+
+
+
+&lt;style&gt;
+
+li {
+  margin-bottom: 10px;
+}
+
+ul {
+  text-indent: -1.5em;
+  list-style: none;
+}
+
+ul li::before {
+  content: "";
+  background: url('megaphone.png') no-repeat center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0; /* Prevents image from resizing */
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  top: 0px; /* Moves image slightly down */
+}
+&lt;/style&gt;
+
+
+
+# Warmup
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px style="width:1000px; margin:auto;"/&gt;&lt;/html&gt;
+
+---
+
+# How would you decide?
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-31750.jpg" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="left"&gt;
+&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; Do you think &lt;u&gt;the second post&lt;/u&gt; constitutes hate speech, offensive&lt;br&gt;speech, or neither of them?&lt;/span&gt;&lt;br&gt;
+&lt;img src="pics/vignette-survey-item-1.png" style="width:80%; height: auto;"&gt;
+&lt;br&gt;&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; And what do you think &lt;u&gt;should be done&lt;/u&gt;?&lt;/span&gt;
+&lt;img src="pics/vignette-survey-item-2.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-3.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-4.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-5.png" style="width:80%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+---
+
+# How would you decide?
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-47432.jpg" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="left"&gt;
+&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; Do you think &lt;u&gt;the second post&lt;/u&gt; constitutes hate speech, offensive&lt;br&gt;speech, or neither of them?&lt;/span&gt;&lt;br&gt;
+&lt;img src="pics/vignette-survey-item-1.png" style="width:80%; height: auto;"&gt;
+&lt;br&gt;&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; And what do you think &lt;u&gt;should be done&lt;/u&gt;?&lt;/span&gt;
+&lt;img src="pics/vignette-survey-item-2.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-3.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-4.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-5.png" style="width:80%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+---
+
+# How would you decide?
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-2586.jpg" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="left"&gt;
+&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; Do you think &lt;u&gt;the second post&lt;/u&gt; constitutes hate speech, offensive&lt;br&gt;speech, or neither of them?&lt;/span&gt;&lt;br&gt;
+&lt;img src="pics/vignette-survey-item-1.png" style="width:80%; height: auto;"&gt;
+&lt;br&gt;&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; And what do you think &lt;u&gt;should be done&lt;/u&gt;?&lt;/span&gt;
+&lt;img src="pics/vignette-survey-item-2.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-3.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-4.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-5.png" style="width:80%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+---
+
+# How would you decide?
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-42897.jpg" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="left"&gt;
+&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; Do you think &lt;u&gt;the second post&lt;/u&gt; constitutes hate speech, offensive&lt;br&gt;speech, or neither of them?&lt;/span&gt;&lt;br&gt;
+&lt;img src="pics/vignette-survey-item-1.png" style="width:80%; height: auto;"&gt;
+&lt;br&gt;&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; And what do you think &lt;u&gt;should be done&lt;/u&gt;?&lt;/span&gt;
+&lt;img src="pics/vignette-survey-item-2.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-3.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-4.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-5.png" style="width:80%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+---
+
+# How would you decide?
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-114565.jpg" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="left"&gt;
+&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; Do you think &lt;u&gt;the second post&lt;/u&gt; constitutes hate speech, offensive&lt;br&gt;speech, or neither of them?&lt;/span&gt;&lt;br&gt;
+&lt;img src="pics/vignette-survey-item-1.png" style="width:80%; height: auto;"&gt;
+&lt;br&gt;&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; And what do you think &lt;u&gt;should be done&lt;/u&gt;?&lt;/span&gt;
+&lt;img src="pics/vignette-survey-item-2.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-3.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-4.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-5.png" style="width:80%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+---
+
+# How would you decide?
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-37836.jpg" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="left"&gt;
+&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; Do you think &lt;u&gt;the second post&lt;/u&gt; constitutes hate speech, offensive&lt;br&gt;speech, or neither of them?&lt;/span&gt;&lt;br&gt;
+&lt;img src="pics/vignette-survey-item-1.png" style="width:80%; height: auto;"&gt;
+&lt;br&gt;&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; And what do you think &lt;u&gt;should be done&lt;/u&gt;?&lt;/span&gt;
+&lt;img src="pics/vignette-survey-item-2.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-3.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-4.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-5.png" style="width:80%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+---
+
+# How would you decide?
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-14584.jpg" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div align="left"&gt;
+&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; Do you think &lt;u&gt;the second post&lt;/u&gt; constitutes hate speech, offensive&lt;br&gt;speech, or neither of them?&lt;/span&gt;&lt;br&gt;
+&lt;img src="pics/vignette-survey-item-1.png" style="width:80%; height: auto;"&gt;
+&lt;br&gt;&lt;span style="font-family: Arial, sans-serif; font-size: 14px;"&gt; And what do you think &lt;u&gt;should be done&lt;/u&gt;?&lt;/span&gt;
+&lt;img src="pics/vignette-survey-item-2.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-3.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-4.png" style="width:80%; height: auto;"&gt;
+&lt;img src="pics/vignette-survey-item-5.png" style="width:80%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+
+---
+class: inverse, center, middle
+
+# Motivation
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px style="width:1000px; margin:auto;"/&gt;&lt;/html&gt;
+
+---
+# The struggle over content moderation online
+
+.pull-left[
+
+- Public discourse is increasingly online — hate and toxic speech more visible than ever
+- Platforms moderate content opaquely, often without oversight ([Gillespie 2018](https://yalebooks.yale.edu/book/9780300261431/custodians-of-the-internet/))
+- Content moderation with commercial services is **massive** (e.g., 500m requests per day to JigSaw's Perspective API in 2021; 200m weekly users of OpenAI's Moderation API)
+- **Content Moderation APIs** by Google, Microsoft, Amazon, OpenAI, and others are supposedly trained on human labeled data but produce lots of questionable decisions ([Hartmann et al. 2025](https://arxiv.org/pdf/2503.01623); FPR/FNR up to 75%, ACC as low as 60% in balanced toxic/non-toxic samples) 
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="pics/chi-lost-in-moderation-1.png" style="width:90%"&gt;
+&lt;/div&gt;
+]
+
+
+---
+# Why hate speech moderation at scale is so challenging
+
+.pull-left-small2[
+## It's a hard problem 
+
+- **Volume and velocity of content**  
+  - Billions of posts per day  
+  - Error amplification at scale
+- **Adversarial users and evolving tactics**  
+  - Coded language, meme shifts  
+  - Evasion of detection systems
+- **Context is everything**  
+  - Meaning depends on intent  
+  - Hard for AI to judge nuance
+- **Legal, reputational, political constraints**  
+  - Balance free speech vs harm  
+  - Laws differ across countries  
+]
+
+--
+
+.pull-right-wide2[
+## And we might not even agree on what the problem is...
+
+- **The fundamental subjectivity of hate speech**  
+  - Likely varies by culture, context, individual
+  - [Why it's impossible to agree on what's allowed](https://danluu.com/impossible-agree/) (Dan Luu) and the ["No vehicles in the park" rule](https://novehiclesinthepark.com/)
+  
+]
+
+
+---
+# Why hate speech moderation at scale is so challenging
+
+.pull-left-small2[
+## It's a hard problem 
+
+- **Volume and velocity of content**  
+  - Billions of posts per day  
+  - Error amplification at scale
+- **Adversarial users and evolving tactics**  
+  - Coded language, meme shifts  
+  - Evasion of detection systems
+- **Context is everything**  
+  - Meaning depends on intent  
+  - Hard for AI to judge nuance
+- **Legal, reputational, political constraints**  
+  - Balance free speech vs harm  
+  - Laws differ across countries  
+]
+
+.pull-right-wide2[
+## And we might not even agree on what the problem is...
+
+- **The fundamental subjectivity of hate speech**  
+  - Likely varies by culture, context, individual
+  - [Why it's impossible to agree on what's allowed](https://danluu.com/impossible-agree/) (Dan Luu) and the ["No vehicles in the park" rule](https://novehiclesinthepark.com/)
+  
+## ... and how it should be tackled
+
+&lt;div align="center"&gt;
+&lt;br&gt;
+&lt;img src="figures/barplot-contentregulation.png" style="width:90%"&gt;
+&lt;/div&gt;
+]
+
+
+
+---
+# Research questions
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+- How do **features of speech and speech context** shape preferences for content moderation?
+- How do hate speech perceptions and moderation preferences **vary across countries**?
+- How do **individual characteristics** shape preferences for content moderation, and do they **interact with the content and context of speech**?
+]
+
+.pull-right[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/image-hatespeech.jpg" style="width:90%"&gt;
+&lt;/div&gt;
+]
+
+
+
+---
+# Evidence on variation in hate speech moderation preferences
+
+- Support for moderation of strong hate speech (threats, violence) ([Pradel et al. 2024](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/405333D7072585903E81BEF1729378F8/S000305542300134Xa.pdf/div-class-title-toxic-speech-and-limited-demand-for-content-moderation-on-social-media-div.pdf), [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228), [Rasmussen 2022](https://osf.io/preprints/psyarxiv/j4nuc))
+- Persistent gender gap in content moderation preferences ([Pradel and Theocharis 2024](https://www.researchgate.net/profile/Franziska-Pradel/publication/385196410_Gender_Differences_in_Demanding_Moderation/links/6723936cdb208342dee0f484/Gender-Differences-in-Demanding-Moderation.pdf); [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
+- Ideological differences in tolerance for hate speech ([Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
+- Partisan norms and identity signaling drive sanctioning preferences ([Ahn et al. 2024](https://doi.org/10.1093/pnasnexus/pgae534), [Dias et al. 2024](https://doi.org/10.1086/733004))
+
+&lt;div align="center"&gt;
+&lt;img src="pics/pradel-apsr-paper.png" style="width:45%"&gt;
+&lt;img src="pics/munzert-pnas-nexus-paper.png" style="width:45%"&gt;
+&lt;/div&gt;
+
+
+---
+class: inverse, center, middle
+
+# Setup
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px style="width:1000px; margin:auto;"/&gt;&lt;/html&gt;
+
+
+
+---
+# Data collection
+
+.pull-left[
+- Online survey fielded in 11 countries
+- Recruitment via FB/Instagram ads
+- ~18.5k completed interviews
+- [Pre-registered at OSF](https://osf.io/2ec8m)
+
+&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/country-map.png" style="width:100%"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/facebook-ad-topic.png" style="width:45%"&gt;
+&lt;img src="pics/facebook-ad-neutral.png" style="width:45%"&gt;
+&lt;/div&gt;
+]
+
+
+---
+# Experimental setup
+
+
+&lt;div align="center"&gt;
+&lt;img src="figures/design-setup.png" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+
+
+---
+# Vignette attributes and levels
+
+.pull-left[
+
+&lt;table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse;"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Attribute&lt;/th&gt;
+      &lt;th&gt;Levels&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;① Topic&lt;/td&gt;
+      &lt;td&gt;14 topics (feminism, homosexuality, religiosity, partisanship, …)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;② Target topic stance&lt;/td&gt;
+      &lt;td&gt;left, right&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;③ Message category&lt;/td&gt;
+      &lt;td&gt;opinion, meme, mocking, insult, threat&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;④ Message severity&lt;/td&gt;
+      &lt;td&gt;moderate, extreme&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;⑤ Message scope&lt;/td&gt;
+      &lt;td&gt;personal, group&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;⑥ Target's identity&lt;/td&gt;
+      &lt;td&gt;white/non-white, female/male&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;⑦ Sender's identity&lt;/td&gt;
+      &lt;td&gt;white/non-white, female/male&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="figures/vignette-illustration.png" style="width:100%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+
+---
+# Topic overview
+
+&lt;div align="center"&gt;
+&lt;img src="figures/barplot-tp-leftright.png" style="width:73%; height: auto;"&gt;
+&lt;/div&gt;
+
+
+
+---
+# Message scheme
+
+&lt;style type="text/css"&gt;
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Fira Sans, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Fira Sans, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-cly1{text-align:left;vertical-align:middle}
+.tg .tg-yla0{font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-7zrl{text-align:left;vertical-align:middle}
+.tg .tg-xzsy{font-style:italic;text-align:left;vertical-align:middle}
+&lt;/style&gt;
+&lt;table class="tg"&gt;&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th class="tg-yla0"&gt;Message category&lt;/th&gt;
+    &lt;th class="tg-yla0" colspan="2"&gt;Message severity&lt;/th&gt;
+    &lt;th class="tg-yla0"&gt;Example (targeting left)&lt;/th&gt;
+    &lt;th class="tg-yla0"&gt;Example (targeting right)&lt;/th&gt;
+  &lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1" rowspan="2"&gt;Opinion/Policy position&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Moderate&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Social norm&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;We should only welcome legal immigrants&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Xenophobes shouldn't be tolerated on the internet&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1"&gt;Extreme&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Law, ban, state- enforcement of some kind&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;The government should deport more immigrants!&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Xenophobes should lose their citizenship and be thrown out of   the country!&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1" rowspan="2"&gt;Incivility/insult&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Moderate&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Denigrating, dismissive&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Most immigrants are uneducated. &lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Xenophobes are pathetic, bigoted losers. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1"&gt;Extreme&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Offensive, often a slur&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Immigrants are dirty rats!&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Xenophobes are a bunch of flag fuckers!&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1" rowspan="2"&gt;Threat/Violence&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Moderate&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Threatening or wishing some kind of physical harm, on the level of a hard punch&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Immigrants should be punched in the face. &lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Xenophobes should be punched in the face. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1"&gt;Extreme&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Threatening or wishing lethal violence&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Immigrants should all be exterminated like vermin!&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Xenophobes should be taken out and shot!&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1" rowspan="2"&gt;Mocking/Sarcasm&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Moderate, verbal&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Undermining the target by making fun of the message or target group, being ironic&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Oh yeah, cannot imagine our society without its drug dealers.   Lol&lt;/td&gt;
+    &lt;td class="tg-xzsy"&gt;Oh yeah, people other than native Americans don't have a place   here! Lol&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-cly1"&gt;Moderate, meme&lt;/td&gt;
+    &lt;td class="tg-cly1"&gt;Mocking/making fun of the target&lt;/td&gt;
+    &lt;td class="tg-7zrl"&gt;&lt;img src="pics/immigrants_l_group_usa.jpeg" style="width:30%"&gt;&lt;/td&gt;
+    &lt;td class="tg-7zrl"&gt;&lt;img src="pics/immigrants_r_group_usa.jpeg" style="width:30%"&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+
+---
+# The memes
+
+.pull-left[
+&lt;br&gt;&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/immigrants_l_group_usa.jpeg" style="width:75%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-left[
+&lt;br&gt;
+&lt;div align="center"&gt;
+&lt;img src="pics/immigrants_r_group_usa.jpeg" style="width:75%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+
+---
+# All the (U.S.) memes
+
+&lt;div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;"&gt;
+&lt;div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-height: 75vh; overflow-y: hidden;"&gt;
+&lt;img src="pics/memes-usa/freespeech_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/cars_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/cars_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/cars_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/cars_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/climate_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/climate_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/climate_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/climate_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/feminism_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/feminism_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/feminism_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/feminism_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/freespeech_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/freespeech_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/freespeech_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/homosexuality_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/homosexuality_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/homosexuality_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/homosexuality_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/immigrants_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/immigrants_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/immigrants_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/immigrants_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/inequality_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/inequality_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/inequality_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/inequality_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/men_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/men_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/men_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/men_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/nationalism_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/nationalism_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/nationalism_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/nationalism_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/police_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/police_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/police_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/police_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/politics_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/politics_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/politics_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/politics_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/racism_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/racism_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/racism_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/racism_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/religion_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/religion_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/religion_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/religion_r_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/vegans_l_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/vegans_l_personal_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/vegans_r_group_usa.jpeg" width="100"&gt;
+  &lt;img src="pics/memes-usa/vegans_r_personal_usa.jpeg" width="100"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+---
+# Elicitation of preferences
+
+.pull-left[
+&lt;div align="center"&gt;
+&lt;img src="pics/hate-survey-sample.png" style="width:70%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+
+&lt;div align="center"&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;a href="https://digital-citizen-lab.com/hate-survey-sample" style="font-size: 1.5em; font-weight: bold;"&gt;https://digital-citizen-lab.com/&lt;/a&gt;&lt;br&gt;
+&lt;a href="https://digital-citizen-lab.com/hate-survey-sample" style="font-size: 1.5em; font-weight: bold;"&gt;hate-survey-sample&lt;/a&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;img src="pics/qrcode-hate-survey-sample.png" style="width:45%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+
+
+
+
+---
+class: inverse, center, middle
+
+# Results
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px style="width:1000px; margin:auto;"/&gt;&lt;/html&gt;
+
+
+---
+# More results: please go to
+
+&lt;div align="center"&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;a href="https://digital-citizen-lab.com/hate-speech-study" style="font-size: 1.5em; font-weight: bold;"&gt;https://digital-citizen-lab.com/&lt;/a&gt;&lt;br&gt;
+&lt;a href="https://digital-citizen-lab.com/hate-speech-study" style="font-size: 1.5em; font-weight: bold;"&gt;hate-speech-study&lt;/a&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;img src="pics/qrcode-hate-speech-study.png" style="width:25%; height: auto;"&gt;
+&lt;/div&gt;
+
+
+
+---
+# Perceptions vs. actions
+
+&lt;div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;"&gt;
+&lt;div align="center"&gt;
+&lt;img src="figures/heatplot-actions-by-perceptions.png" style="width:25%; height: auto;position: relative; top: -80px;"&gt;
+&lt;img src="figures/table-perceptions-actions-by-country.png" style="width:70%; height: auto;"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+---
+# Messages most often flagged as hate speech
+
+&lt;div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;"&gt;
+&lt;div align="center"&gt;
+&lt;img src="figures/table-messages-ranked-pooled.png" style="width:85%; height: auto"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+---
+# Effect of non-alignment on issue stance with target (H1)
+
+&lt;div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;"&gt;
+&lt;div align="center"&gt;
+&lt;img src="figures/table-h1-models-pooled.png" style="width:50%; height: auto;"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+---
+# Effect of non-alignment on gender/ethnicity with target (H2)
+
+&lt;div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;"&gt;
+&lt;div align="center"&gt;
+&lt;img src="figures/table-h2target-models-pooled.png" style="width:50%; height: auto;"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+---
+# Effect of non-alignment on gender/ethnicity with sender (H3)
+
+&lt;div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;"&gt;
+&lt;div align="center"&gt;
+&lt;img src="figures/table-h3sender-models-pooled.png" style="width:50%; height: auto;"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+---
+class: inverse, center, middle
+
+# Summary
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px style="width:1000px; margin:auto;"/&gt;&lt;/html&gt;
+
+
+---
+# Key findings
+
+- **Type and degree of hate speech matters.**  
+  People perceive more extreme threats and insults as more offensive and hateful and are thus more willing to take action.
+- **Substance matters.**  
+  Some topics, often related to immutable or identity-shaping features (feminism, homosexuality, religiosity, immigration) are perceived as more problematic than others (inequality, partisanship, SUV use)
+- **Speaker context less important.**  
+  Sender or target attributes with little effect on outcomes
+- **Preferences vary systematically across citizen characteristics.**  
+  Level of concern for females &gt; males, politically left &gt; right, old &gt; young, toxic experiences
+- **Issue alignment matters.**  
+  There is strong evidence for (lack of) solidarity with the target if the respondent (does not) share their issue stance.
+- **Gender/ethnicity alignment matters less.**  
+  There is no strong evidence for similar patterns when the respondent is/is not aligned on gender/ethnicity with the target or sender.
+
+
+---
+# Implications
+
+.pull-left[
+- **Reconsider the gold standard**  
+  Treating human judgments as a gold standard for training AI models is problematic. 
+- **Take cultural contexts into account**  
+  Any moderation approach that does not consider local and regional speech norms is likely to produce decisions that are at odds with human preferences on the ground.
+- **There are hard and really hard cases. Focus on the just hard ones first?**  
+  As biases induced by respondent characteristics seem to be less pronounced for harder forms of hate speech, focusing on those cases might be a good starting point for training AI models.
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="pics/memes-usa/freespeech_r_personal_usa.jpeg" style="width:75%; height: auto;"&gt;
+&lt;/div&gt;
+]
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"hash": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+  .logo {
+    background-image: url("hertieschool-neg.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 1.5em;
+    right: 1em;
+    width: 150px;
+    height: 128px;
+    z-index: 0;
+  }
+</style>
+  
+  <script>
+  document
+.querySelectorAll(
+  '.remark-slide-content' +
+    ':not(.title-slide)' +
+    ':not(.inverse)' +
+	
+    // add additional classes to exclude here, e.g.
+  // ':not(.inverse)' +
+    ':not(.hide-logo)'
+)
+.forEach(el => {
+  el.innerHTML += '<div class="logo"></div>';
+ 
+});
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

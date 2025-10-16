@@ -1,0 +1,595 @@
+---
+title: 'What [young] people think we should be allowed to say'
+subtitle: '<small>CIVICA Youth Gender Polarization and Digital Fragmentation Conference</small>'
+author: 'Simon Munzert <span style="color:#ff0000;">&middot;</span> Hertie School, Berlin'
+date: "<br>Oct 18, 2025<br><br><br>
+<br>
+<img src='hertieschool-neg.svg' style='height:25px; margin-right: 10px'>
+<img src='kcl-logo.png' style='height:25px; margin-right: 10px'>
+<img src='mpi-logo.png' style='height:25px; margin-right: 10px'>
+<img src='mannheim-logo.png' style='height:25px; margin-right: 285px'>
+Co-funded by: 
+<img src='facebook-research-logo.png' style='height:25px'>
+"
+output:
+  xaringan::moon_reader:
+    includes:
+      after_body: "add_hertie_logo.html"
+      in_header: "my_header.html"
+    css: [default, metropolis, metropolis-fonts, 'simons-touch.css'] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+      hash: true
+---
+class: inverse, center, middle
+
+
+```{css, echo=FALSE} 
+@media print { # print out incremental slides; see https://stackoverflow.com/questions/56373198/get-xaringan-incremental-animations-to-print-to-pdf/56374619#56374619
+  .has-continuation {
+    display: block !important;
+  }
+}
+```
+
+```{r setup, include=FALSE}
+# figures formatting setup
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  prompt = T,
+  fig.align="center", #fig.width=6, fig.height=4.5, 
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T, #echo=F, warning=F, message=F
+  engine.opts = list(bash = "-l")
+  )
+
+## Next hook based on this SO answer: https://stackoverflow.com/a/39025054
+knit_hooks$set(
+  prompt = function(before, options, envir) {
+    options(
+      prompt = if (options$engine %in% c('sh','bash')) '$ ' else 'R> ',
+      continue = if (options$engine %in% c('sh','bash')) '$ ' else '+ '
+      )
+})
+
+library(tidyverse)
+library(hrbrthemes)
+library(fontawesome)
+```
+
+<style>
+
+li {
+  margin-bottom: 10px;
+}
+
+ul {
+  text-indent: -1.5em;
+  list-style: none;
+}
+
+ul li::before {
+  content: "";
+  background: url('megaphone.png') no-repeat center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0; /* Prevents image from resizing */
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  top: 0px; /* Moves image slightly down */
+}
+</style>
+
+
+# Where I'm coming from
+<html><div style='float:left'></div><hr color='#EB811B' size=1px style="width:1000px; margin:auto;"/></html>
+
+
+
+---
+# Content moderation is big and... bad?
+
+.pull-left[
+
+- Platforms moderate content opaquely, often without oversight ([Gillespie 2018](https://yalebooks.yale.edu/book/9780300261431/custodians-of-the-internet/))
+- Content moderation with commercial services is **massive** (e.g., 500m requests per day to JigSaw's Perspective API in 2021; 200m weekly users of OpenAI's Moderation API)
+- **Content Moderation APIs** by Google, Microsoft, Amazon, OpenAI, and others are supposedly trained on human labeled data but produce lots of questionable decisions ([Hartmann et al. 2025](https://arxiv.org/pdf/2503.01623); FPR/FNR up to 75%, ACC as low as 60% in balanced toxic/non-toxic samples) 
+]
+
+.pull-right[
+<div align="center">
+<img src="pics/chi-lost-in-moderation-1.png" style="width:90%">
+</div>
+]
+
+---
+# Why hate speech moderation at scale is so challenging
+
+.pull-left-small2[
+## It's a hard problem 
+
+- **Volume and velocity of content**  
+  - Billions of posts per day  
+  - Error amplification at scale
+- **Adversarial users**  
+  - Coded language, meme shifts  
+  - Evasion of detection systems
+- **Context is everything**  
+  - Meaning depends on intent  
+  - Hard for AI to judge nuance
+- **Legal and reputational constraints**  
+  - Balance free speech vs harm  
+  - Laws differ across countries  
+]
+
+--
+
+.pull-right-wide2[
+## And we might not even agree on what the problem is...
+
+- **The fundamental subjectivity of hate speech**  
+  - Likely varies by culture, context of speech, and individual prefs
+  - [Why it's impossible to agree on what's allowed](https://danluu.com/impossible-agree/) (Dan Luu) and the ["No vehicles in the park" rule](https://novehiclesinthepark.com/)
+  
+]
+
+
+---
+# Why hate speech moderation at scale is so challenging
+
+.pull-left-small2[
+## It's a hard problem 
+
+- **Volume and velocity of content**  
+  - Billions of posts per day  
+  - Error amplification at scale
+- **Adversarial users**  
+  - Coded language, meme shifts  
+  - Evasion of detection systems
+- **Context is everything**  
+  - Meaning depends on intent  
+  - Hard for AI to judge nuance
+- **Legal and reputational constraints**  
+  - Balance free speech vs harm  
+  - Laws differ across countries  
+]
+
+.pull-right-wide2[
+## And we might not even agree on what the problem is...
+
+- **The fundamental subjectivity of hate speech**  
+  - Likely varies by culture, context of speech, and individual prefs
+  - [Why it's impossible to agree on what's allowed](https://danluu.com/impossible-agree/) (Dan Luu) and the ["No vehicles in the park" rule](https://novehiclesinthepark.com/)
+  
+## ... and how it should be tackled
+
+<div align="center">
+<br>
+<img src="figures/barplot-contentregulation.png" style="width:90%">
+</div>
+]
+
+
+---
+# Evidence on variation in hate speech moderation preferences
+
+- Support for moderation of severe hate speech (threats, violence) ([Pradel et al. 2024](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/405333D7072585903E81BEF1729378F8/S000305542300134Xa.pdf/div-class-title-toxic-speech-and-limited-demand-for-content-moderation-on-social-media-div.pdf), [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228), [Rasmussen 2022](https://osf.io/preprints/psyarxiv/j4nuc))
+- Persistent gender gap in content moderation preferences ([Pradel and Theocharis 2024](https://www.researchgate.net/profile/Franziska-Pradel/publication/385196410_Gender_Differences_in_Demanding_Moderation/links/6723936cdb208342dee0f484/Gender-Differences-in-Demanding-Moderation.pdf); [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
+- Ideological differences in tolerance for hate speech ([Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
+- Partisan norms and identity signaling drive sanctioning preferences ([Ahn et al. 2024](https://doi.org/10.1093/pnasnexus/pgae534), [Dias et al. 2024](https://doi.org/10.1086/733004))
+
+<div align="center">
+<img src="pics/pradel-apsr-paper.png" style="width:45%">
+<img src="pics/munzert-pnas-nexus-paper.png" style="width:45%">
+</div>
+
+
+
+---
+# Data collection
+
+.pull-left[
+- Online survey fielded in 11 countries
+- Recruitment via FB/Instagram ads
+- ~18.5k completed interviews
+- [Pre-registered at OSF](https://osf.io/2ec8m)
+
+<br>
+<div align="center">
+<img src="pics/country-map.png" style="width:100%">
+</div>
+]
+
+.pull-right[
+<br>
+<div align="center">
+<img src="pics/facebook-ad-topic.png" style="width:45%">
+<img src="pics/facebook-ad-neutral.png" style="width:45%">
+</div>
+]
+
+
+
+---
+# Vignette attributes and levels
+
+.pull-left[
+
+<br>
+<br>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; font-size: 16px;">
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Levels</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>① Topic</td>
+      <td>14 topics (feminism, religiosity, partisanship, ...)</td>
+    </tr>
+    <tr>
+      <td>② Target stance</td>
+      <td>left, right</td>
+    </tr>
+    <tr>
+      <td>③ Message category</td>
+      <td>opinion, meme, mocking, insult, threat</td>
+    </tr>
+    <tr>
+      <td>④ Message severity</td>
+      <td>moderate, extreme</td>
+    </tr>
+    <tr>
+      <td>⑤ Message scope</td>
+      <td>personal, group</td>
+    </tr>
+    <tr>
+      <td>⑥ Target's identity</td>
+      <td>white/non-white, female/male</td>
+    </tr>
+    <tr>
+      <td>⑦ Sender's identity</td>
+      <td>white/non-white, female/male</td>
+    </tr>
+  </tbody>
+</table>
+
+]
+
+
+.pull-right[
+<div align="center">
+<img src="figures/vignette-illustration.png" style="width:100%; height: auto;">
+</div>
+]
+
+
+---
+# Some of the vignettes
+
+<br><br>
+<div align="center">
+<img src="pics/vignettes-loop.gif" style="width: 80%; margin-top:-5px;"">
+</div>
+
+
+
+---
+# All the (U.S.) memes
+
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-height: 75vh; overflow-y: hidden;">
+<img src="pics/memes-usa/freespeech_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/cars_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/cars_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/cars_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/cars_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/climate_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/climate_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/climate_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/climate_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/feminism_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/feminism_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/feminism_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/feminism_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/freespeech_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/freespeech_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/freespeech_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/homosexuality_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/homosexuality_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/homosexuality_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/homosexuality_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/immigrants_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/immigrants_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/immigrants_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/immigrants_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/inequality_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/inequality_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/inequality_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/inequality_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/men_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/men_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/men_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/men_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/nationalism_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/nationalism_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/nationalism_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/nationalism_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/police_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/police_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/police_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/police_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/politics_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/politics_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/politics_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/politics_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/racism_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/racism_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/racism_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/racism_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/religion_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/religion_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/religion_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/religion_r_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/vegans_l_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/vegans_l_personal_usa.jpeg" width="100">
+  <img src="pics/memes-usa/vegans_r_group_usa.jpeg" width="100">
+  <img src="pics/memes-usa/vegans_r_personal_usa.jpeg" width="100">
+</div>
+</div>
+
+
+
+---
+# Messages most often flagged as hate speech
+
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="figures/table-messages-ranked-pooled.png" style="width:85%; height: auto">
+</div>
+</div>
+
+
+---
+# Perceived nature of speech and support for moderation
+
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="figures/barplot-perceptions-actions-by-country.png" style="width:65%; height: auto;">
+<img src="figures/profileplot-actions-by-perceptions.png" style="width:60%; height: auto;">
+</div>
+</div>
+
+
+
+---
+# Myside bias in content moderation
+
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="figures/effects-h1-coefplot-heterogeneity.png" style="width:75%; height: auto;">
+</div>
+</div>
+
+
+
+---
+# Respondent characteristics matter
+
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="pics/respmodels-zoom.png" style="width:90%; height: auto;">
+</div>
+</div>
+
+
+---
+# Respondent characteristics matter
+
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="pics/respmodels-zoom-2.png" style="width:90%; height: auto;">
+</div>
+</div>
+
+
+---
+# Zooming in: age and gender differences
+
+<br><br>
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="figures/effects-ageXgender-coefplot.png" style="width:85%; height: auto;">
+</div>
+</div>
+
+
+---
+# Zooming in: age differences across content types
+
+<br><br>
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="figures/effects-ageXcategory-coefplot.png" style="width:85%; height: auto;">
+</div>
+</div>
+
+---
+# Zooming in: gender differences across content types
+
+<br><br>
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="figures/effects-genderXcategory-coefplot.png" style="width:85%; height: auto;">
+</div>
+</div>
+
+
+
+---
+class: inverse, center, middle
+
+# Time for a new agenda
+<html><div style='float:left'></div><hr color='#EB811B' size=1px style="width:1000px; margin:auto;"/></html>
+
+---
+background-image: url("pics/fellow-kids.gif")
+background-size: cover
+background-color: #000000
+
+
+
+---
+# Online harassment: a problem of the young...
+
+.pull-left[
+<div align="center">
+<img src="pics/pew-online-harassment.webp" style="width:60%">
+</div>
+]
+
+.pull-right[
+<div align="center">
+<img src="pics/pew-online-harassment-5.webp" style="width:89%">
+</div>
+]
+
+---
+# ... and with variation across genders
+
+.pull-left-small2[
+<br>
+<div align="center">
+<img src="pics/pew-online-harassment-2.webp" style="width:100%">
+</div>
+]
+
+.pull-right-wide2[
+<br>
+<div align="center">
+<img src="pics/pew-online-harassment-4.webp" style="width:100%">
+</div>
+]
+
+
+---
+# Youth language and culture is different and changing fast
+
+.pull-left[
+<br>
+<div align="center">
+<img src="pics/know-your-meme.png" style="width:100%">
+</div>
+]
+
+.pull-right[
+<br>
+<div align="center">
+<img src="pics/langenscheidt-jugendwort.png" style="width:100%">
+</div>
+]
+
+---
+# We need to broaden our data basis
+
+<br>
+
+.pull-left[
+<div align="center">
+<img src="pics/hate-speech-data-1.png" style="width:100%">
+<img src="pics/hate-speech-data-2.png" style="width:100%">
+</div>
+]
+
+.pull-right[
+<div align="center">
+<img src="pics/hate-speech-data-3.png" style="width:100%">
+<img src="pics/hate-speech-data-4.png" style="width:100%">
+</div>
+]
+
+
+---
+# We need to go places where this happens
+
+<br>
+
+.pull-left-small[
+<div align="center">
+<img src="pics/fortnite.png" style="height:400px">
+</div>
+]
+
+.pull-left-small[
+<div align="center">
+<img src="pics/whatsapp.png" style="height:400px">
+</div>
+]
+
+.pull-right-small[
+<div align="center">
+<img src="pics/4chan.png" style="height:400px">
+</div>
+]
+
+
+---
+# Towards a better understanding of youth speech preferences
+
+.pull-left[
+## Why this matters
+
+- Language is identity for the youth; context (irony, memes!) is crucial
+- Slang evolves faster than a millenial can scroll
+- Platform use and communication styles are often gendered
+- Current regulation rarely reflects young people's lived experiences
+]
+
+.pull-right[
+## Where we need to go
+
+- **Better data:** systematic mapping of how adolescents use and interpret toxic or provocative speech
+- **Better ethics:** frameworks that take seriously the sensitivities of studying youth speech norms
+- **Better dialogue:** between researchers, platforms, and young people themselves
+]
+
+
+---
+# Data on toxic youth speech + moderation preferences
+
+.pull-left[
+## What we have
+<br>
+<div align="center">
+<img src="pics/hate-speech-data-1-cr.png" style="width:90%">
+<img src="pics/hate-speech-data-3-cr.png" style="width:90%">
+<img src="pics/hate-speech-data-4-cr.png" style="width:90%">
+</div>
+
+**Plus:** Tools to generate synthetic content at scale, solid preference evaluation pipeline, comparative surveys on preferences (gender 👍, youth 👎)
+]
+
+.pull-right[
+## What I'd like us to have
+<br>
+- Longitudinal behavioral **data on youth speech** and **platform use**
+- **Platform moderation data**, ideally linked to user demographics
+- **Everything all at once:** An ongoing, comparative, panel+cross-section youth survey infrastructure that integrates behavioral data and a module on speech tolerance
+]
+
+
+
+
+
+
