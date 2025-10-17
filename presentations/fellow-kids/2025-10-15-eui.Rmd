@@ -1,7 +1,7 @@
 ---
 title: 'What [young] people think we should be allowed to say'
 subtitle: '<small>CIVICA Youth Gender Polarization and Digital Fragmentation Conference</small>'
-author: 'Simon Munzert <span style="color:#ff0000;">&middot;</span> Hertie School, Berlin'
+author: 'Simon Munzert <span style="color:#ff0000;">&middot;</span> Hertie School, Berlin  <span style="color:#ff0000;">&middot;</span> Together with Julia Ellingwood, Lisa Oswald, Richard Traunmüller'
 date: "<br>Oct 18, 2025<br><br><br>
 <br>
 <img src='hertieschool-neg.svg' style='height:25px; margin-right: 10px'>
