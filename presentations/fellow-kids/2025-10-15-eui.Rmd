@@ -374,13 +374,24 @@ ul li::before {
 
 
 ---
-# Myside bias in content moderation
+# Myside bias in content moderation I
+
+<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
+<div align="center">
+<img src="figures/effects-h1-3-coefplot-flipped.png" style="width:50%; height: auto;">
+</div>
+</div>
+
+
+---
+# Myside bias in content moderation II
 
 <div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
 <div align="center">
 <img src="figures/effects-h1-coefplot-heterogeneity.png" style="width:75%; height: auto;">
 </div>
 </div>
+
 
 
 
