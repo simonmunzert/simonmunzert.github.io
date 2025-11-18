@@ -1,0 +1,1056 @@
+---
+title: "Global Preferences for Hate Speech Moderation: Supplementary Materials"
+author: "Simon Munzert"
+date: "April 3, 2025"
+output: 
+  rmdformats::readthedown:
+    df_print: paged
+    number_sections: FALSE
+    highlight: tango
+    toc_depth: 3
+    toc_float: true
+    self_contained: false
+knitr:
+  opts_knit:
+    root.dir: !expr here::here()
+editor_options: 
+  chunk_output_type: console
+---
+
+```{=html}
+<style>
+.h1,h2,h3,h4 {
+color:#2f1a61;
+}
+
+.subtitle, section.normal {
+color:#291854;
+}
+
+.title {
+color:#160a3d;
+}
+
+.nav-pills>li>a{
+color: #2f1a61;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+color: #fff;
+background-color: #2f1a61;
+}
+
+.nav-tabs>li>a{
+color: #2f1a61;
+padding: .5em;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+color: #fff;
+background-color: #2f1a61;
+padding: .5em;
+
+}
+
+.pad-box{
+padding: 1em;
+}
+
+</style>
+
+<style>
+.zoomable {
+  cursor: zoom-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 100%;
+  height: auto;
+}
+
+.zoomable.zoomed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  cursor: zoom-out;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  background-color: rgba(255,255,255,0.95);
+  padding: 1rem;
+  border-radius: 8px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll("img").forEach(function(img) {
+    img.classList.add("zoomable");
+    img.addEventListener("click", function() {
+      img.classList.toggle("zoomed");
+    });
+  });
+});
+</script>
+```
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  eval = TRUE,
+  error = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = NA,
+  dev = "png",
+  dpi = 96,
+  fig_retina = NULL
+)
+```
+
+```{r, include=FALSE}
+# Custom function to install needed packages, if they're not
+# already installed on your machine
+check.packages <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg))
+    install.packages(new.pkg, dependencies = TRUE,
+                     repos = "https://cran.rstudio.com")
+  sapply(pkg, require, character.only = TRUE)
+}
+
+check.packages(c("tidyverse", "readxl", "reshape2", "janitor", "ggplot2", "mirt", "reactable", "ggmirt", "gt", "stringr", "ggridges"))
+```
+
+
+<!--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+---
+
+# Vignette construction
+
+
+## Vignette delivery descriptives {.tabset}
+
+### Message configurations shown by country
+
+![](figures/barplot-vignettes-messages-shown-by-country.png)
+
+### Vignette configurations shown by country
+
+![](figures/barplot-vignettes-shown-by-country.png)
+
+
+
+<!--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+---
+
+# Covariate descriptives
+
+
+
+
+## Demographics {.tabset}
+
+### Political interest
+
+![](figures/barplot-polinterest.png)
+
+### Political ideology
+
+![](figures/barplot-leftright3.png)
+
+### Party identification
+
+![](figures/barplot-partyid.png)
+
+### Empathy
+
+![](figures/barplot-empathy.png)
+
+### Issue positions
+
+![](figures/barplot-tp-leftright.png)
+
+
+## Speech regulation attitudes {.tabset}
+
+### Trade-offs in tackling hate speech
+
+![](figures/barplot-tradeoffs.png)
+
+### Responsibility for social media content regulation
+
+![](figures/barplot-contentregulation.png)
+
+### Responsibility to act against online hate speech
+
+![](figures/barplot-responsibility.png)
+
+### Censorship attitudes
+ 
+![](figures/barplot-silencing.png)
+
+### Free speech perceptions
+![](figures/barplot-speaking-freely.png)
+
+
+## Online behaviors {.tabset}
+
+### Online experiences
+
+![](figures/barplot-experiences.png)
+
+### Online posting behavior
+
+![](figures/barplot-postings.png)
+
+
+
+<!--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+
+
+# Vignette descriptives
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Perceptions and preferred actions, by country
+
+![](figures/table-perceptions-actions-by-country.png)
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Messages with highest cross-country hate perception variance 
+
+![](figures/table-messages-heterogeneity-ranked.png)
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Messages most often flagged as hate speech
+
+![](figures/table-messages-ranked.png)
+
+
+
+
+
+<!--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+
+
+# Main results
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Content moderation task: Vignette AMCEs {.tabset}
+
+
+### Pooled
+
+![](figures/table-acme-pooled.png)
+
+### BRA
+
+![](figures/table-acme-bra.png)
+
+### COL
+
+![](figures/table-acme-col.png)
+
+### GER
+
+![](figures/table-acme-ger.png)
+
+### IND
+
+![](figures/table-acme-ind.png)
+
+### IDN
+
+![](figures/table-acme-idn.png)
+
+### NIG
+
+![](figures/table-acme-nig.png)
+
+### PHL
+
+![](figures/table-acme-phl.png)
+
+### POL
+
+![](figures/table-acme-pol.png)
+
+### TUR
+
+![](figures/table-acme-tur.png)
+
+### UKD
+
+![](figures/table-acme-gbr.png)
+
+### USA
+
+![](figures/table-acme-usa.png)
+
+### Offensive
+
+![](figures/table-acme-vig_perc_offensive2.png)
+
+### Hateful
+
+![](figures/table-acme-vig_perc_hate2.png)
+
+### Remove post
+
+![](figures/table-acme-vig_remove.png)
+
+### Ban sender
+
+![](figures/table-acme-vig_ban.png)
+
+### Legal action
+
+![](figures/table-acme-vig_legal.png)
+
+
+
+### Job loss
+
+![](figures/table-acme-vig_job.png)
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Respondent characteristics models {.tabset}
+
+
+### Pooled
+
+![](figures/table-respmodels-pooled.png)
+
+
+
+### BRA
+
+![](figures/table-respmodels-bra.png)
+
+
+
+### COL
+
+![](figures/table-respmodels-col.png)
+
+
+
+### GER
+
+![](figures/table-respmodels-ger.png)
+
+
+
+### IND
+
+![](figures/table-respmodels-ind.png)
+
+
+
+### IDN
+
+![](figures/table-respmodels-idn.png)
+
+
+
+### NIG
+
+![](figures/table-respmodels-nig.png)
+
+
+
+### PHL
+
+![](figures/table-respmodels-phl.png)
+
+
+
+### POL
+
+![](figures/table-respmodels-pol.png)
+
+
+
+### TUR
+
+![](figures/table-respmodels-tur.png)
+
+
+
+### UKD
+
+![](figures/table-respmodels-gbr.png)
+
+
+
+### USA
+
+![](figures/table-respmodels-usa.png)
+
+
+
+### Offensive
+
+![](figures/table-respmodels-vig_perc_offensive2.png)
+
+
+
+### Hateful
+
+![](figures/table-respmodels-vig_perc_hate2.png)
+
+
+
+### Remove post
+
+![](figures/table-respmodels-vig_remove.png)
+
+
+
+### Ban target
+
+![](figures/table-respmodels-vig_ban.png)
+
+
+
+### Legal action
+
+![](figures/table-respmodels-vig_legal.png)
+
+
+
+### Job loss
+
+![](figures/table-respmodels-vig_job.png)
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## H1: Issue alignment with target {.tabset}
+
+
+### Pooled
+
+![](figures/table-h1-models-pooled.png)
+
+
+
+### BRA
+
+![](figures/table-h1-models-bra.png)
+
+
+
+### COL
+
+![](figures/table-h1-models-col.png)
+
+
+
+### GER
+
+![](figures/table-h1-models-ger.png)
+
+
+
+### IND
+
+![](figures/table-h1-models-ind.png)
+
+
+
+### IDN
+
+![](figures/table-h1-models-idn.png)
+
+
+
+### NIG
+
+![](figures/table-h1-models-nig.png)
+
+
+
+### PHL
+
+![](figures/table-h1-models-phl.png)
+
+
+
+### POL
+
+![](figures/table-h1-models-pol.png)
+
+
+
+### TUR
+
+![](figures/table-h1-models-tur.png)
+
+
+
+### UKD
+
+![](figures/table-h1-models-gbr.png)
+
+
+
+### USA
+
+![](figures/table-h1-models-usa.png)
+
+
+
+### Offensive
+
+![](figures/table-h1-models-vig_perc_offensive2.png)
+
+
+
+### Hateful
+
+![](figures/table-h1-models-vig_perc_hate2.png)
+
+
+
+### Remove post
+
+![](figures/table-h1-models-vig_remove.png)
+
+
+
+### Ban sender
+
+![](figures/table-h1-models-vig_ban.png)
+
+
+
+### Legal action
+
+![](figures/table-h1-models-vig_legal.png)
+
+
+
+### Job loss
+
+![](figures/table-h1-models-vig_job.png)
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## H2: Gender/ethnicity alignment with target {.tabset}
+
+
+### Pooled
+
+![](figures/table-h2target-models-pooled.png)
+
+
+
+### BRA
+
+![](figures/table-h2target-models-bra.png)
+
+
+
+### COL
+
+![](figures/table-h2target-models-col.png)
+
+
+
+### GER
+
+![](figures/table-h2target-models-ger.png)
+
+
+
+### IND
+
+![](figures/table-h2target-models-ind.png)
+
+
+
+### IDN
+
+![](figures/table-h2target-models-idn.png)
+
+
+
+### NIG
+
+![](figures/table-h2target-models-nig.png)
+
+
+
+### PHL
+
+![](figures/table-h2target-models-phl.png)
+
+
+
+### POL
+
+![](figures/table-h2target-models-pol.png)
+
+
+
+### TUR
+
+![](figures/table-h2target-models-tur.png)
+
+
+
+### UKD
+
+![](figures/table-h2target-models-gbr.png)
+
+
+
+### USA
+
+![](figures/table-h2target-models-usa.png)
+
+
+
+### Offensive
+
+![](figures/table-h2target-models-vig_perc_offensive2.png)
+
+
+
+### Hateful
+
+![](figures/table-h2target-models-vig_perc_hate2.png)
+
+
+
+### Remove post
+
+![](figures/table-h2target-models-vig_remove.png)
+
+
+
+### Ban sender
+
+![](figures/table-h2target-models-vig_ban.png)
+
+
+
+### Legal action
+
+![](figures/table-h2target-models-vig_legal.png)
+
+
+
+### Job loss
+
+![](figures/table-h2target-models-vig_job.png)
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## H3: Gender/ethnicity alignment with sender {.tabset}
+
+
+### Pooled
+
+![](figures/table-h3sender-models-pooled.png)
+
+
+
+### BRA
+
+![](figures/table-h3sender-models-bra.png)
+
+
+
+### COL
+
+![](figures/table-h3sender-models-col.png)
+
+
+
+### GER
+
+![](figures/table-h3sender-models-ger.png)
+
+
+
+### IND
+
+![](figures/table-h3sender-models-ind.png)
+
+
+
+### IDN
+
+![](figures/table-h3sender-models-idn.png)
+
+
+
+### NIG
+
+![](figures/table-h3sender-models-nig.png)
+
+
+
+### PHL
+
+![](figures/table-h3sender-models-phl.png)
+
+
+
+### POL
+
+![](figures/table-h3sender-models-pol.png)
+
+
+
+### TUR
+
+![](figures/table-h3sender-models-tur.png)
+
+
+
+### UKD
+
+![](figures/table-h3sender-models-gbr.png)
+
+
+
+### USA
+
+![](figures/table-h3sender-models-usa.png)
+
+
+
+### Offensive
+
+![](figures/table-h3sender-models-vig_perc_offensive2.png)
+
+
+
+### Hateful
+
+![](figures/table-h3sender-models-vig_perc_hate2.png)
+
+
+
+### Remove post
+
+![](figures/table-h3sender-models-vig_remove.png)
+
+
+
+### Ban sender
+
+![](figures/table-h3sender-models-vig_ban.png)
+
+
+
+### Legal action
+
+![](figures/table-h3sender-models-vig_legal.png)
+
+
+
+### Job loss
+
+![](figures/table-h3sender-models-vig_job.png)
+
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## H4/H5: Task framing effects {.tabset}
+
+
+
+### By country
+
+![](figures/effects-frame-by-country.png)
+
+
+
+### By attention/manipulation check criterion
+
+![](figures/effects-frame-by-check.png)
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## H6: Exposure effects {.tabset}
+
+
+To be done
+
+
+
+
+<!--- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+
+
+# Additional results
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Sender avatar effects {.tabset}
+
+
+### Pooled
+
+![](figures/table-acme-senderavatar-pooled.png)
+
+
+
+### BRA
+
+![](figures/table-acme-senderavatar-bra.png)
+
+
+
+### COL
+
+![](figures/table-acme-senderavatar-col.png)
+
+
+
+### GER
+
+![](figures/table-acme-senderavatar-ger.png)
+
+
+
+### IND
+
+![](figures/table-acme-senderavatar-ind.png)
+
+
+
+### IDN
+
+![](figures/table-acme-senderavatar-idn.png)
+
+
+
+### NIG
+
+![](figures/table-acme-senderavatar-nig.png)
+
+
+
+### PHL
+
+![](figures/table-acme-senderavatar-phl.png)
+
+
+
+### POL
+
+![](figures/table-acme-senderavatar-pol.png)
+
+
+
+### TUR
+
+![](figures/table-acme-senderavatar-tur.png)
+
+
+
+### UKD
+
+![](figures/table-acme-senderavatar-gbr.png)
+
+
+
+### USA
+
+![](figures/table-acme-senderavatar-usa.png)
+
+
+
+### Offensive
+
+![](figures/table-acme-senderavatar-vig_perc_offensive2.png)
+
+
+
+### Hateful
+
+![](figures/table-acme-senderavatar-vig_perc_hate2.png)
+
+
+
+### Remove post
+
+![](figures/table-acme-senderavatar-vig_remove.png)
+
+
+
+### Ban sender
+
+![](figures/table-acme-senderavatar-vig_ban.png)
+
+
+
+### Legal action
+
+![](figures/table-acme-senderavatar-vig_legal.png)
+
+
+
+### Job loss
+
+![](figures/table-acme-senderavatar-vig_job.png)
+
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Target avatar effects {.tabset}
+
+
+### Pooled
+
+![](figures/table-acme-targetavatar-pooled.png)
+
+
+
+### BRA
+
+![](figures/table-acme-targetavatar-bra.png)
+
+
+
+### COL
+
+![](figures/table-acme-targetavatar-col.png)
+
+
+
+### GER
+
+![](figures/table-acme-targetavatar-ger.png)
+
+
+
+### IND
+
+![](figures/table-acme-targetavatar-ind.png)
+
+
+
+### IDN
+
+![](figures/table-acme-targetavatar-idn.png)
+
+
+
+### NIG
+
+![](figures/table-acme-targetavatar-nig.png)
+
+
+
+### PHL
+
+![](figures/table-acme-targetavatar-phl.png)
+
+
+
+### POL
+
+![](figures/table-acme-targetavatar-pol.png)
+
+
+
+### TUR
+
+![](figures/table-acme-targetavatar-tur.png)
+
+
+
+### UKD
+
+![](figures/table-acme-targetavatar-gbr.png)
+
+
+
+### USA
+
+![](figures/table-acme-targetavatar-usa.png)
+
+
+
+### Offensive
+
+![](figures/table-acme-targetavatar-vig_perc_offensive2.png)
+
+
+
+### Hateful
+
+![](figures/table-acme-targetavatar-vig_perc_hate2.png)
+
+
+
+### Remove post
+
+![](figures/table-acme-targetavatar-vig_remove.png)
+
+
+
+### Ban sender
+
+![](figures/table-acme-targetavatar-vig_ban.png)
+
+
+
+### Legal action
+
+![](figures/table-acme-targetavatar-vig_legal.png)
+
+
+
+### Job loss
+
+![](figures/table-acme-targetavatar-vig_job.png)
+
+
+
+<!--- XXXXXXXXXXXXXXXXX -->
+
+
+## Vignette position effects {.tabset}
+
+### Pooled
+
+![](figures/table-acme-vigpositions-pooled.png)
+
+
+

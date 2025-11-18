@@ -1,0 +1,323 @@
+# load packages, functions, and helper objects --------
+
+source("code/packages.R")
+source("code/functions.R")
+source("code/helper-objects.R")
+
+
+
+### load vignette data ----------------------------------
+
+# pre-processed survey data
+data_survey_vignettes <- readRDS("data/cooked/data_survey_vignettes.rds")
+
+# vignettes characteristics data
+load("data/cooked/deck_vignette_ids_list.RDa")
+load("data/cooked/vignette_deck_vignette_ids_df.RData")
+vignettes_complete_df <- bind_rows(vignettes_complete_list)
+
+load("data/cooked/vignettes_df.RData")
+vignettes_universe_df <- bind_rows(list(vignettes_universe_bra_df, vignettes_universe_col_df, vignettes_universe_gbr_df, vignettes_universe_ger_df, vignettes_universe_idn_df, vignettes_universe_ind_df, vignettes_universe_indeng_df, vignettes_universe_nig_df, vignettes_universe_phl_df, vignettes_universe_phleng_df, vignettes_universe_pol_df, vignettes_universe_tur_df, vignettes_universe_usa_df))
+
+
+  # deck_vignette_ids_img_list (data frames of 8 jpg names per deck, by sample)
+  # deck_vignette_ids_img_qualtrics_list (data frame of 8 external image links as they were embedded in qualtrics, by sample)
+  # deck_vignette_ids_list (data frames of 8 vignette IDs/names per deck, by sample)
+  # decks_complete_list (data frames for all decks with complete vignettes information, by sample, 400 decks each)
+  # vignettes_complete_list (data frame with at vignette level with all relevant information, by sample, 3200 vignettes each)
+
+
+### prepare vignette evaluation data ----------------
+
+# make long, rename variables
+
+data_survey_vig_long <- data_survey_vignettes %>%
+  pivot_longer(cols = -c(resp_id, deck_id), 
+               names_to = c("vig_pos", ".value"),
+               names_pattern = "vig_(\\d{1})_([[:alpha:]]+)") %>%
+  rename(vig_hate = hate,
+         vig_remove = remove,
+         vig_ban = ban,
+         vig_legal = legal,
+         vig_job = job,
+         t_vig_first = First,
+         t_vig_last = Last,
+         t_vig_page = Page,
+         t_vig_click = Click)
+data_survey_vig_long$vig_pos <- as.integer(data_survey_vig_long$vig_pos)
+
+# add factor variables
+
+data_survey_vig_long$vig_hate_fct <- factor(data_survey_vig_long$vig_hate, levels = 1:3, labels = c("Hate speech", "Offensive but not hate speech", "Neither offensive nor hate speech"))
+
+# hate score, pre-registered
+data_survey_vig_long$vig_hate2 <- ifelse(data_survey_vig_long$vig_hate == 1, 1, 0)
+data_survey_vig_long$vig_hate2_fct <- factor(data_survey_vig_long$vig_hate2, levels  = c(1, 0), labels = c("Hate speech", "Offensive or neither/nor"))
+
+# hate or offensive score, pre-registered
+data_survey_vig_long$vig_hateoffense2 <- ifelse(data_survey_vig_long$vig_hate %in% c(1, 2), 1, 0)
+data_survey_vig_long$vig_hateoffense2_fct <- factor(data_survey_vig_long$vig_hateoffense2, levels = c(1, 0), labels = c("Hate speech or offensive", "Neither/nor"))
+
+# perception dummies
+data_survey_vig_long$vig_perc_hate <- ifelse(data_survey_vig_long$vig_hate == 1, 1, 0)
+data_survey_vig_long$vig_perc_offensive <- ifelse(data_survey_vig_long$vig_hate == 2, 1, 0)
+data_survey_vig_long$vig_perc_none <- ifelse(data_survey_vig_long$vig_hate == 3, 1, 0)
+
+# set offensive/hate to NA to contrast with "none" only in regression models
+data_survey_vig_long$vig_perc_hate2 <- data_survey_vig_long$vig_perc_hate
+data_survey_vig_long$vig_perc_offensive2 <- data_survey_vig_long$vig_perc_offensive 
+data_survey_vig_long$vig_perc_hate2[data_survey_vig_long$vig_perc_offensive == 1] <- NA
+data_survey_vig_long$vig_perc_offensive2[data_survey_vig_long$vig_perc_hate == 1] <- NA
+
+# create remove score
+data_survey_vig_long$vig_remove <- 2 - as.numeric(data_survey_vig_long$vig_remove)
+data_survey_vig_long$vig_remove_fct <- factor(data_survey_vig_long$vig_remove, levels = 0:1, labels = c("Post should not be removed", "Post should be removed"))
+
+# create ban score
+data_survey_vig_long$vig_ban <- 2 - as.numeric(data_survey_vig_long$vig_ban)
+data_survey_vig_long$vig_ban_fct <- factor(data_survey_vig_long$vig_ban, levels = 0:1, labels = c("Person should not be banned", "Person should be banned"))
+
+# create legal score
+data_survey_vig_long$vig_legal <- 2 - as.numeric(data_survey_vig_long$vig_legal)
+data_survey_vig_long$vig_legal_fct <- factor(data_survey_vig_long$vig_legal, levels = 0:1, labels = c("Person should not face legal consequences", "Person should face legal consequences"))
+
+# create job score
+data_survey_vig_long$vig_job <- 2 - as.numeric(data_survey_vig_long$vig_job)
+data_survey_vig_long$vig_job_fct <- factor(data_survey_vig_long$vig_job, levels = 0:1, labels = c("Person should not face consequences by employer", "Person should face consequences by employer"))
+
+
+
+### merge vignette evaluation data with vignettes characteristics data ---------
+
+data_survey_vig <- left_join(data_survey_vig_long, vignette_deck_vignette_ids_df,
+                             by = c("deck_id", "vig_pos")) %>%
+  left_join(dplyr::select(vignettes_universe_df, -country), by = "vig_id")
+
+
+### export merged data, long format ---------
+
+save(data_survey_vig, file = "data/cooked/data_survey_vig.RData")
+
+
+
+### merge back to survey data ----------
+
+load("data/cooked/data_survey_resp.RData")
+
+data_survey_combined <- right_join(data_survey_resp, dplyr::select(data_survey_vig, -deck_id), by = "resp_id")
+
+
+### generate respondent-vignette interaction variables ----------
+
+# generate issue agreement indicator (for Hypothesis 1)
+
+data_survey_combined <- 
+  data_survey_combined %>% mutate(
+    target_resp_issue_agreement = 
+      case_when(
+        target_topic == "feminism" & target_position == "left" & tp_feminism_l == "Tend to agree" ~ "Agree",
+        target_topic == "feminism" & target_position == "left" & tp_feminism_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "mensrights" & target_position == "left" & tp_mensrights_l == "Tend to agree" ~ "Agree",
+        target_topic == "mensrights" & target_position == "left" & tp_mensrights_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "immigration" & target_position == "left" & tp_immigration_l == "Tend to agree" ~ "Agree",
+        target_topic == "immigration" & target_position == "left" & tp_immigration_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "racism" & target_position == "left" & tp_racism_l == "Tend to agree" ~ "Agree",
+        target_topic == "racism" & target_position == "left" & tp_racism_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "veganism" & target_position == "left" & tp_veganism_l == "Tend to agree" ~ "Agree",
+        target_topic == "veganism" & target_position == "left" & tp_veganism_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "climatechange" & target_position == "left" & tp_climatechange_l == "Tend to agree" ~ "Agree",
+        target_topic == "climatechange" & target_position == "left" & tp_climatechange_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "freespeech" & target_position == "left" & tp_freespeech_l == "Tend to agree" ~ "Agree",
+        target_topic == "freespeech" & target_position == "left" & tp_freespeech_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "partisanship" & target_position == "left" & tp_partisanship_l == "Tend to agree" ~ "Agree",
+        target_topic == "partisanship" & target_position == "left" & tp_partisanship_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "homosexuality" & target_position == "left" & tp_homosexuality_l == "Tend to agree" ~ "Agree",
+        target_topic == "homosexuality" & target_position == "left" & tp_homosexuality_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "religious" & target_position == "left" & tp_religious_l == "Tend to agree" ~ "Agree",
+        target_topic == "religious" & target_position == "left" & tp_religious_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "inequality" & target_position == "left" & tp_inequality_l == "Tend to agree" ~ "Agree",
+        target_topic == "inequality" & target_position == "left" & tp_inequality_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "nationalism" & target_position == "left" & tp_nationalism_l == "Tend to agree" ~ "Agree",
+        target_topic == "nationalism" & target_position == "left" & tp_nationalism_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "police" & target_position == "left" & tp_police_l == "Tend to agree" ~ "Agree",
+        target_topic == "police" & target_position == "left" & tp_police_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "cardriver" & target_position == "left" & tp_cardriver_l == "Tend to agree" ~ "Agree",
+        target_topic == "cardriver" & target_position == "left" & tp_cardriver_l == "Tend to disagree" ~ "Disagree",
+        target_topic == "feminism" & target_position == "right" & tp_feminism_r == "Tend to agree" ~ "Agree",
+        target_topic == "feminism" & target_position == "right" & tp_feminism_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "mensrights" & target_position == "right" & tp_mensrights_r == "Tend to agree" ~ "Agree",
+        target_topic == "mensrights" & target_position == "right" & tp_mensrights_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "immigration" & target_position == "right" & tp_immigration_r == "Tend to agree" ~ "Agree",
+        target_topic == "immigration" & target_position == "right" & tp_immigration_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "racism" & target_position == "right" & tp_racism_r == "Tend to agree" ~ "Agree",
+        target_topic == "racism" & target_position == "right" & tp_racism_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "veganism" & target_position == "right" & tp_veganism_r == "Tend to agree" ~ "Agree",
+        target_topic == "veganism" & target_position == "right" & tp_veganism_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "climatechange" & target_position == "right" & tp_climatechange_r == "Tend to agree" ~ "Agree",
+        target_topic == "climatechange" & target_position == "right" & tp_climatechange_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "freespeech" & target_position == "right" & tp_freespeech_r == "Tend to agree" ~ "Agree",
+        target_topic == "freespeech" & target_position == "right" & tp_freespeech_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "partisanship" & target_position == "right" & tp_partisanship_r == "Tend to agree" ~ "Agree",
+        target_topic == "partisanship" & target_position == "right" & tp_partisanship_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "homosexuality" & target_position == "right" & tp_homosexuality_r == "Tend to agree" ~ "Agree",
+        target_topic == "homosexuality" & target_position == "right" & tp_homosexuality_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "religious" & target_position == "right" & tp_religious_r == "Tend to agree" ~ "Agree",
+        target_topic == "religious" & target_position == "right" & tp_religious_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "inequality" & target_position == "right" & tp_inequality_r == "Tend to agree" ~ "Agree",
+        target_topic == "inequality" & target_position == "right" & tp_inequality_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "nationalism" & target_position == "right" & tp_nationalism_r == "Tend to agree" ~ "Agree",
+        target_topic == "nationalism" & target_position == "right" & tp_nationalism_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "police" & target_position == "right" & tp_police_r == "Tend to agree" ~ "Agree",
+        target_topic == "police" & target_position == "right" & tp_police_r == "Tend to disagree" ~ "Disagree",
+        target_topic == "cardriver" & target_position == "right" & tp_cardriver_r == "Tend to agree" ~ "Agree",
+        target_topic == "cardriver" & target_position == "right" & tp_cardriver_r == "Tend to disagree" ~ "Disagree",
+        .default = NA
+      )
+  )
+
+# generate ethnicity/identity match indicator (for Hypotheses 2+3)
+
+data_survey_combined <- 
+  data_survey_combined %>% mutate(
+    target_ethnicity_match = 
+      case_when(
+        ethnicity_code == target_avatar ~ "Match",
+        ethnicity_code != target_avatar ~ "Mismatch",
+        .default = NA
+      ),
+    sender_ethnicity_match = 
+      case_when(
+        ethnicity_code == sender_avatar ~ "Match",
+        ethnicity_code != sender_avatar ~ "Mismatch",
+        .default = NA
+      )
+  )
+
+
+# generate white/non-white match indicator (for Hypotheses 2+3)
+
+data_survey_combined$sender_white <- ifelse(data_survey_combined$sender_ethnicity == "white", "white", "non-white")
+data_survey_combined$target_white <- ifelse(data_survey_combined$target_ethnicity == "white", "white", "non-white")
+
+data_survey_combined <- 
+  data_survey_combined %>% mutate(
+    target_white_match = 
+      case_when(
+        tolower(white_cat) == target_white ~ "Match",
+        tolower(white_cat) != target_white ~ "Mismatch",
+        .default = NA
+      ),
+    sender_white_match = 
+      case_when(
+        tolower(white_cat) == sender_white ~ "Match",
+        tolower(white_cat) != sender_white ~ "Mismatch",
+        .default = NA
+      )
+  )
+
+data_survey_combined$sender_white <- firstup(data_survey_combined$sender_white)
+data_survey_combined$target_white <- firstup(data_survey_combined$target_white)
+
+# generate gender match indicator (for Hypotheses 2+3)
+
+data_survey_combined <- 
+  data_survey_combined %>% mutate(
+    target_gender_match = 
+      case_when(
+        tolower(gender) == target_gender ~ "Match",
+        tolower(gender) != target_gender ~ "Mismatch",
+        .default = NA
+      ),
+    sender_gender_match = 
+      case_when(
+        tolower(gender) == sender_gender ~ "Match",
+        tolower(gender) != sender_gender ~ "Mismatch",
+        .default = NA
+      )
+  )
+
+
+
+# change labels and levels for regression model display
+
+data_survey_combined$target_topic <- 
+  data_survey_combined$target_topic %>%
+  str_replace("cardriver", "car driver") %>%
+  str_replace("climatechange", "climate change") %>%
+  str_replace("freespeech", "free speech") %>%
+  str_replace("mensrights", "men's rights") %>%
+  str_replace("religious", "religiosity") %>%
+  firstup() %>%
+  as.factor() %>%
+  relevel(ref = "Car driver")
+
+data_survey_combined$sender_category <-
+  data_survey_combined$sender_category %>%
+  firstup() %>%
+  factor(levels = c("Opinion", "Meme", "Mocking", "Insult", "Threat")) 
+
+data_survey_combined$sender_hatescore <-
+  data_survey_combined$sender_hatescore %>%
+  str_replace("1", "Moderate") %>%
+  str_replace("2", "Extreme") %>%
+  as.factor() %>%
+  relevel(ref = "Moderate")
+
+data_survey_combined$sender_scope <-
+  data_survey_combined$sender_scope %>%
+  firstup() %>%
+  as.factor() %>%
+  relevel(ref = "Group")
+
+data_survey_combined$target_position <-
+  data_survey_combined$target_position %>%
+  firstup() %>%
+  as.factor() %>%
+  relevel(ref = "Left")
+
+data_survey_combined$target_ethnicity <- 
+  data_survey_combined$target_ethnicity %>%
+  str_replace("eastasian", "East Asian") %>%
+  str_replace("southasian", "South Asian") %>%
+  firstup() %>%
+  as.factor() %>%
+  relevel(ref = "Arabic")
+
+data_survey_combined$sender_ethnicity <- 
+  data_survey_combined$sender_ethnicity %>%
+  str_replace("eastasian", "East Asian") %>%
+  str_replace("southasian", "South Asian") %>%
+  firstup() %>%
+  as.factor() %>%
+  relevel(ref = "Arabic")
+
+data_survey_combined$target_gender <- 
+  data_survey_combined$target_gender %>%
+  firstup() %>%
+  as.factor() %>%
+  relevel(ref = "Male")
+
+data_survey_combined$sender_gender <- 
+  data_survey_combined$sender_gender %>%
+  firstup() %>%
+  as.factor() %>%
+  relevel(ref = "Male")
+
+
+# vignette position
+data_survey_combined$vig_pos_cat <- 
+  as.factor(data_survey_combined$vig_pos) %>% 
+  recode("1" = "Vignette 1", 
+         "2" = "Vignette 2", 
+         "3" = "Vignette 3", 
+         "4" = "Vignette 4", 
+         "5" = "Vignette 5", 
+         "6" = "Vignette 6", 
+         "7" = "Vignette 7",
+         "8" = "Vignette 8")
+
+# export combined data -----------------
+
+save(data_survey_combined, file = "data/cooked/data_survey_combined.RData")
+
+
