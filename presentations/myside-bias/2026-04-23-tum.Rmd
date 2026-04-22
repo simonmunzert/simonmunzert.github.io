@@ -179,17 +179,39 @@ ul li::before {
 
 
 ---
-# Evidence on variation in hate speech moderation preferences
+# What drives disagreement in moderation judgments?
 
-- Support for moderation of severe hate speech (threats, violence) ([Pradel et al. 2024](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/405333D7072585903E81BEF1729378F8/S000305542300134Xa.pdf/div-class-title-toxic-speech-and-limited-demand-for-content-moderation-on-social-media-div.pdf), [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228), [Rasmussen 2022](https://osf.io/preprints/psyarxiv/j4nuc))
-- Persistent gender gap in content moderation preferences ([Pradel and Theocharis 2024](https://www.researchgate.net/profile/Franziska-Pradel/publication/385196410_Gender_Differences_in_Demanding_Moderation/links/6723936cdb208342dee0f484/Gender-Differences-in-Demanding-Moderation.pdf); [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
-- Ideological differences in tolerance for hate speech ([Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
-- Partisan norms and identity signaling drive sanctioning preferences ([Ahn et al. 2024](https://doi.org/10.1093/pnasnexus/pgae534), [Dias et al. 2024](https://doi.org/10.1086/733004))
+.pull-left[
 
-<div align="center">
-<img src="pics/pradel-apsr-paper.png" style="width:45%">
-<img src="pics/munzert-pnas-nexus-paper.png" style="width:45%">
-</div>
+## Judgments demonstrably structured by:
+
+- **Cultural norms** (Jiang et al. 2021)
+- **Moral values** (Davani et al. 2024)
+- **Racial attitudes** (Sap et al. 2022)
+- **Group identity** (Das et al. 2024, Giorgi et al. 2025)
+
+## Two known sources of bias
+
+**Identity bias:** judgments shaped by demographic overlap (gender, race, religion) between annotator and speaker/target (Das et al. 2024, Sap et al. 2022)
+
+**Partisan bias:** speech against one's own party judged more harshly — though evidence is mixed ([Pradel et al. 2024](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/405333D7072585903E81BEF1729378F8/S000305542300134Xa.pdf/div-class-title-toxic-speech-and-limited-demand-for-content-moderation-on-social-media-div.pdf), [Rasmussen 2022](https://osf.io/preprints/psyarxiv/j4nuc), [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
+
+]
+
+.pull-right[
+
+## Myside bias: a structurally distinct form
+
+Unlike identity and partisan bias, myside bias is **not a property of who the annotator is, but of what they believe** (Stanovich 2021)
+
+- Operates **beyond party lines** and political domains
+- Emerges **dynamically, issue by issue** — a person may side with a target on immigration but not on veganism
+- **Cannot be corrected** by demographic reweighting or partisan-balance adjustments
+
+Standard debiasing approaches calibrated on demographic or partisan dimensions will systematically miss this content-contingent component.
+
+Community-based content moderation approaches that rely on self-selection into "like-minded" communities may exacerbate those effects!
+]
 
 
 ---
@@ -272,72 +294,6 @@ class: inverse, center, middle
 </div>
 
 
-
----
-# All the (U.S.) memes
-
-<div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
-<div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-height: 75vh; overflow-y: hidden;">
-<img src="pics/memes-usa/freespeech_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/cars_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/cars_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/cars_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/cars_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/climate_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/climate_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/climate_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/climate_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/feminism_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/feminism_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/feminism_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/feminism_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/freespeech_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/freespeech_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/freespeech_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/homosexuality_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/homosexuality_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/homosexuality_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/homosexuality_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/immigrants_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/immigrants_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/immigrants_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/immigrants_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/inequality_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/inequality_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/inequality_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/inequality_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/men_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/men_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/men_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/men_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/nationalism_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/nationalism_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/nationalism_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/nationalism_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/police_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/police_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/police_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/police_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/politics_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/politics_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/politics_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/politics_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/racism_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/racism_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/racism_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/racism_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/religion_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/religion_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/religion_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/religion_r_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/vegans_l_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/vegans_l_personal_usa.jpeg" width="100">
-  <img src="pics/memes-usa/vegans_r_group_usa.jpeg" width="100">
-  <img src="pics/memes-usa/vegans_r_personal_usa.jpeg" width="100">
-</div>
-</div>
-
-
 ---
 # Elicitation of preferences
 
@@ -360,13 +316,12 @@ class: inverse, center, middle
 
 
 
-
 ---
-# Messages most often flagged as hate speech
+# Anchoring myside bias
 
 <div style="margin-left: -2em; margin-right: -2em; padding-left: 0; padding-right: 0;">
 <div align="center">
-<img src="figures/table-messages-ranked-pooled.png" style="width:85%; height: auto">
+<img src="figures/barplot-tp-leftright.png" style="width:65%; height: auto">
 </div>
 </div>
 
@@ -518,25 +473,6 @@ background-color: #000000
 <br>
 <div align="center">
 <img src="pics/langenscheidt-jugendwort.png" style="width:100%">
-</div>
-]
-
----
-# We need to broaden our data basis
-
-<br>
-
-.pull-left[
-<div align="center">
-<img src="pics/hate-speech-data-1.png" style="width:100%">
-<img src="pics/hate-speech-data-2.png" style="width:100%">
-</div>
-]
-
-.pull-right[
-<div align="center">
-<img src="pics/hate-speech-data-3.png" style="width:100%">
-<img src="pics/hate-speech-data-4.png" style="width:100%">
 </div>
 ]
 
