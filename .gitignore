@@ -50,4 +50,4 @@ rsconnect/
 
 presentations/medem25/input
 
-*.DS_Store
+.DS_Store
