@@ -496,3 +496,10 @@ blockquote {
     font-weight: bold;
     padding: 0 6px;;
 }
+
+
+.emph {
+    font-weight: bold;
+    border-bottom: 3px solid #C2001A;
+    padding-bottom: 0px;
+}

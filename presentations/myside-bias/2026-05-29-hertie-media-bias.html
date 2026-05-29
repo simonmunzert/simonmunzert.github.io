@@ -80,6 +80,8 @@ ul li::before {
 
 .pull-left[
 
+## Content moderation today 
+
 - Platforms moderate content opaquely, often without oversight ([Gillespie 2018](https://yalebooks.yale.edu/book/9780300261431/custodians-of-the-internet/))
 - Content moderation with commercial services is **massive** (e.g., 500m requests per day to JigSaw's Perspective API in 2021; 200m weekly users of OpenAI's Moderation API)
 - **Content Moderation APIs** by Google, Microsoft, Amazon, OpenAI, and others are supposedly trained on human labeled data but produce lots of questionable decisions ([Hartmann et al. 2025](https://arxiv.org/pdf/2503.01623); FPR/FNR up to 75%, ACC as low as 60% in balanced toxic/non-toxic samples) 
@@ -87,7 +89,8 @@ ul li::before {
 
 .pull-right[
 &lt;div align="center"&gt;
-&lt;img src="pics/chi-lost-in-moderation-1.png" style="width:90%"&gt;
+&lt;br&gt;
+&lt;img src="pics/bronner-deletions.png" style="width:100%"&gt;
 &lt;/div&gt;
 ]
 
@@ -119,37 +122,7 @@ ul li::before {
 - **The fundamental subjectivity of hate speech**  
   - Likely varies by culture, context of speech, and individual prefs
   - [Why it's impossible to agree on what's allowed](https://danluu.com/impossible-agree/) (Dan Luu) and the ["No vehicles in the park" rule](https://novehiclesinthepark.com/)
-  
-]
 
-
----
-# Why hate speech moderation at scale is so challenging
-
-.pull-left-small2[
-## It's a hard problem 
-
-- **Volume and velocity of content**  
-  - Billions of posts per day  
-  - Error amplification at scale
-- **Adversarial users**  
-  - Coded language, meme shifts  
-  - Evasion of detection systems
-- **Context is everything**  
-  - Meaning depends on intent  
-  - Hard for AI to judge nuance
-- **Legal and reputational constraints**  
-  - Balance free speech vs harm  
-  - Laws differ across countries  
-]
-
-.pull-right-wide2[
-## And we might not even agree on what the problem is...
-
-- **The fundamental subjectivity of hate speech**  
-  - Likely varies by culture, context of speech, and individual prefs
-  - [Why it's impossible to agree on what's allowed](https://danluu.com/impossible-agree/) (Dan Luu) and the ["No vehicles in the park" rule](https://novehiclesinthepark.com/)
-  
 ## ... and how it should be tackled
 
 &lt;div align="center"&gt;
@@ -159,13 +132,13 @@ ul li::before {
 ]
 
 
+
 ---
 # Evidence on variation in hate speech moderation preferences
 
 - Support for moderation of severe hate speech (threats, violence) ([Pradel et al. 2024](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/405333D7072585903E81BEF1729378F8/S000305542300134Xa.pdf/div-class-title-toxic-speech-and-limited-demand-for-content-moderation-on-social-media-div.pdf), [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228), [Rasmussen 2022](https://osf.io/preprints/psyarxiv/j4nuc))
 - Persistent gender gap in content moderation preferences ([Pradel and Theocharis 2024](https://www.researchgate.net/profile/Franziska-Pradel/publication/385196410_Gender_Differences_in_Demanding_Moderation/links/6723936cdb208342dee0f484/Gender-Differences-in-Demanding-Moderation.pdf); [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
 - Ideological differences in tolerance for hate speech ([Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
-- Partisan norms and identity signaling drive sanctioning preferences ([Ahn et al. 2024](https://doi.org/10.1093/pnasnexus/pgae534), [Dias et al. 2024](https://doi.org/10.1086/733004))
 
 &lt;div align="center"&gt;
 &lt;img src="pics/pradel-apsr-paper.png" style="width:45%"&gt;
@@ -180,13 +153,9 @@ ul li::before {
 
 ## Two established sources of bias
 
-**Identity bias:** judgments shaped by demographic overlap and group identity (gender, race, religion) between annotator and speaker/target (Das et al. 2024, Sap et al. 2022)
+**Identity bias:** judgments shaped by demographic/group marker overlap between annotator and speaker/target (Das et al. 2024, Sap et al. 2022)
 
 **Partisan bias:** speech against one's own party judged more harshly — though evidence is mixed (Appel et al. 2023, [Pradel et al. 2024](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/405333D7072585903E81BEF1729378F8/S000305542300134Xa.pdf/div-class-title-toxic-speech-and-limited-demand-for-content-moderation-on-social-media-div.pdf), [Rasmussen 2022](https://osf.io/preprints/psyarxiv/j4nuc), [Munzert et al. 2025](https://academic.oup.com/pnasnexus/article/4/2/pgaf032/8010228))
-
-]
-
-.pull-right[
 
 ## Myside bias: a structurally distinct form
 
@@ -194,7 +163,15 @@ Unlike identity bias, myside bias is **not a property of who the annotator is, b
 
 - Operates **beyond party lines** and political domains
 - Emerges **dynamically, issue by issue** — a person may side with a target on immigration but not on veganism
-- **Cannot be corrected** by demographic reweighting or partisan-balance adjustments
+- **Cannot be corrected** by partisan-balance adjustments
+]
+
+.pull-right[
+&lt;div align="center"&gt;
+&lt;img src="pics/usa-vig-42897.jpg" style="width:95%"&gt;
+&lt;br&gt;
+&lt;img src="pics/usa-vig-14584.jpg" style="width:95%"&gt;
+&lt;/div&gt;
 ]
 
 
