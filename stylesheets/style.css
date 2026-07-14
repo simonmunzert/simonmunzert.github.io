@@ -179,6 +179,82 @@ a:hover, a:focus { color: var(--blue-hover); text-decoration: underline; }
 }
 .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
 
+/* Media box (video + podcast) ---------------------------------------------- */
+
+.media-box {
+  background: #f8e9eb;
+  border: 1px solid #ecccd1;
+  border-radius: 8px;
+  padding: 1.4rem 1.6rem 1.6rem;
+  margin: 0 0 2.5rem;
+}
+.media-box .media-title { margin-bottom: .4rem; }
+.media-box p { margin-bottom: 0; }
+
+.media-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.3rem;
+  margin-top: 1.3rem;
+}
+@media (max-width: 620px) {
+  .media-tiles { grid-template-columns: 1fr; }
+}
+
+.media-tile { text-align: center; }
+.media-tile a {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  line-height: 0;
+}
+.media-tile img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 8px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.media-tile a:hover img,
+.media-tile a:focus img {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .16);
+}
+.media-tile .label {
+  display: block;
+  margin-top: .55rem;
+  font-weight: 600;
+  color: var(--red);
+  line-height: 1.3;
+}
+
+/* play badge overlaid on the video thumbnail */
+.media-tile--video a::before,
+.media-tile--video a::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transition: transform .15s ease;
+}
+.media-tile--video a::before {
+  width: 78px;
+  height: 78px;
+  margin: -39px 0 0 -39px;
+  border-radius: 50%;
+  background: rgba(178, 24, 43, .92);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+}
+.media-tile--video a::after {
+  margin: -17px 0 0 -11px;
+  border-style: solid;
+  border-width: 17px 0 17px 28px;
+  border-color: transparent transparent transparent #fff;
+}
+.media-tile--video a:hover::before { transform: scale(1.08); }
+
 .tag {
   display: inline-block;
   font-size: .72rem;
