@@ -1,117 +1,114 @@
-
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<html lang="en">
 <head>
-
-<!-- Fonts and styles -->
-<script src="https://kit.fontawesome.com/b1f6c37ee8.js" crossorigin="anonymous"></script>
-
-
-	<!-- Basic Page Needs
-  ================================================== -->
 	<meta charset="utf-8">
 	<title>Simon Munzert</title>
-	<meta name="description" content="Personal web page of Simon Munzert, Professor of Data Science and Public Policy and Director of the Data Science Lab at the Hertie School, Berlin, Germany">
+	<meta name="description" content="Personal website of Simon Munzert, Professor of Data Science and Public Policy and Director of the Data Science Lab at the Hertie School, Berlin, Germany.">
 	<meta name="author" content="Simon Munzert">
-
-	<!-- Mobile Specific Metas
-  ================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-	<!-- CSS
-  ================================================== -->
-	<link rel="stylesheet" href="stylesheets/base-old.css">
-	<!--<link rel="stylesheet" href="stylesheets/layout-old.css">-->
-	<link rel="stylesheet" href="stylesheets/skeleton-old.css">
-	<!--<link rel="stylesheet" href="stylesheets/normalize.css">-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-	<!-- Favicons
-	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="stylesheets/style.css">
 	<link rel="icon" href="images/favicon.ico">
-	<link rel="shortcut icon" href="images/favicon.ico">
-
-
 </head>
 <body>
 
+<!-- Inline SVG icon sprite — self-hosted, no external requests.
+     Marks: Bootstrap Icons (MIT); brand marks: Simple Icons (CC0). -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 16 16"><path d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/></symbol>
+  <symbol id="i-bluesky" viewBox="0 0 24 24"><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+  <symbol id="i-scholar" viewBox="0 0 24 24"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></symbol>
+  <symbol id="i-orcid" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 16 16"><path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/></symbol>
+</svg>
+
 <div class="container">
-<div class="sixteen columns">
-<h1 class="remove-bottom" style="margin-top: 20px;">Simon Munzert</h1>
-<h6 style="margin-bottom: 20px;">data science and public policy. politics. experiments. surveys. and all that.</h6>
-<hr />
+
+<header class="site-header">
+	<h1 class="remove-bottom"><a href="index.html">Simon Munzert</a></h1>
+	<p class="tagline">data science and public policy. politics. experiments. surveys. and all that.</p>
+	<nav class="site-nav" aria-label="Primary">
+		<a href="index.html" aria-current="page">Home</a>
+		<a href="publications.html">Publications</a>
+		<a href="teaching.html">Teaching</a>
+		<a href="supervision.html">Supervision</a>
+		<a href="links.html">Links</a>
+		<a href="cv/cv-munzert.pdf">CV</a>
+	</nav>
+</header>
+
+<main>
+
+<div class="grid grid--portrait">
+	<section>
+		<h3>About me</h3>
+		<p>I'm Professor of Data Science and Public Policy at the <a href="https://www.hertie-school.org">Hertie School</a> in Berlin and Director of the <a href="https://www.hertie-school.org/en/datasciencelab/">Data Science Lab</a>. My research focuses on political communication, attitude formation in the digital age, and the use of online data in social research. I use experimental methods, online data, and innovative measurement strategies to study how people act and think, politically. Please find my CV <a href="cv/cv-munzert.pdf">here</a>.</p>
+		<ul class="contact">
+			<li><svg class="icon"><use href="#i-phone"/></svg> +49 (0)30 259 219 450</li>
+			<li><svg class="icon"><use href="#i-mail"/></svg> <a href="mailto:munzert@hertie-school.org">munzert@hertie-school.org</a></li>
+			<li><svg class="icon"><use href="#i-bluesky"/></svg> <a href="https://bsky.app/profile/simonsaysnothin.bsky.social">@simonsaysnothin.bsky.social</a></li>
+			<li><svg class="icon"><use href="#i-github"/></svg> <a href="https://github.com/simonmunzert">github.com/simonmunzert</a></li>
+			<li><svg class="icon"><use href="#i-scholar"/></svg> <a href="https://scholar.google.com/citations?user=hIMdRkMAAAAJ">Google Scholar</a></li>
+			<li><svg class="icon"><use href="#i-orcid"/></svg> <a href="https://orcid.org/0000-0003-4760-367X">ORCID</a></li>
+		</ul>
+	</section>
+
+	<section>
+		<h3>Current research</h3>
+		<ul>
+			<li>Myside bias and public preferences for online content moderation <em>(with Lisa Oswald, Julia Ellingwood, and Richard Traunmüller, funded by Facebook Research)</em></li>
+			<li><a href="https://zweitstimme.org">Zweitstimme</a> — forecasting German federal elections <em>(with Thomas Gschwend and Lukas Stoetzer, funded by the DFG)</em></li>
+			<li><a href="https://www.thelancet.com/countdown-health-climate">The Lancet Countdown on health and climate change</a> <em>(Working Group 5: public and political engagement)</em></li>
+			<li><a href="https://simonmunzert.github.io/meof/">Media Exposure and Opinion Formation in an Age of Information Overload</a> <em>(with Pablo Barberá, Andrew Guess, and JungHwan Yang, funded by the Volkswagen Foundation)</em></li>
+		</ul>
+	</section>
+
+	<section>
+		<img class="portrait" src="images/munzertportrait2019.jpg" alt="Portrait of Simon Munzert" width="90%">
+		<small class="credit">Foto: Hertie School | Maurice Weiß</small>
+	</section>
 </div>
 
-<div class="clearfix">
+<div class="grid">
+	<section>
+		<h3><a href="publications.html">Publications</a></h3>
+		<p>See <a href="publications.html">here</a> for an overview of my research and publications, or browse my profile on <a href="https://scholar.google.com/citations?user=hIMdRkMAAAAJ">Google Scholar</a>.</p>
+		<p><strong>Recent publications</strong></p>
+		<p class="pub"><svg class="pub-icon"><use href="#i-book"/></svg> Cornelius Erfort et al. <a href="https://doi.org/10.1016/j.electstud.2026.103104">"How swing model assumptions shape vote-to-seat predictions."</a> <em>Electoral Studies.</em></p>
+		<p class="pub"><svg class="pub-icon"><use href="#i-book"/></svg> Lisa Oswald and Simon Munzert. <a href="https://journalqd.org/article/view/9620">"Little change in a changing landscape: Tracking exposure to untrustworthy news in Germany from 2017 to 2024."</a> <em>Journal of Quantitative Description: Digital Media.</em></p>
+		<p class="pub"><svg class="pub-icon"><use href="#i-book"/></svg> Cornelius Erfort et al. <a href="https://www.cambridge.org/core/journals/ps-political-science-and-politics/article/zweitstimme-forecast-for-the-german-federal-election-2025-coalition-majorities-and-vacant-districts/9DD258D89C69F73D1AFC284B0CDBE54D">"The Zweitstimme Forecast for the German Federal Election 2025."</a> <em>PS: Political Science &amp; Politics.</em></p>
+	</section>
 
-	<div class="one-third column">
-	<h3>About me</h3>
-	<p>I'm Professor of Data Science and Public Policy at the <a href="https://www.hertie-school.org">Hertie School</a> in Berlin and Director of the <a href="https://www.hertie-school.org/en/datasciencelab/"> Data Science Lab</a>. My research focuses on political communication, attitude formation in the digital age, and the use of online data in social research. I use experimental methods, online data, and innovative measurement strategies to study how people act and think, politically. Please find my CV <a href="cv/cv-munzert.pdf">here</a>.</p>
-    <p>
-	<i class="fa fa-phone-square"></i>  +49 (0)30 259 219 450 <br/>
-	<i class="fa fa-envelope-square"></i>  <a href="mailto:munzert@hertie-school.org">munzert@hertie-school.org</a><br/>
-	<i class="fa fa-bluesky-square"></i>  <a href="https://bsky.app/simonsaysnothin.bsky.social">@simonsaysnothin.bsky.social</a><br/>
-	<i class="fa fa-github-square"></i>  <a href="https://github.com/simonmunzert">github.com/simonmunzert</a><br/>
-    <i class="fa fa-user-graduate"></i>  <a href="https://scholar.google.com/citations?user=hIMdRkMAAAAJ">Google Scholar</a><br/>
-    <i class="fab fa-orcid"></i>  <a href="https://orcid.org/0000-0003-4760-367X">ORCID</a><br/>  
-    </p>
-    </div>
+	<section>
+		<h3><a href="teaching.html">Teaching</a></h3>
+		<p>I regularly teach graduate students about causal inference, online data collection, and computational social science in general. You can find my courses and syllabi <a href="teaching.html">here</a>.</p>
+		<p><strong>Automated Data Collection with R</strong></p>
+		<p>Together with Christian Rubba, Peter Mei&szlig;ner, and <a href="https://www.ipw.uni-hannover.de/en/institut/personenverzeichnis/dominic-nyhuis">Dominic Nyhuis</a>, I've written <em>Automated Data Collection with R — A Practical Guide to Web Scraping and Text Mining</em>. The <a href="http://www.r-datacollection.com">book</a> was published by <em>John Wiley &amp; Sons</em> in 2015.</p>
+	</section>
 
-    <div class="one-third column">
-	<h3>Current research</h3>
-	<ul>
-		<li> <a href="https://www.thelancet.com/countdown-health-climate">The Lancet Countdown on health and climate change.</a> (Working group 5: public and political engagement)</li>
-		<li> <a href="https://research.fb.com/blog/2020/02/announcing-winners-content-governance-rfp/">Global Preferences for Online Hate Speech Regulation</a> (joint project with Richard Traunmüller, funded by Facebook Research) </li>
-		<li> <a href="https://simonmunzert.github.io/meof/">Media Exposure and Opinion Formation in an Age of Information Overload</a> (joint project with Pablo Barberá, Andrew Guess and JungHwan Yang, funded by the Volkswagen Foundation) </li>
-		<li> <a href="https://www.daimler-benz-stiftung.de/cms/nachwuchs/stipendienprogramm-fuer-postdoktoranden/750-stipendiaten-2017.html">Citizen and Elite Activity on the Wikipedia Market Place of Political Information</a> (funded by the Daimler and Benz Foundation) </li>
-	</ul>
-	</div>
+	<section>
+		<h3><a href="supervision.html">Thesis supervision</a></h3>
+		<p>Thinking about a master's thesis? I supervise data-driven work on public opinion, political behavior, online communication, and content moderation. See my <a href="supervision.html">supervision page</a> for topics I'm keen to advise and what a good fit looks like, and my policy on <a href="recommendations.html">recommendation letters</a>.</p>
+	</section>
 
-	<div class="one-third column">
-	<p><img src="images/munzertportrait2019.jpg" alt="" width="90%">
-	<br>
-		<font size="1">Foto: Hertie School | Maurice Weiß</font>
-	</div>
+	<section>
+		<h3><a href="links.html">Other resources</a></h3>
+		<p>Links to friends in academia and resources I recommend are listed <a href="links.html">here</a>.</p>
+	</section>
 </div>
 
-<div class="clearfix">
-    <div class="one-third column">
-	<a href="publications.html"><h3>Publications</h3></a>
-	<p>See <a href="publications.html">here</a> for an overview of my current research and publications. Alternatively, browse my profile on <a href="https://scholar.google.com/citations?user=hIMdRkMAAAAJ">Google Scholar</a>.</p>
-    <p><strong>Recent publications</strong>
-<br><i class="fa fa-book"></i> David Hartmann et al. <a href="https://doi.org/10.1145/3706598.3713998">“Lost in Moderation: How Commercial Content Moderation APIs Over- and Under-Moderate Group-Targeted Hate Speech and Linguistic Variations.”</a> <em>CHI 2025, Yokohama, Japan.</em>
-<br><i class="fa fa-book"></i> Lukas F. Stoetzer et al. “An Election Forecasting Model for Subnational Elections.” <em>Electoral Studies.</em>
-<br><i class="fa fa-book"></i> Simon Munzert et al. <a href="https://doi.org/10.1093/pnasnexus/pgaf032">“Citizen preferences for online hate speech regulation.”</a> <em>PNAS Nexus.</em>
-    </p>
-	</div>
+</main>
 
-	<div class="one-third column">
-	<a href="teaching.html"><h3>Teaching</h3></a>
-	<p>I regularly teach graduate students about causal inference, online data collection, and computational social science in general. You can find syllabi <a href="teaching.html">here</a>.</p>
-    <p><strong>Automated Data Collection with R</strong>
-    <br><i class="fa fa-book"></i> Together with Christian Rubba, Peter Mei&szlig;ner and <a href="https://www.ipw.uni-hannover.de/en/institut/personenverzeichnis/dominic-nyhuis">Dominic Nyhuis</a>, I've written a book, <em>Automated Data Collection with R - A Practical Guide to Web Scraping and Text Mining</em>. The <a href="http://www.r-datacollection.com">book</a> has been published at <em>John Wiley &amp Sons</em> in 2015.
+<footer class="site-footer">
+	<div class="legal">
+		<a href="impressum.html">Impressum</a>
+		<a href="datenschutz.html">Datenschutz</a>
+		<a href="disclaimer.html">Disclaimer</a>
 	</div>
-    
-    <div class="clearfix">
-     	<div class="one-third column">
-	<a href="links.html"><h3>Other resources</h3></a>
-    	<p>Links to friends in academia and resources I recommend are listed <a href="links.html">here</a>.</p>
-	</div>
-</div>
-    
-    
-<div class="one-third column" align="left">
-<a href="impressum.html">Impressum</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         <a href="datenschutz.html">Datenschutz</a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        <a href="disclaimer.html">Disclaimer</a> </div>
-<div class="one-third column" align="left">
-</div>
-<div class="one-third column" align="right">&copy;  Simon Munzert 2025
-</div>
+	<div>&copy; Simon Munzert 2026</div>
+</footer>
 
-
-<!-- End Document
-================================================== -->
+</div>
 </body>
 </html>

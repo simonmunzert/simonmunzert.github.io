@@ -1,171 +1,113 @@
-
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<html lang="en">
 <head>
-
-<!-- Google Fonts -->
-<link href='http://fonts.googleapis.com/css?family=Trocchi|Raleway:500' rel='stylesheet' type='text/css'>
-
-<!-- FontAwesome -->
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-
-	<!-- Basic Page Needs
-  ================================================== -->
 	<meta charset="utf-8">
-	<title>Simon Munzert</title>
-	<meta name="description" content="Personal web page of Simon Munzert, Professor of Data Science and Public Policy and Director of the Data Science Lab at the Hertie School, Berlin, Germany">
+	<title>Teaching &mdash; Simon Munzert</title>
+	<meta name="description" content="Courses and teaching materials by Simon Munzert, Professor of Data Science and Public Policy at the Hertie School, Berlin.">
 	<meta name="author" content="Simon Munzert">
-
-	<!-- Mobile Specific Metas
-  ================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-	<!-- CSS
-  ================================================== -->
-	<link rel="stylesheet" href="stylesheets/base-old.css">
-	<link rel="stylesheet" href="stylesheets/layout-old.css">
-	<link rel="stylesheet" href="stylesheets/skeleton-old.css">
-	<link rel="stylesheet" href="stylesheets/normalize.css">
-
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-
-	<!-- Favicons
-	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="stylesheets/style.css">
 	<link rel="icon" href="images/favicon.ico">
-	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-
-<!--        RSS feed code -->
-        <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-        <script type="text/javascript">google.load("feeds","1");</script>
-        <script type="text/javascript" src="rssscript.js"></script>
-
-
-
 </head>
 <body>
-
 <div class="container">
-<div class="sixteen columns">
-<h1 class="remove-bottom" style="margin-top: 20px;"><a href="http://simonmunzert.github.io/">Simon Munzert</a></h1>
-<h6 style="margin-bottom: 20px;">political science. surveys. data. web scraping. and all that.</h6>
-<hr />
-</div>
 
-<div class="clearfix">
+<header class="site-header">
+	<h1 class="remove-bottom"><a href="index.html">Simon Munzert</a></h1>
+	<p class="tagline">data science and public policy. politics. experiments. surveys. and all that.</p>
+	<nav class="site-nav" aria-label="Primary">
+		<a href="index.html">Home</a>
+		<a href="publications.html">Publications</a>
+		<a href="teaching.html" aria-current="page">Teaching</a>
+		<a href="supervision.html">Supervision</a>
+		<a href="links.html">Links</a>
+		<a href="cv/cv-munzert.pdf">CV</a>
+	</nav>
+</header>
 
-<h3>Teaching</h3>
+<main>
 
-<p></p>
-<h3>Winter Term 2023/24</h3>
+<h2>Teaching</h2>
+<p>I teach graduate students about data science, causal inference, online data collection, and computational social science. Course materials for my recent courses live in open GitHub repositories&mdash;feel free to browse the slides, labs, and code.</p>
 
-<p>Introduction to Data Science <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws23-syllabus.pdf">Syllabus</a>.</p>
+<section class="section">
+	<h3>Current &amp; recent courses</h3>
 
-<p></p>
-<h3>Summer Term 2023</h3>
+	<div class="entry">
+		<h4>Introduction to Data Science <small>(MPP, MIA, MDS &middot; Fall 2025)</small></h4>
+		<p>A hands-on introduction to the data-science workflow with R&mdash;data wrangling, visualization, and communication.<br>
+		Materials: <a href="https://github.com/intro-to-data-science-25">github.com/intro-to-data-science-25</a> (<a href="https://github.com/intro-to-data-science-25/lectures">lectures</a>, <a href="https://github.com/intro-to-data-science-25/labs">labs</a>).</p>
+	</div>
 
-<p>Statistics II: Statistical Modeling and Causal Inference (with R) <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss23-syllabus.pdf">Syllabus</a>.</p>
+	<div class="entry">
+		<h4>Data Journalism <small>(elective E1493 &middot; Spring 2026)</small></h4>
+		<p>Turning data into stories: sourcing, analyzing, and visualizing data for public-interest reporting.<br>
+		Course site: <a href="https://data-journalism-26.github.io/">data-journalism-26.github.io</a> &middot; Materials: <a href="https://github.com/data-journalism-26">github.com/data-journalism-26</a> (<a href="https://github.com/data-journalism-26/slides">slides</a>, <a href="https://github.com/data-journalism-26/code">code</a>).</p>
+	</div>
+</section>
 
-<p></p>
-<h3>Winter Term 2022/23</h3>
+<section class="section">
+	<h3>Courses I regularly teach</h3>
+	<p>At the <strong>Hertie School</strong> (MPP, MIA, MDS, EMPA, and executive education):</p>
+	<ul>
+		<li>Introduction to Data Science</li>
+		<li>Data Journalism</li>
+		<li>Statistics II: Statistical Modeling and Causal Inference</li>
+		<li>Statistics II: Time-Series, Panel Data &amp; Maximum Likelihood Estimation</li>
+		<li>Web Data Collection and Social Media Mining</li>
+		<li>Election Forecasting</li>
+		<li>Data Literacy in the Digital Age</li>
+		<li>Evidence-Based Decision-Making <em>(executive education)</em></li>
+		<li>Der Daten Life-Cycle &ndash; Vom Rohstoff zur KI-Anwendung <em>(Zertifikatsprogramm "KI und Data Science f&uuml;r die &ouml;ffentliche Verwaltung")</em></li>
+	</ul>
+	<p>I have also taught at the International Program in Survey and Data Science (Mannheim &amp; Maryland), Humboldt University of Berlin, the Mannheim Centre for European Social Research (MZES), and the University of Konstanz&mdash;covering web scraping with R, election forecasting, computational political science, and survey methodology.</p>
+</section>
 
-<p>Introduction to Data Science <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws22-syllabus.pdf">Syllabus</a>.</p>
+<section class="section">
+	<h3>Syllabus archive</h3>
+	<p>Syllabi for earlier courses are collected in the <a href="https://github.com/simonmunzert/teaching-syllabi">teaching-syllabi</a> repository.</p>
 
-<p></p>
-<h3>Summer Term 2022</h3>
+	<h4>Introduction to Data Science</h4>
+	<ul>
+		<li>WS 2023/24 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws23-syllabus.pdf">Syllabus</a></li>
+		<li>WS 2022/23 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws22-syllabus.pdf">Syllabus</a></li>
+		<li>WS 2021/22 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws21-syllabus.pdf">Syllabus</a></li>
+		<li>WS 2020/21 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws20-syllabus.pdf">Syllabus</a></li>
+	</ul>
 
-<p>Statistics II: Statistical Modeling and Causal Inference (with R) <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss22-syllabus.pdf">Syllabus</a>.</p>
+	<h4>Statistics II: Statistical Modeling and Causal Inference (with R)</h4>
+	<ul>
+		<li>SS 2023 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss23-syllabus.pdf">Syllabus</a></li>
+		<li>SS 2022 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss22-syllabus.pdf">Syllabus</a></li>
+		<li>SS 2021 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss21-syllabus.pdf">Syllabus</a></li>
+		<li>SS 2020 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss20-syllabus.pdf">Syllabus</a></li>
+		<li>SS 2019 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss19-syllabus.pdf">Syllabus</a></li>
+	</ul>
 
-<p></p>
-<h3>Winter Term 2021/22</h3>
+	<h4>Earlier courses</h4>
+	<ul>
+		<li>Data Literacy in the Age of Big Data &middot; WS 2018/19 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/data-literacy-ws18-syllabus.pdf">Syllabus</a></li>
+		<li>Introduction to Survey Methodology &middot; WS 2015/16 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/surveymethods-ws15-syllabus.pdf">Syllabus</a></li>
+		<li>Computational Political Science &middot; SS 2015 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/cps-ss15-syllabus.pdf">Syllabus</a></li>
+		<li>Datenerhebung im World Wide Web &middot; SS 2015 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/datenerhebung-ss15-syllabus.pdf">Syllabus</a></li>
+		<li>Datenerhebung im World Wide Web &middot; WS 2014/15 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/datenerhebung-ws14-syllabus.pdf">Syllabus</a></li>
+		<li>Introduction to Survey Methodology &middot; WS 2014/15 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/surveymethods-ws14-syllabus.pdf">Syllabus</a></li>
+		<li>Datenerhebung im World Wide Web &middot; SS 2014 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/datenerhebung-ss14-syllabus.pdf">Syllabus</a></li>
+		<li>Einf&uuml;hrung in die Fragebogenkonstruktion &middot; WS 2013/14 &middot; <a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/fragebogenkonstruktion-ws13-syllabus.pdf">Syllabus</a></li>
+	</ul>
+</section>
 
-<p>Introduction to Data Science <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws21-syllabus.pdf">Syllabus</a>.</p>
+</main>
 
-<p></p>
-<h3>Summer Term 2021</h3>
-
-<p>Statistics II: Statistical Modeling and Causal Inference (with R) <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss21-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Winter Term 2020/21</h3>
-
-<p>Introduction to Data Science <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/introtodatascience-ws20-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Summer Term 2020</h3>
-
-<p>Statistics II: Statistical Modeling and Causal Inference (with R) <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss20-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Summer Term 2019</h3>
-
-<p>Statistics II: Statistical Modeling and Causal Inference (with R) <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/statisticsII-ss19-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Winter Term 2018/19</h3>
-
-<p>Data Literacy in the Age of Big Data <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/data-literacy-ws18-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Winter Term 2015/16</h3>
-
-<p>Introduction to Survey Methodology - Tutorial. Undergraduate/Graduate course. <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/surveymethods-ws15-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Summer Term 2015</h3>
-	
-<p>Computational Political Science. Undergraduate course. <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/cps-ss15-syllabus.pdf">Syllabus</a>.</p>
-
-<p>Datenerhebung im World Wide Web. Techniken zur Gewinnung politischer und Social-Media-Daten. Undergraduate/Graduate course. <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/datenerhebung-ss15-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Winter Term 2014/15</h3>
-
-<p>Datenerhebung im World Wide Web. Techniken zur Gewinnung politischer und Social-Media-Daten. Undergraduate/Graduate course. <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/datenerhebung-ws14-syllabus.pdf">Syllabus</a>.</p>
-
-<p>Introduction to Survey Methodology - Tutorial. Undergraduate course. <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/surveymethods-ws14-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Summer Term 2014</h3>
-
-<p>Datenerhebung im World Wide Web. Techniken zur Gewinnung politischer und Social-Media-Daten. Undergraduate/Graduate course. <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/datenerhebung-ss14-syllabus.pdf">Syllabus</a>.</p>
-
-<p></p>
-<h3>Winter Term 2013/14</h3>
-
-<p>Einführung in die Fragebogenkonstruktion. Undergraduate/Graduate course. <br>
-<a href="https://github.com/simonmunzert/teaching-syllabi/blob/master/fragebogenkonstruktion-ws13-syllabus.pdf">Syllabus</a>.</p>
-
-
-
-<a href="http://simonmunzert.github.io/">Back to the main page</a>
+<footer class="site-footer">
+	<div class="legal">
+		<a href="impressum.html">Impressum</a>
+		<a href="datenschutz.html">Datenschutz</a>
+		<a href="disclaimer.html">Disclaimer</a>
+	</div>
+	<div>&copy; Simon Munzert 2026</div>
+</footer>
 
 </div>
-<!-- End Document
-================================================== -->
 </body>
 </html>
