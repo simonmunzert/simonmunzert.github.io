@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDS Mock Exam · Introduction to Data Science</title>
+<meta name="description" content="Practice quiz for the course Introduction to Data Science (Hertie School): ten random questions on sessions 1–8 with feedback.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fira+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="quiz">
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="./">
+      <span class="brand-title">IDS Mock Exam</span>
+      <span class="brand-sub">Introduction to Data Science · Hertie School · Fall 2026</span>
+    </a>
+    <a class="logo" target="_blank" rel="noopener" href="https://www.hertie-school.org/" aria-label="Hertie School"><img src="assets/hertieschool-neg.svg" alt="Hertie School"></a>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+
+  <!-- ===== Start screen ===== -->
+  <section id="view-start">
+    <div class="hero">
+      <p class="kicker">GRAD-C11/E1339 · Sessions 1–8</p>
+      <h1>Mock exam</h1>
+      <p class="subtitle">Test your understanding of the material, one random set of questions at a time.</p>
+      <p class="lead">Each round draws a fresh set of questions from the pool: single-choice and true/false questions as in the weekly quizzes, plus code snippets in which you mark buggy lines, elements selected by an XPath expression, or strings matched by a regular expression. At the end you get your score and feedback on every question.</p>
+    </div>
+
+    <div class="facts">
+      <div><span class="fact-label">Question pool</span><span class="fact-value" id="fact-pool">…</span></div>
+      <div><span class="fact-label">Per round</span><span class="fact-value" id="fact-n">10 questions</span></div>
+      <div><span class="fact-label">Grading</span><span class="fact-value">1 point per question, no partial credit</span></div>
+    </div>
+
+    <div class="settings" id="settings">
+      <h3>Set up your round</h3>
+      <div class="setting">
+        <span class="setting-label">Sessions</span>
+        <div class="chips" id="session-chips"></div>
+        <p class="chip-actions"><a href="#" id="sel-all">select all</a><a href="#" id="sel-none">select none</a></p>
+      </div>
+      <div class="setting">
+        <span class="setting-label">Number of questions</span>
+        <div class="seg" id="n-seg">
+          <label><input type="radio" name="n" value="10" checked>10</label>
+          <label><input type="radio" name="n" value="20">20</label>
+          <label><input type="radio" name="n" value="all">all available</label>
+        </div>
+      </div>
+      <div class="setting">
+        <span class="setting-label">Mode</span>
+        <div class="seg" id="mode-seg">
+          <label><input type="radio" name="mode" value="exam" checked>Exam</label>
+          <label><input type="radio" name="mode" value="practice">Practice</label>
+        </div>
+        <p class="setting-help" id="mode-help">Exam: answer everything first, feedback comes at the end. Practice: check each answer right away.</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-big" id="btn-start">Start</button>
+        <span class="muted small" id="start-hint"></span>
+      </div>
+    </div>
+
+    <div id="history-block" class="hidden">
+      <h2>Your progress</h2>
+      <p class="muted small">Stored only in this browser. <a href="#" id="clear-history">Clear history</a></p>
+      <div id="session-bars"></div>
+      <div id="history-table"></div>
+    </div>
+
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>Single choice.</strong> Exactly one of the four options is correct. True/false statements count as single choice with two options.</li>
+      <li><strong>Mark lines.</strong> You get a short snippet of R code, shell commands, HTML or plain strings. Tap or click the line(s) the question asks for, e.g. the line that contains a bug, the elements an XPath expression selects, or the strings a regular expression matches. A question only counts as correct if you mark exactly the right lines.</li>
+      <li><strong>Scoring.</strong> One point per question. Unanswered questions count as wrong. In the real exam you will also answer on paper, so it pays to be precise.</li>
+      <li><strong>What is tested.</strong> Conceptual understanding of the material and of code, not memorising function names. Everything comes from lectures and labs 1–8.</li>
+    </ul>
+    <p class="muted small">Found a mistake in a question? Send a note to <a href="mailto:munzert@hertie-school.org">munzert@hertie-school.org</a> with the question ID shown in the review.</p>
+  </section>
+
+  <!-- ===== Quiz screen ===== -->
+  <section id="view-quiz" class="hidden">
+    <div class="progress">
+      <span class="count" id="progress-count"></span>
+      <div class="progress-bar"><span id="progress-fill" style="width:0%"></span></div>
+      <span class="timer" id="timer">0:00</span>
+    </div>
+    <div class="dots" id="dots"></div>
+    <div id="question"></div>
+    <div class="quiz-nav">
+      <button class="btn btn-ghost" id="btn-prev">← Previous</button>
+      <span class="spacer"></span>
+      <button class="btn btn-ghost" id="btn-abort">Quit</button>
+      <button class="btn" id="btn-check">Check answer</button>
+      <button class="btn btn-primary" id="btn-next">Next →</button>
+      <button class="btn btn-primary" id="btn-finish">Finish &amp; see results</button>
+    </div>
+  </section>
+
+  <!-- ===== Results screen ===== -->
+  <section id="view-result" class="hidden">
+    <p class="kicker">Results</p>
+    <h1>Your round</h1>
+    <div class="score-box" id="score-box"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-again">New random round</button>
+      <button class="btn" id="btn-retake">Retake this set</button>
+      <button class="btn btn-ghost" id="btn-home">Back to start</button>
+    </div>
+    <div id="result-sessions"></div>
+    <h2>Review</h2>
+    <p class="legend"><span><i style="background:var(--green)"></i>correct</span><span><i style="background:var(--red)"></i>your wrong pick</span><span><i style="background:var(--blue)"></i>your pick</span></p>
+    <ol class="review" id="review"></ol>
+    <h2>Share this set</h2>
+    <p class="small muted">Anyone opening this link gets exactly the same questions, so you can compare notes with a study partner.</p>
+    <div class="share"><input type="text" id="share-url" readonly><button class="btn btn-small" id="btn-copy">Copy link</button></div>
+  </section>
+
+  <div id="notice"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <strong>IDS Mock Exam</strong> · Introduction to Data Science, Fall 2026<br>
+      <a target="_blank" rel="noopener" href="https://simonmunzert.com/">Simon Munzert</a>, <a target="_blank" rel="noopener" href="https://www.hertie-school.org/">Hertie School</a>, Berlin
+    </div>
+    <div class="footer-links">
+      <a target="_blank" rel="noopener" href="https://github.com/intro-to-data-science-26/lectures">Lecture materials</a>
+      <a href="questions.csv" target="_blank" rel="noopener">Question database (CSV)</a>
+      <a href="print.html">Paper version</a>
+      <a href="mailto:munzert@hertie-school.org">Contact</a>
+    </div>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper version · IDS Mock Exam</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fira+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="print">
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="./">
+      <span class="brand-title">IDS Mock Exam</span>
+      <span class="brand-sub">Paper version · generate a printable question sheet with answer key</span>
+    </a>
+    <a class="logo" target="_blank" rel="noopener" href="https://www.hertie-school.org/" aria-label="Hertie School"><img src="assets/hertieschool-neg.svg" alt="Hertie School"></a>
+  </div>
+</header>
+<main class="wrap">
+  <div class="print-controls">
+    <div class="row">
+      <label>Sessions: <span class="chips" id="p-sessions" style="display:inline-flex"></span></label>
+    </div>
+    <div class="row" style="margin-top:.6rem">
+      <label>Questions <input type="number" id="p-n" value="20" min="1" max="200"></label>
+      <label>Set # <input type="text" id="p-seed" value="1"></label>
+      <label><input type="checkbox" id="p-key" checked> Answer key on last page</label>
+      <button class="btn btn-small" id="p-shuffle">New random set</button>
+      <button class="btn btn-small btn-primary" id="p-print">Print / save as PDF</button>
+    </div>
+    <p class="setting-help">The same set number always yields the same sheet. Use the browser's print dialog to save it as PDF. <a href="./">Back to the online quiz</a>.</p>
+  </div>
+  <div class="sheet" id="sheet"></div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
