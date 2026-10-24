@@ -5,7 +5,7 @@ Erzeugt statische HTML-Seiten aus den Daten unten:
   index.html, sessions.html, sessions/s01.html … s11.html, leistungen.html, ressourcen.html
 
 Aufruf:  python3 build.py
-Slides und Code-Materialien bleiben im Kurs-Repo und werden über raw.githack.com verlinkt.
+Slides und Code-Materialien bleiben im Kurs-Repo und werden über dessen GitHub Pages verlinkt.
 """
 from pathlib import Path
 import html
@@ -16,7 +16,7 @@ REPO = "hertie-ai-certificate/modul-2-2026"
 GH = f"https://github.com/{REPO}"
 GH_TREE = f"{GH}/tree/main"
 GH_BLOB = f"{GH}/blob/main"
-GITHACK = f"https://raw.githack.com/{REPO}/main"
+PAGES = "https://hertie-ai-certificate.github.io/modul-2-2026"  # GitHub Pages des Kurs-Repos (Branch main)
 SITE_TITLE = "Der Daten-Lifecycle"
 SITE_SUB = "Modul 2 · Zertifikatsprogramm „KI und Data Science für die öffentliche Verwaltung“"
 
@@ -31,10 +31,10 @@ DAYS = {
 }
 
 def deck(folder, stem, pdf=True):
-    d = {"html": f"{GITHACK}/{folder}/{stem}.html", "rmd": f"{GITHACK}/{folder}/{stem}.Rmd",
+    d = {"html": f"{PAGES}/{folder}/{stem}.html", "rmd": f"{PAGES}/{folder}/{stem}.Rmd",
          "rmd_gh": f"{GH_BLOB}/{folder}/{stem}.Rmd", "folder": f"{GH_TREE}/{folder}"}
     if pdf:
-        d["pdf"] = f"{GITHACK}/{folder}/{stem}.pdf"
+        d["pdf"] = f"{PAGES}/{folder}/{stem}.pdf"
     return d
 
 def lit(text, url=None, note=None):
@@ -102,9 +102,9 @@ SESSIONS = [
         "deck": deck("d1s4-web-scraping", "d1s4-web-scraping"),
         "materials": [
             {"title": "Fallstudie Web Scraping: Wo sitzen die Bundesbehörden?", "desc": "Schritt für Schritt von der Wikipedia-Liste über den Browser-Inspector und rvest bis zur geocodierten Karte der Bundesbehörden.",
-             "links": [("Fallstudie (HTML)", f"{GITHACK}/d1s4-web-scraping/case-study-scraping/fallstudie-scraping.html"), ("R-Skript", f"{GH_BLOB}/d1s4-web-scraping/case-study-scraping/behoerden-karte.R"), ("Rmd-Quelle", f"{GH_BLOB}/d1s4-web-scraping/case-study-scraping/fallstudie-scraping.Rmd"), ("Ordner", f"{GH_TREE}/d1s4-web-scraping/case-study-scraping")]},
+             "links": [("Fallstudie (HTML)", f"{PAGES}/d1s4-web-scraping/case-study-scraping/fallstudie-scraping.html"), ("R-Skript", f"{GH_BLOB}/d1s4-web-scraping/case-study-scraping/behoerden-karte.R"), ("Rmd-Quelle", f"{GH_BLOB}/d1s4-web-scraping/case-study-scraping/fallstudie-scraping.Rmd"), ("Ordner", f"{GH_TREE}/d1s4-web-scraping/case-study-scraping")]},
             {"title": "Fallstudie APIs: Verwaltungsdaten über Schnittstellen", "desc": "Pegelstände von Pegelonline, Codelisten aus dem XRepository und Datensätze aus GovData – mit httr2 und jsonlite abgerufen und ausgewertet.",
-             "links": [("Fallstudie (HTML)", f"{GITHACK}/d1s4-web-scraping/case-study-api/fallstudie-api.html"), ("R-Skript", f"{GH_BLOB}/d1s4-web-scraping/case-study-api/behoerden-apis.R"), ("Rmd-Quelle", f"{GH_BLOB}/d1s4-web-scraping/case-study-api/fallstudie-api.Rmd"), ("Ordner", f"{GH_TREE}/d1s4-web-scraping/case-study-api")]},
+             "links": [("Fallstudie (HTML)", f"{PAGES}/d1s4-web-scraping/case-study-api/fallstudie-api.html"), ("R-Skript", f"{GH_BLOB}/d1s4-web-scraping/case-study-api/behoerden-apis.R"), ("Rmd-Quelle", f"{GH_BLOB}/d1s4-web-scraping/case-study-api/fallstudie-api.Rmd"), ("Ordner", f"{GH_TREE}/d1s4-web-scraping/case-study-api")]},
         ],
         "kern": [lit("Kühnemann, H. (2021). Anwendungen des Web Scraping in der amtlichen Statistik. AStA Wirtschafts- und Sozialstatistisches Archiv, 15(1), 5–25.")],
         "hoeren": [lit("Coding Buddies, Episode „Was sind eigentlich APIs?“")],
@@ -153,10 +153,10 @@ SESSIONS = [
         "short": "Von Scans zu Tabellen: OCR, Sprachmodelle für Bereinigung und Klassifikation, saubere Ablage in CSVs. Keine Folien, wir arbeiten direkt an der Fallstudie.",
         "content": "In der zweiten Praxis-Session bauen wir eine kleine Verarbeitungspipeline für einen typischen Verwaltungsfall: Eingescannte Dokumente (Briefe, Formulare, Notizen) sollen in auswertbare Tabellen überführt werden. Wir lesen die Scans mit OCR ein, lassen ein Sprachmodell den fehlerhaften Text bereinigen und die zentralen Felder extrahieren, klassifizieren die Dokumente nach Kategorie und Dringlichkeit und legen alles sauber in CSV-Dateien ab. Die Pipeline läuft wahlweise mit einem lokalen Open-Source-Modell (Ollama) oder einem Cloud-Anbieter. Am Ende prüfen wir die Ergebnisse gegen einen Goldstandard und diskutieren, wo solche Pipelines verlässlich sind und wo nicht.",
         "deck": None,
-        "primary": [("Fallstudie (HTML)", f"{GITHACK}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("Ordner auf GitHub", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")],
+        "primary": [("Fallstudie (HTML)", f"{PAGES}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("Ordner auf GitHub", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")],
         "materials": [
             {"title": "Fallstudie OCR und Sprachmodelle: Von Scans zu Tabellen", "desc": "Fallstudie mit Erläuterungen, das vollständige R-Skript, acht Beispielscans mit Goldstandard sowie die Zwischen- und Endergebnisse jedes Schritts. Das README erklärt Installation (tesseract, ellmer, Ollama) und Alternativen mit API-Schlüssel.",
-             "links": [("Fallstudie (HTML)", f"{GITHACK}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("README", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/README.md"), ("Ordner mit Daten", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")]},
+             "links": [("Fallstudie (HTML)", f"{PAGES}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("README", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/README.md"), ("Ordner mit Daten", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")]},
         ],
         "kern": [],
         "hoeren": [],

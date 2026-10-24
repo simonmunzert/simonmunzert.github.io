@@ -8,4 +8,4 @@ Die Seiten werden mit `build.py` aus den Daten im Skript erzeugt (danach wie gew
 python3 build.py
 ```
 
-Folien und Code-Materialien liegen im Repository [hertie-ai-certificate/modul-2-2026](https://github.com/hertie-ai-certificate/modul-2-2026) und werden über raw.githack.com bzw. GitHub direkt verlinkt.
+Folien und Code-Materialien liegen im Repository [hertie-ai-certificate/modul-2-2026](https://github.com/hertie-ai-certificate/modul-2-2026) und werden über die GitHub-Pages-Adresse des Repos (hertie-ai-certificate.github.io/modul-2-2026) bzw. GitHub direkt verlinkt.
