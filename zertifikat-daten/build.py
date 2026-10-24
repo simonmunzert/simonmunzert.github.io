@@ -9,6 +9,7 @@ Slides und Code-Materialien bleiben im Kurs-Repo und werden über raw.githack.co
 """
 from pathlib import Path
 import html
+import re
 
 ROOT = Path(__file__).parent
 REPO = "hertie-ai-certificate/modul-2-2026"
@@ -59,7 +60,7 @@ SESSIONS = [
         "title": "Wo kommen die Daten her?",
         "short": "Datentypen, prozessproduzierte und aktiv erhobene Daten, Diskussion der Daten-Poster.",
         "content": "In dieser Session verschaffen wir uns zunächst einen Überblick über die wichtigsten Datentypen: strukturierte Daten – abgelegt in konventionellen Tabellen und Datenbanken – ebenso wie unstrukturierte Datentypen wie Text-, Bild- und Geodaten. Anschließend fragen wir, woher diese Daten eigentlich kommen, und unterscheiden dabei prozessproduzierte Daten einerseits und aktiv erhobene Daten andererseits. Zum Abschluss wenden wir uns Euren eigenen Daten zu: Anhand der vorbereiteten Daten-Poster diskutieren wir gemeinsam, welche Datenbestände in Euren Behörden entstehen und wie sie sich einordnen lassen.",
-        "deck": deck("d1s2-datenherkunft", "d1s2-datenherkunft", pdf=False),
+        "deck": deck("d1s2-datenherkunft", "d1s2-datenherkunft"),
         "materials": [
             {"title": "Wikipedia-Aufrufe „ELSTER“", "desc": "R-Skript, das die Seitenaufrufe des Wikipedia-Artikels über die Wikimedia-API lädt und als Zeitreihe plottet (ggplot2), samt Daten als CSV.",
              "links": [("R-Skript", f"{GH_BLOB}/d1s2-datenherkunft/materialien/wiki-elster.R"), ("Daten (CSV)", f"{GH_BLOB}/d1s2-datenherkunft/materialien/wiki-elster-pageviews.csv"), ("Ordner", f"{GH_TREE}/d1s2-datenherkunft/materialien")]},
@@ -77,7 +78,7 @@ SESSIONS = [
         "title": "Mit Daten umgehen und zur Verfügung stellen",
         "short": "Gute und schlechte Tabellen, XML und JSON, relationale Datenbanken, XÖV-Standards wie XFall.",
         "content": "In dieser Session geht es um die konkrete Gestalt von Daten und darum, wie sie gewonnen, ausgetauscht und bereitgestellt werden. Wir beginnen bei der wohl verbreitetsten Form der Datenhaltung in der Verwaltung, dem Spreadsheet, und besprechen, was gute von schlechten Tabellen unterscheidet. Anschließend lernen wir mit XML und JSON die gängigen Austauschformate für strukturierte Daten kennen, werfen einen Blick auf relationale Datenbanken und auf die XÖV-Standards der öffentlichen Verwaltung (etwa XFall). Abschließend diskutieren wir, was es heißt, Daten so zur Verfügung zu stellen, dass andere sie tatsächlich nachnutzen können.",
-        "deck": deck("d1s3-datengewinnung", "d1s3-datengewinnung", pdf=False),
+        "deck": deck("d1s3-datengewinnung", "d1s3-datengewinnung"),
         "materials": [
             {"title": "Übung: Eine XFall-Nachricht auseinandernehmen", "desc": "Zwei kommentierte, schema-valide XFall-Beispielnachrichten (Gewerbeanmeldung und Container) sowie die offiziellen Spezifikationen und XML-Schemata aus dem XRepository.",
              "links": [("Ordner mit README", f"{GH_TREE}/d1s3-datengewinnung/materials"), ("Beispiel Gewerbeanmeldung (XML)", f"{GH_BLOB}/d1s3-datengewinnung/materials/beispiel-gewerbeanmeldung_xfall-daten-4.0.0.xml"), ("Beispiel Container (XML)", f"{GH_BLOB}/d1s3-datengewinnung/materials/beispiel-container_xfall-container-3.0.0.xml")]},
@@ -94,7 +95,7 @@ SESSIONS = [
         ],
     },
     {
-        "n": 4, "day": 1, "time": "18–19 Uhr",
+        "n": 4, "day": 1, "time": "18–19 Uhr", "praxis": True,
         "title": "Praxis-Session I: Web Scraping und APIs",
         "short": "Daten automatisiert aus Webseiten extrahieren und über Schnittstellen abrufen, mit zwei Fallstudien aus der Verwaltung.",
         "content": "In dieser Praxis-Session lernen wir, mit externen Tools und Datenquellen zu interagieren. Erst beschäftigen wir uns mit der automatisierten Datensammlung aus dem Web: Wir sehen uns an, wie HTML-Strukturen genutzt werden können, um gezielt Daten von Webseiten zu extrahieren. Anschließend lernen wir, wie APIs als Schnittstellen für den Zugriff auf strukturierte Datenquellen und externe Tools dienen, und schauen uns an, wo APIs in der deutschen öffentlichen Verwaltung bereits im Einsatz sind. Zwei Fallstudien zeigen den Datenabruf an realen Szenarien: eine Karte der Bundesbehörden aus einer Wikipedia-Liste und der Zugriff auf Verwaltungs-APIs wie Pegelonline, XRepository und GovData.",
@@ -147,14 +148,15 @@ SESSIONS = [
         ],
     },
     {
-        "n": 7, "day": 2, "time": "14–16 Uhr",
+        "n": 7, "day": 2, "time": "14–16 Uhr", "praxis": True,
         "title": "Praxis-Session II: Daten weiterverarbeiten und strukturieren",
-        "short": "Von Scans zu Tabellen: OCR, Sprachmodelle für Bereinigung und Klassifikation, saubere Ablage in CSVs.",
+        "short": "Von Scans zu Tabellen: OCR, Sprachmodelle für Bereinigung und Klassifikation, saubere Ablage in CSVs. Keine Folien, wir arbeiten direkt an der Fallstudie.",
         "content": "In der zweiten Praxis-Session bauen wir eine kleine Verarbeitungspipeline für einen typischen Verwaltungsfall: Eingescannte Dokumente (Briefe, Formulare, Notizen) sollen in auswertbare Tabellen überführt werden. Wir lesen die Scans mit OCR ein, lassen ein Sprachmodell den fehlerhaften Text bereinigen und die zentralen Felder extrahieren, klassifizieren die Dokumente nach Kategorie und Dringlichkeit und legen alles sauber in CSV-Dateien ab. Die Pipeline läuft wahlweise mit einem lokalen Open-Source-Modell (Ollama) oder einem Cloud-Anbieter. Am Ende prüfen wir die Ergebnisse gegen einen Goldstandard und diskutieren, wo solche Pipelines verlässlich sind und wo nicht.",
-        "deck": deck("d2s7-datenverarbeitung", "d2s7-datenverarbeitung"),
+        "deck": None,
+        "primary": [("Fallstudie (HTML)", f"{GITHACK}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("Ordner auf GitHub", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")],
         "materials": [
-            {"title": "Praxis-Pipeline: OCR und Sprachmodelle", "desc": "Dokumentation mit Erläuterungen, das vollständige R-Skript, acht Beispielscans mit Goldstandard sowie die Zwischen- und Endergebnisse jedes Schritts. Das README erklärt Installation (tesseract, ellmer, Ollama) und Alternativen mit API-Schlüssel.",
-             "links": [("Dokumentation (HTML)", f"{GITHACK}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("README", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/README.md"), ("Ordner mit Daten", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")]},
+            {"title": "Fallstudie OCR und Sprachmodelle: Von Scans zu Tabellen", "desc": "Fallstudie mit Erläuterungen, das vollständige R-Skript, acht Beispielscans mit Goldstandard sowie die Zwischen- und Endergebnisse jedes Schritts. Das README erklärt Installation (tesseract, ellmer, Ollama) und Alternativen mit API-Schlüssel.",
+             "links": [("Fallstudie (HTML)", f"{GITHACK}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("README", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/README.md"), ("Ordner mit Daten", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")]},
         ],
         "kern": [],
         "hoeren": [],
@@ -303,12 +305,12 @@ def esc(s):
 def page(title, body, depth=0, active=None, description=None):
     rel = "../" * depth
     nav = [("index.html", "Überblick", "home"), ("sessions.html", "Sessions", "sessions"),
-           ("leistungen.html", "Leistungen", "leistungen"), ("ressourcen.html", "Ressourcen", "ressourcen")]
+           ("ressourcen.html", "Ressourcen", "ressourcen")]
     nav_html = "".join(
         f'<a href="{rel}{href}"{" class=\"active\"" if key == active else ""}>{label}</a>' for href, label, key in nav)
     full_title = f"{title} · {SITE_TITLE}" if title != SITE_TITLE else f"{SITE_TITLE} · Modul 2"
     desc = description or "Kurswebseite zu Modul 2 „Der Daten-Lifecycle“ des Zertifikatsprogramms „KI und Data Science für die öffentliche Verwaltung“ der Hertie School."
-    return f"""<!DOCTYPE html>
+    out = f"""<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
@@ -350,6 +352,8 @@ def page(title, body, depth=0, active=None, description=None):
 </body>
 </html>
 """
+    # Externe Links (http/https) öffnen in einem neuen Tab
+    return re.sub(r'<a (class="[^"]*" )?href="http', lambda m: f'<a {m.group(1) or ""}target="_blank" rel="noopener" href="http', out)
 
 def session_href(s, depth):
     rel = "../" * depth
@@ -357,6 +361,9 @@ def session_href(s, depth):
 
 def deck_links(s, cls="btn-row"):
     d = s["deck"]
+    if not d and s.get("primary"):
+        parts = [f'<a class="btn{" btn-primary" if i == 0 else ""}" href="{u}">{esc(l)}</a>' for i, (l, u) in enumerate(s["primary"])]
+        return f'<div class="{cls}">{"".join(parts)}</div>'
     if not d:
         return '<p class="muted">Zu dieser Session gibt es keine Folien; der Gastvortrag wird nicht veröffentlicht.</p>'
     parts = [f'<a class="btn btn-primary" href="{d["html"]}">Folien (HTML)</a>']
@@ -431,7 +438,8 @@ def schedule_table():
             s = by.get((d, slot))
             if s:
                 sp = f'<span class="cell-speaker">{esc(s["speaker"])}</span>' if s.get("speaker") else ""
-                cells.append(f'<td><a href="sessions/s{s["n"]:02d}.html"><span class="cell-num">Session {s["n"]}</span>{esc(s["title"])}</a>{sp}</td>')
+                cls = ' class="praxis"' if s.get("praxis") else ""
+                cells.append(f'<td{cls}><a href="sessions/s{s["n"]:02d}.html"><span class="cell-num">Session {s["n"]}</span>{esc(s["title"])}</a>{sp}</td>')
             elif slot == "13–14 Uhr":
                 cells.append('<td class="pause">Mittagspause</td>')
             elif slot == "ab 19 Uhr" and d == 2:
@@ -444,7 +452,7 @@ def schedule_table():
     lst = []
     for d in (1, 2, 3):
         items = "".join(
-            f'<li><a href="sessions/s{s["n"]:02d}.html"><span class="li-time">{s["time"]}</span><span class="cell-num">Session {s["n"]}</span>{esc(s["title"])}</a></li>'
+            f'<li{" class=\"praxis\"" if s.get("praxis") else ""}><a href="sessions/s{s["n"]:02d}.html"><span class="li-time">{s["time"]}</span><span class="cell-num">Session {s["n"]}</span>{esc(s["title"])}</a></li>'
             for s in SESSIONS if s["day"] == d)
         lst.append(f'<li class="day"><span class="day-label">{DAYS[d]["label"]} · {esc(DAYS[d]["date"])}</span><span class="day-theme">{esc(DAYS[d]["theme"])}</span><ul>{items}</ul></li>')
     schedule_list = f'<ul class="schedule-list">{"".join(lst)}</ul>'
@@ -471,25 +479,14 @@ def index_page():
   {schedule_table()}
 </section>
 
-<section class="two-col">
-  <div>
-    <h2 id="leistungen">Leistungen</h2>
-    <ul class="plain">
-      <li><strong>Aufgabe 1: Daten-Poster</strong> (20 %) – Überblick zur Datennutzung in der eigenen Behörde, Abgabe bis 19. Oktober 2026.</li>
-      <li><strong>Aufgabe 2: Daten-Podcast oder Daten-Literacy-Training</strong> (50 %) – im Team zu zweit oder zu dritt, Abgabe bis 23. November 2026.</li>
-      <li><strong>Teilnahme</strong> (30 %) – aktive Beteiligung an Austausch und Diskussion.</li>
-    </ul>
-    <p><a class="btn" href="leistungen.html">Details zu den Aufgaben</a></p>
-  </div>
-  <div>
-    <h2 id="materialien">Materialien</h2>
-    <ul class="plain">
-      <li><a href="{GH}">Repository mit allen Folien und Code-Materialien</a> (HTML, PDF, Rmd, R-Skripte, Beispieldaten)</li>
-      <li><a href="sessions/s04.html#materialien">Fallstudien zu Web Scraping und APIs</a> (Session 4)</li>
-      <li><a href="sessions/s07.html#materialien">Praxis-Pipeline zu OCR und Sprachmodellen</a> (Session 7)</li>
-      <li><a href="ressourcen.html">Bücher, Podcasts und Webseiten</a> zur Vertiefung</li>
-    </ul>
-  </div>
+<section>
+  <h2 id="materialien">Materialien</h2>
+  <ul class="plain">
+    <li><a href="{GH}">Repository mit allen Folien und Code-Materialien</a> (HTML, PDF, Rmd, R-Skripte, Beispieldaten)</li>
+    <li><a href="sessions/s04.html#materialien">Fallstudien zu Web Scraping und APIs</a> (Praxis-Session I, Session 4)</li>
+    <li><a href="sessions/s07.html#materialien">Fallstudie zu OCR und Sprachmodellen</a> (Praxis-Session II, Session 7)</li>
+    <li><a href="ressourcen.html">Bücher, Podcasts und Webseiten</a> zur Vertiefung</li>
+  </ul>
 </section>
 
 <section class="dozent">
@@ -511,11 +508,13 @@ def sessions_page():
                 links.append(f'<a href="{s["deck"]["html"]}">Folien</a>')
                 if "pdf" in s["deck"]:
                     links.append(f'<a href="{s["deck"]["pdf"]}">PDF</a>')
+            if s.get("primary"):
+                links.append(f'<a href="{s["primary"][0][1]}">Fallstudie</a>')
             if s["materials"]:
                 links.append(f'<a href="sessions/s{s["n"]:02d}.html#materialien">Materialien</a>')
             sp = f'<p class="cell-speaker">{esc(s["speaker"])}</p>' if s.get("speaker") else ""
-            cards.append(f"""<div class="card session-card">
-  <p class="kicker">Session {s['n']} · {s['time']}</p>
+            cards.append(f"""<div class="card session-card{' praxis' if s.get('praxis') else ''}">
+  <p class="kicker">Session {s['n']} · {s['time']}{' · Praxis-Session' if s.get('praxis') else ''}</p>
   <h3><a href="sessions/s{s['n']:02d}.html">{esc(s['title'])}</a></h3>
   {sp}
   <p>{esc(s['short'])}</p>
@@ -528,76 +527,6 @@ def sessions_page():
 {"".join(blocks)}
 """
     return page("Sessions", body, depth=0, active="sessions")
-
-def leistungen_page():
-    body = f"""
-<h1>Leistungen</h1>
-<p class="lead">Die Modulnote setzt sich aus drei Teilen zusammen. Alle Abgaben erfolgen über Moodle.</p>
-<div class="table-wrap"><table class="grades">
-<thead><tr><th>Leistung</th><th>Abgabe</th><th>Gewicht</th></tr></thead>
-<tbody>
-<tr><td><a href="#aufgabe1">Aufgabe 1: Daten-Poster</a><br><span class="muted">Vorbereitender Überblick zur Datennutzung in der eigenen Behörde</span></td><td>19. Oktober 2026</td><td>20 %</td></tr>
-<tr><td><a href="#aufgabe2">Aufgabe 2: Daten-Podcast oder Daten-Literacy-Training</a><br><span class="muted">Im Team zu zweit oder zu dritt</span></td><td>23. November 2026</td><td>50 %</td></tr>
-<tr><td><a href="#teilnahme">Teilnahme</a></td><td>–</td><td>30 %</td></tr>
-</tbody></table></div>
-
-<h2 id="aufgabe1">Aufgabe 1: Daten-Poster</h2>
-<p>Die Vorab-Aufgabe schließt an Aufgabe 2 von Modul 1 an. Dort wurde ein Kernprozess aus der eigenen Behörde, der eine Datenquelle involviert, in einer Process Map beschrieben. In Vorbereitung auf Modul 2 erstellt Ihr ein Poster, das eine Datenquelle aus dieser Process Map genauer vorstellt. Das Poster informiert über folgende Punkte:</p>
-<ul>
-  <li><strong>Um welche Daten handelt es sich?</strong> Welcher Typ von Daten, und was zeichnet die Daten aus?</li>
-  <li><strong>Wie sehen die Daten konkret aus?</strong> Wenn möglich mit einem oder mehreren Beispielen (gerne modifiziert, um keine echten Daten offenzulegen).</li>
-  <li><strong>Wozu werden die Daten verwendet?</strong> Kurz auf den Punkt gebracht, auch wenn die Daten in mehreren Prozessen genutzt werden.</li>
-  <li><strong>Wie sieht die Infrastruktur um die Daten aus?</strong> Wo sind sie abgelegt (Cloud, on premise, physische Akten) und wie werden sie verwaltet?</li>
-  <li><strong>Wer ist involviert?</strong> Abteilungen und Akteure in Generierung, Verarbeitung, Nutzung und Verwahrung, gerne tabellarisch.</li>
-</ul>
-<div class="merke">
-  <p><strong>Format.</strong> Das Poster kann zum Beispiel als PowerPoint-Folie oder Word-Seite entstehen, Hoch- oder Querformat. Einreichung als PDF; die Poster werden auf DIN A3 gedruckt und im Modul als Diskussionsgrundlage genutzt. Bitte sparsam mit Text umgehen und Schriftgrößen wählen, die aus einem Meter Entfernung lesbar sind.</p>
-</div>
-
-<h2 id="aufgabe2">Aufgabe 2: Daten-Podcast oder Daten-Literacy-Training</h2>
-<p>Für die zweite Leistung könnt Ihr zwischen zwei Optionen wählen. Beide werden <strong>zu zweit oder zu dritt</strong> bearbeitet, ein Upload pro Team über Moodle bis zum <strong>23. November 2026</strong>. Die ausführlichen Hinweise aus dem Kurs stehen in den <a href="{GITHACK}/d3s11-wrapup/d3s11-wrapup.html">Folien zu Session 11</a>.</p>
-
-<div class="two-col options">
-<div class="card">
-<h3>Option 1: Der Daten-Podcast</h3>
-<p>Eine Podcast-Aufnahme, schwerpunktmäßig zu zwei Themen, die Kern des Kurses waren. Die Aufnahme enthält mindestens zwei der drei Bausteine:</p>
-<ol>
-  <li><strong>Einblick in einen Daten-Use-Case aus Eurer Behörde</strong>: ein Fall aus Eurer Arbeit, bei dem Daten eine zentrale Rolle spielen, als Best- oder Worst-Practice-Beispiel, mit Bezug zu Konzepten aus dem Kurs.</li>
-  <li><strong>Daten-Fail der Woche</strong>: ein aktueller Artikel, Blogbeitrag oder Post mit problematischer oder missverständlicher Datennutzung. Was ist schiefgelaufen, was lernt man daraus?</li>
-  <li><strong>Blick in die Zukunft</strong>: Eure Vision für den Umgang mit Daten in Eurer Behörde oder Einheit.</li>
-</ol>
-<p><strong>Länge:</strong> maximal 20 Minuten (zwei Personen) bzw. 30 Minuten (drei Personen).<br>
-<strong>Einzureichen:</strong> Audiodatei (mp3 oder m4a), Transkript (automatisch erzeugt reicht) und Shownotes mit den besprochenen Quellen.<br>
-<strong>Technik:</strong> Smartphone oder Laptop genügen; keine aufwändige Postproduktion nötig.<br>
-<strong>KI-Einsatz:</strong> Selbst einsprechen ist Pflicht. KI-generierte Audio-Podcasts (NotebookLM, ElevenLabs o.Ä.) sind nicht erlaubt. KI-Unterstützung bei Skript oder Fragen ist in Ordnung.</p>
-</div>
-<div class="card">
-<h3>Option 2: Daten-Literacy-Training</h3>
-<p>Ein Trainingskonzept für die eigene Behörde zu <strong>einem Thema aus dem Kurs</strong>, das in Eurem Haus einen Unterschied machen würde: Datenqualität, Schnittstellen und Weiternutzung, Statistiken richtig lesen, Visualisierung oder KI-Werkzeuge im Arbeitsalltag.</p>
-<p><strong>Einzureichen:</strong></p>
-<ol>
-  <li><strong>Ein One-Pager</strong>: Was Ihr anbietet (Thema, Lernziele, Format, Dauer), für wen (Zielgruppe und Vorwissen), von wem (samt Vorbereitung, Technik und Daten).</li>
-  <li><strong>Ein Foliendeck</strong> für eine kurze Session mit etwa acht bis zwölf Folien.</li>
-</ol>
-<p><strong>Worauf ich achte:</strong> Der Einstieg macht klar, warum das Thema für die Zielgruppe relevant ist, am besten an einem Beispiel aus Eurem Haus. Mindestens ein aktivierendes Element (Übung, Diskussionsfrage, Beispieldatensatz, Quiz). Konzepte aus dem Kurs sind in die Sprache der Zielgruppe übersetzt.<br>
-<strong>KI-Einsatz:</strong> erlaubt für Konzept, Text und Folien. Das Ergebnis muss aber aus einem Guss sein und auf Eure Zielgruppe passen. Bitte keine Beispiele unverändert aus dem Kurs übernehmen.</p>
-<p class="muted">Bewertet wird nicht die Folienästhetik, sondern ob das Training bei Eurer Zielgruppe ankommen würde.</p>
-</div>
-</div>
-
-<h2 id="teilnahme">Teilnahme</h2>
-<p>Die Note für die Teilnahme geht davon aus, dass Ihr nicht rein passiv zuhört, sondern Euch aktiv am Austausch und der Diskussion der Kursinhalte beteiligt und eigene Erfahrungen, Einschätzungen und Ideen einbringt. Insbesondere solltet Ihr eine eigene Meinung zur vorzubereitenden Literatur entwickeln und diskutieren können. Eine gute Teilnahme zeichnet sich durch aktive Beteiligung, die Qualität der Beiträge und eine gute Interaktion mit den anderen Teilnehmenden aus.</p>
-
-<h2 id="regeln">Regeln</h2>
-<ul>
-  <li><strong>Verspätete Einreichung:</strong> Bei verspäteter Abgabe ist der Kursleitung eine schriftliche Erklärung vorzulegen. Wird die Arbeit angenommen, wird die Verspätung mit einem Notenabzug belegt (Examination Rules §9).</li>
-  <li><strong>Anwesenheit:</strong> Die Teilnahme am gesamten Modul ist verpflichtend. Bei Nicht-Erscheinen ist vorab eine schriftliche Begründung vorzulegen. Werden mehr als 20 % versäumt, entscheidet die Kursleitung über Nichtbestehen oder Zusatzanforderungen.</li>
-  <li><strong>Academic Integrity:</strong> Plagiate, betrügerische Handlungen und Trittbrettfahren bei Gruppenarbeiten werden nicht toleriert (Examination Rules §15, Hertie Plagiarism Policy). Beim Arbeiten mit KI gelten die Hertie AI Guidelines.</li>
-  <li><strong>Nachteilsausgleich und mildernde Umstände:</strong> Bei Behinderung, dauerhafter Erkrankung oder Pflege Angehöriger legt der Prüfungsausschuss auf Antrag Ausgleichsmaßnahmen fest (§13). Bei mildernden Umständen bitte rechtzeitig vor dem Abgabetermin an die Kursleitung wenden.</li>
-</ul>
-<p class="muted">Verbindlich ist der Syllabus auf Moodle sowie die <a href="https://moodle.hertie-school.org/mod/book/view.php?id=47912&chapterid=1159">Study, Examination and Admission Rules</a> der Hertie School.</p>
-"""
-    return page("Leistungen", body, depth=0, active="leistungen")
 
 def ressourcen_page():
     def entry(title, by, url, blurb):
@@ -625,11 +554,10 @@ def main():
     (ROOT / "sessions").mkdir(exist_ok=True)
     (ROOT / "index.html").write_text(index_page(), encoding="utf-8")
     (ROOT / "sessions.html").write_text(sessions_page(), encoding="utf-8")
-    (ROOT / "leistungen.html").write_text(leistungen_page(), encoding="utf-8")
     (ROOT / "ressourcen.html").write_text(ressourcen_page(), encoding="utf-8")
     for i, s in enumerate(SESSIONS):
         (ROOT / "sessions" / f"s{s['n']:02d}.html").write_text(session_page(s, i), encoding="utf-8")
-    print(f"{4 + len(SESSIONS)} Seiten geschrieben nach {ROOT}")
+    print(f"{3 + len(SESSIONS)} Seiten geschrieben nach {ROOT}")
 
 if __name__ == "__main__":
     main()

@@ -148,6 +148,12 @@ ul.resources li:last-child { border-bottom: none; }
 .res-title .by::before { content: " · "; }
 .res-blurb { margin: 0; color: #3d4448; }
 
+/* Praxis-Sessions hervorheben */
+.schedule td.praxis { background: #fbf3f4; box-shadow: inset 4px 0 0 var(--red); }
+.schedule td.praxis .cell-num::after { content: " · Praxis"; }
+.session-card.praxis { background: #fbf3f4; border-top-color: var(--red); }
+.schedule-list li.praxis a { background: #fbf3f4; box-shadow: inset 4px 0 0 var(--red); }
+
 /* Kompakte Programmliste (nur mobil) */
 .schedule-list { display: none; list-style: none; padding: 0; margin: 1rem 0 1.5rem; }
 .schedule-list .day { margin-bottom: 1.4rem; }
