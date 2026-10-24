@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 4: Praxis-Session I: Web Scraping und APIs · Der Daten-Lifecycle</title>
+<meta name="description" content="Daten automatisiert aus Webseiten extrahieren und über Schnittstellen abrufen, mit zwei Fallstudien aus der Verwaltung.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fira+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html">
+      <span class="brand-title">Der Daten-Lifecycle</span>
+      <span class="brand-sub">Modul 2 · Zertifikatsprogramm „KI und Data Science für die öffentliche Verwaltung“</span>
+    </a>
+    <nav class="site-nav" aria-label="Hauptnavigation"><a href="../index.html">Überblick</a><a href="../sessions.html" class="active">Sessions</a><a href="../leistungen.html">Leistungen</a><a href="../ressourcen.html">Ressourcen</a></nav>
+    <a class="logo" href="https://www.hertie-school.org/" aria-label="Hertie School"><img src="../assets/hertieschool-neg.svg" alt="Hertie School"></a>
+  </div>
+</header>
+<main class="wrap">
+
+<p class="breadcrumb"><a href="../index.html">Überblick</a> › <a href="../sessions.html">Sessions</a> › Session 4</p>
+<article class="session">
+  <p class="kicker">Tag 1 · Montag, 26. Oktober 2026 · 18–19 Uhr</p>
+  <h1><span class="num">Session 4</span>Praxis-Session I: Web Scraping und APIs</h1>
+  
+  <p class="theme">Tagesthema: Der Daten-Lifecycle und: Woher kommen Daten?</p>
+  <div class="btn-row"><a class="btn btn-primary" href="https://raw.githack.com/hertie-ai-certificate/modul-2-2026/main/d1s4-web-scraping/d1s4-web-scraping.html">Folien (HTML)</a><a class="btn" href="https://raw.githack.com/hertie-ai-certificate/modul-2-2026/main/d1s4-web-scraping/d1s4-web-scraping.pdf">Folien (PDF)</a><a class="btn" href="https://github.com/hertie-ai-certificate/modul-2-2026/blob/main/d1s4-web-scraping/d1s4-web-scraping.Rmd">Quelltext (Rmd)</a><a class="btn btn-ghost" href="https://github.com/hertie-ai-certificate/modul-2-2026/tree/main/d1s4-web-scraping">Ordner auf GitHub</a></div>
+  <h2 id="inhalte">Inhalte</h2>
+  <p class="lead">In dieser Praxis-Session lernen wir, mit externen Tools und Datenquellen zu interagieren. Erst beschäftigen wir uns mit der automatisierten Datensammlung aus dem Web: Wir sehen uns an, wie HTML-Strukturen genutzt werden können, um gezielt Daten von Webseiten zu extrahieren. Anschließend lernen wir, wie APIs als Schnittstellen für den Zugriff auf strukturierte Datenquellen und externe Tools dienen, und schauen uns an, wo APIs in der deutschen öffentlichen Verwaltung bereits im Einsatz sind. Zwei Fallstudien zeigen den Datenabruf an realen Szenarien: eine Karte der Bundesbehörden aus einer Wikipedia-Liste und der Zugriff auf Verwaltungs-APIs wie Pegelonline, XRepository und GovData.</p>
+  <h2 id="materialien">Code und Materialien</h2><div class="cards"><div class="card"><h3>Fallstudie Web Scraping: Wo sitzen die Bundesbehörden?</h3><p>Schritt für Schritt von der Wikipedia-Liste über den Browser-Inspector und rvest bis zur geocodierten Karte der Bundesbehörden.</p><div class="btn-row"><a class="btn btn-small" href="https://raw.githack.com/hertie-ai-certificate/modul-2-2026/main/d1s4-web-scraping/case-study-scraping/fallstudie-scraping.html">Fallstudie (HTML)</a> <a class="btn btn-small" href="https://github.com/hertie-ai-certificate/modul-2-2026/blob/main/d1s4-web-scraping/case-study-scraping/behoerden-karte.R">R-Skript</a> <a class="btn btn-small" href="https://github.com/hertie-ai-certificate/modul-2-2026/blob/main/d1s4-web-scraping/case-study-scraping/fallstudie-scraping.Rmd">Rmd-Quelle</a> <a class="btn btn-small" href="https://github.com/hertie-ai-certificate/modul-2-2026/tree/main/d1s4-web-scraping/case-study-scraping">Ordner</a></div></div><div class="card"><h3>Fallstudie APIs: Verwaltungsdaten über Schnittstellen</h3><p>Pegelstände von Pegelonline, Codelisten aus dem XRepository und Datensätze aus GovData – mit httr2 und jsonlite abgerufen und ausgewertet.</p><div class="btn-row"><a class="btn btn-small" href="https://raw.githack.com/hertie-ai-certificate/modul-2-2026/main/d1s4-web-scraping/case-study-api/fallstudie-api.html">Fallstudie (HTML)</a> <a class="btn btn-small" href="https://github.com/hertie-ai-certificate/modul-2-2026/blob/main/d1s4-web-scraping/case-study-api/behoerden-apis.R">R-Skript</a> <a class="btn btn-small" href="https://github.com/hertie-ai-certificate/modul-2-2026/blob/main/d1s4-web-scraping/case-study-api/fallstudie-api.Rmd">Rmd-Quelle</a> <a class="btn btn-small" href="https://github.com/hertie-ai-certificate/modul-2-2026/tree/main/d1s4-web-scraping/case-study-api">Ordner</a></div></div></div>
+  <h2 id="literatur">Literatur und Medien</h2><p class="muted">Die Kernliteratur ist zur Vorbereitung gedacht, alles Weitere ist ein ergänzendes Angebot.</p><h3>Kernliteratur</h3><ul class="lit">
+<li>Kühnemann, H. (2021). Anwendungen des Web Scraping in der amtlichen Statistik. AStA Wirtschafts- und Sozialstatistisches Archiv, 15(1), 5–25.</li>
+</ul><h3>Zum Weiterhören</h3><ul class="lit">
+<li>Coding Buddies, Episode „Was sind eigentlich APIs?“</li>
+</ul><h3>Zum Weiterlesen</h3><ul class="lit">
+<li>Munzert, S., Rubba, C., Meißner, P., &amp; Nyhuis, D. (2014). Automated Data Collection with R: A Practical Guide to Web Scraping and Text Mining. John Wiley &amp; Sons.</li>
+</ul>
+</article>
+<nav class="prevnext" aria-label="Sessions"><a class="prev" href="s03.html"><span>Vorherige Session</span>3: Mit Daten umgehen und zur Verfügung stellen</a><a class="next" href="s05.html"><span>Nächste Session</span>5: Möglichkeiten und Probleme mit Big Data</a></nav>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <strong>Der Daten-Lifecycle</strong> · Modul 2 des Zertifikatsprogramms „KI und Data Science für die öffentliche Verwaltung“<br>
+      <a href="https://simonmunzert.com/">Simon Munzert</a>, <a href="https://www.hertie-school.org/">Hertie School</a>, Berlin · 26.–28. Oktober 2026
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/hertie-ai-certificate/modul-2-2026">Materialien auf GitHub</a>
+      <a href="mailto:munzert@hertie-school.org">Kontakt</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
