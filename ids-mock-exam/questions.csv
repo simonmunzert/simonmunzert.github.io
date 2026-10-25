@@ -1,0 +1,177 @@
+id,session,type,topic,lang,question,code,option_a,option_b,option_c,option_d,answer,explanation,source
+s01-01,1,choice,Types of data-driven research,,Which is NOT one of the types of data-driven research we discussed?,,Description,Prediction,Prescription,Explanation,C,"The lecture distinguishes description, explanation and prediction as the three types of data-driven research that matter for policy-making. Prescription is not one of them.",Quiz 1 · Lecture 1
+s01-02,1,choice,What is data science?,,"According to Drew Conway's definition of data science, data science as a field combines (1) hacking skills, (2) substantive expertise, and",,Math & stats knowledge,Coding/programming skills,Reasoning skills,None of the above is correct,A,"Conway's Venn diagram has three circles: hacking skills, math & statistics knowledge, and substantive expertise. Coding is already covered by hacking skills.",Quiz 1 · Lecture 1
+s01-03,1,choice,History of data science,,"True or false: According to Kelleher and Tierney, the term ""data science"" dates back to the 16th century.",,True,False,,,B,"The term is much younger. Kelleher and Tierney trace it to the second half of the 20th century, when statisticians and computer scientists started using it; it became popular only in the 2000s.",Quiz 1 · Reading: Kelleher & Tierney
+s01-04,1,choice,Big data characteristics,,"True or false: One of the common characteristics of big data discussed by Matt Salganik is that they are ""always-on"".",,True,False,,,A,Salganik lists ten characteristics of big data; being always-on (data are collected continuously) is one of the properties he considers generally good for research.,"Quiz 1 · Reading: Salganik, Bit by Bit"
+s01-06,1,choice,Algorithmic bias,,The 2016 ProPublica investigation of the COMPAS recidivism algorithm found that the tool …,,"was generally accurate, but its predictions were not used by U.S. courts",was outperformed by a group of humans with little expertise by a wide margin,was easy to audit because the firm published its inner workings,was more likely to wrongly predict that African American defendants would re-offend,D,"ProPublica found that Black defendants were almost twice as likely as white defendants to be falsely flagged as future criminals. The tool is proprietary and was not easy to audit, and its scores were in fact used by courts.",Quiz 2 · Lecture 1
+s01-09,1,choice,The pipe,,Which expression is equivalent to the piped code below?,"penguins |>
+  filter(year == 2007) |>
+  nrow()","`filter(nrow(penguins), year == 2007)`","`nrow(penguins, filter(year == 2007))`","`penguins(filter(year == 2007), nrow)`","`nrow(filter(penguins, year == 2007))`",D,"The pipe passes the left-hand side as the first argument of the right-hand function, so `x |> f() |> g()` is `g(f(x))`. The other options either apply the functions in the wrong order or pass arguments incorrectly.","Lab 1, section 'The pipe operator'"
+s01-15,1,mark,Comparison vs. assignment in filter(),r,This code is supposed to compute the average body mass of all Adelie penguins. Mark the line that contains the bug.,"library(tidyverse)
+library(palmerpenguins)
+penguins |>
+  filter(species = ""Adelie"") |>
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE))",,,,,4,"A logical test for equality uses `==`, not `=`. With a single `=`, `filter()` interprets the input as a named argument rather than a condition and throws an error.","Lab 1, section 'dplyr::filter()'"
+s01-17,1,mark,Missing values in summaries,r,"This code is supposed to compute the average flipper length per species, ignoring missing values, and sort species from longest to shortest. Mark the line that contains the bug.","penguins |>
+  group_by(species) |>
+  summarize(avg_flipper = mean(flipper_length_mm)) |>
+  arrange(desc(avg_flipper))",,,,,3,"`flipper_length_mm` contains `NA`s, so `mean()` returns `NA` for the affected species unless `na.rm = TRUE` is set. Grouping and arranging are correct.","Lab 1, sections 'NAs in R' and 'dplyr::group_by() and dplyr::summarize()'"
+s02-01,2,choice,Why write functions,,"According to R for Data Science, which of the following is NOT a reason to write your own function?",,You eliminate the chance of making incidental mistakes when copying and pasting,Writing and executing functions is generally faster than the equivalent copy-pasted code,"As requirements change, you only need to update code in one place",You can give a function an evocative name that makes your code easier to understand,B,"R4DS gives three advantages: evocative names, updating code in one place, and avoiding copy-paste errors. Functions do not run faster than the equivalent inline code.","Quiz 2 · Reading: R4DS, Functions"
+s02-02,2,choice,Why write functions,,True or false: A good rule of thumb is to consider writing a function whenever you have copied and pasted a block of code more than twice.,,True,False,,,A,This is the R4DS rule of thumb: three copies of the same code are a signal to write a function.,"Quiz 2 · Reading: R4DS, Functions"
+s02-04,2,choice,Debugging,,"True or false: To isolate an error in debugging, you should try to make it repeatable.",,True,False,,,A,Making the error repeatable is the first step of debugging in the lecture: only then can you track it down systematically.,Quiz 2 · Lecture 2
+s02-05,2,choice,Function return values,,Which statement about return values of R functions is correct?,,"A function must contain an explicit `return()` call, otherwise it throws an error","By default, a function returns every object created inside its body","`return()` can only be used to return atomic vectors, not lists or data frames",R automatically returns the last evaluated (not assigned) object; an explicit `return()` is optional but makes the code clearer,D,"If there is no `return()`, R returns the value of the last expression that was evaluated. `return()` can return any object and is mostly used to exit a function early or for clarity.",Quiz 3 · Lecture 2
+s02-06,2,choice,Function scope,,True or false: Objects created inside a function body remain accessible from the global environment after the function has been called.,,True,False,,,B,Objects created inside a function live in the function's own environment and vanish when the call finishes. Only the returned value is available outside.,Quiz 3 · Lecture 2
+s02-09,2,choice,return() and control flow,,What do the two calls at the end of this code return?,"sign_label <- function(x) {
+  if (x > 0) {
+    return(""positive"")
+  }
+  ""not positive""
+}
+sign_label(5)
+sign_label(-2)","`""not positive""` and `""not positive""`","`""positive""` and an error, because the second call has no `return()`","`""positive""` and `""not positive""`","`""not positive""` and `""positive""`",C,"`return()` immediately exits the function, so for 5 the function stops with `""positive""`. For -2 the `if` block is skipped and R returns the value of the last evaluated expression, `""not positive""`, even without an explicit `return()`.","Lecture 2, slide section 'Basic syntax' (return behavior) and Lab 2, section 'Conditional functions'"
+s02-15,2,mark,Copy-paste errors,r,"This code is supposed to z-standardize each of the four columns of `df` (subtract the column mean, divide by the column standard deviation). Mark the line that contains the bug.","df$a <- (df$a - mean(df$a, na.rm = TRUE)) / sd(df$a, na.rm = TRUE)
+df$b <- (df$b - mean(df$b, na.rm = TRUE)) / sd(df$a, na.rm = TRUE)
+df$c <- (df$c - mean(df$c, na.rm = TRUE)) / sd(df$c, na.rm = TRUE)
+df$d <- (df$d - mean(df$d, na.rm = TRUE)) / sd(df$d, na.rm = TRUE)",,,,,2,"Line 2 divides column `b` by the standard deviation of column `a`, a typical copy-paste mistake. Exactly this kind of error is why repeated code should be wrapped in a function.","Lab 2, section 'Basic Syntax'"
+s02-17,2,mark,Embracing arguments in data frame functions,r,"This code is supposed to compute the mean of a chosen variable for each level of a chosen grouping variable, e.g. `grouped_mean(flights, origin, arr_delay)`. Mark the line that contains the bug.","grouped_mean <- function(df, group_var, mean_var) {
+  df |>
+    group_by({{ group_var }}) |>
+    summarize(mean = mean(mean_var, na.rm = TRUE))
+}
+grouped_mean(flights, origin, arr_delay)",,,,,4,"`group_var` is correctly embraced, but `mean_var` is not. `summarize()` therefore looks for a column literally called `mean_var`, which does not exist, and the call fails. It must be `mean({{ mean_var }}, na.rm = TRUE)`.","Lecture 2, slide sections 'Data frame functions' and 'Indirection and tidy evaluation'"
+s03-01,3,choice,Operating on multiple columns,,Which of the following computes a summary statistic for all numeric columns of a data frame `df`?,,"`df |> summarize(across(everything(is.numeric), median))`","`df |> summarize(across(where(is.numeric), median))`","`df |> summarize(if_any(is.numeric, median))`","`df |> summarize(map(is.numeric, median))`",B,"`across()` applies a function to a selection of columns; `where()` selects columns by a condition on their type. `everything()` takes no arguments, `if_any()` is for logical conditions in `filter()`, and `map()` is not a column selector.",Quiz 3 · Lecture 3
+s03-02,3,choice,Anonymous functions,,True or false: `\(x)` is a shorthand syntax for anonymous functions.,,True,False,,,A,"Since R 4.1, `\(x) x + 1` is equivalent to `function(x) x + 1`. It is handy for short functions passed to `map()` and friends.",Quiz 3 · Lecture 3
+s03-03,3,choice,Functionals,,"True or false: By default, `purrr::map()` returns a data frame.",,True,False,,,B,"`map()` always returns a list. The typed variants `map_dbl()`, `map_chr()` etc. return vectors, and combining into a data frame takes an extra step such as `list_rbind()`.",Quiz 3 · Lecture 3
+s03-04,3,mark,for() loops,r,This loop is supposed to store the square of every number in the vector `squares`. Mark the line that contains the bug.,"numbers <- c(2, 5, 8, 11)
+squares <- vector(""double"", length(numbers))
+for (i in seq_along(numbers)) {
+  squares <- numbers[i]^2
+}",,,,,4,Line 4 overwrites the whole vector in every iteration instead of filling position `i`. It should read `squares[i] <- numbers[i]^2`. Pre-allocation (line 2) and `seq_along()` (line 3) are correct.,Quiz 4 · Lecture 3
+s03-05,3,choice,Vectorization,,"True or false: In R, vectorized operations such as `x * 2` are generally slower than an equivalent `for()` loop.",,True,False,,,B,Vectorized operations are implemented in compiled code and are typically much faster than looping over elements in R. Use vectorization whenever it is available.,Quiz 4 · Lecture 3
+s03-06,3,choice,Dealing with failure,,"True or false: `safely()` returns, for each input, both the result and any error object instead of aborting the whole call.",,True,False,,,A,`safely()` wraps a function so that it always returns a list with the elements `result` and `error`. One failing element therefore does not stop the whole `map()` call.,Quiz 4 · Lecture 3
+s03-07,3,choice,Pre-allocating loop output,,"Inside a `for()` loop, a student collects results with `results <- c(results, new_value)` instead of writing into a pre-allocated vector. What is the main problem with this approach?",,The results are silently stored in the wrong order.,"R copies the entire vector in every iteration, which becomes very slow for long loops.",It only works if `new_value` is numeric.,The loop stops after the first iteration because `results` does not exist yet.,B,"Growing an object with c() creates a full copy each time, so the cost grows with every iteration; pre-allocating the output container avoids this. The results are not reordered, the approach works for any type, and c(NULL, value) is legal, so the loop does not stop.","Lecture 3, slide section 'Iteration with for() loops: good practice'"
+s03-17,3,mark,Reading many files with map(),r,This code is supposed to read all CSV files in the `data/polls` folder and stack them into one data frame. Mark the line that contains the bug.,"library(tidyverse)
+paths <- list.files(""data/polls"", pattern = ""\\.csv$"", full.names = TRUE)
+polls <- map(read_csv, paths) |>
+  list_rbind()
+nrow(polls)",,,,,3,"map() takes the object to iterate over first and the function second, i.e. map(paths, read_csv). As written, R tries to iterate over the function read_csv and use the character vector of paths as the function, which fails. Lines 2 and 4 are correct: list.files() builds the full paths and list_rbind() stacks the list of data frames.","Lecture 3, slide section 'Iteration with purrr: a common use case'"
+s04-01,4,choice,Navigation,,"Which command takes you to your home directory, no matter which directory you are currently in?",,`cd`,`cd ..`,`cd /`,`pwd`,A,"`cd` without an argument jumps to the home directory. `cd ..` moves one level up, `cd /` goes to the root of the file system, and `pwd` only prints the current directory.",Quiz 4 · Lecture 4
+s04-02,4,choice,Removing files,,"True or false: Files deleted with `rm` are moved to a trash folder, from which they can be restored.",,True,False,,,B,"`rm` deletes files permanently; there is no trash. This is why the lecture warns to be careful with `rm`, especially with wildcards or `-r`.",Quiz 4 · Lecture 4
+s04-03,4,choice,Moving files,,"True or false: The command `mv notes.txt archive/` moves the file `notes.txt` into the `archive` folder, so that it is no longer in the current folder afterwards.",,True,False,,,A,"`mv` moves (or renames) files. After the command, `notes.txt` exists only inside `archive/`. To keep the original and create a copy, you would use `cp`.",Quiz 5 · Lecture 4
+s04-04,4,choice,Pipes,,"True or false: The pipe `|` passes one command's output on to the next, as in `ls | wc -l`.",,True,False,,,A,"The pipe chains commands: the output of `ls` (one file name per line) becomes the input of `wc -l`, which counts the lines, i.e. the number of files.",Quiz 5 · Lecture 4
+s04-05,4,choice,Redirection: > vs >>,,The following three commands are run in order in an empty folder. What does `cat log.txt` show afterwards?,"echo ""sun"" > log.txt
+echo ""rain"" >> log.txt
+echo ""cloud"" > log.txt","Three lines: sun, rain, cloud",One line: cloud,"Two lines: sun, rain","Two lines: rain, cloud",B,"`>` creates the file or replaces its contents, while `>>` appends. After the first two commands the file holds 'sun' and 'rain', but the third command uses `>` again and overwrites everything, leaving only 'cloud'.","Lecture 4, slide section 'Redirect: >'; Lab 4, section 'Redirecting output and building pipelines'"
+s04-07,4,choice,Absolute vs relative paths,,Which of the following is an absolute path?,,`data/bird_notes.txt`,`../results/output.csv`,`./scripts/make_report.sh`,`/Users/anna/project/data/bird_notes.txt`,D,An absolute path starts at the root of the file system (with `/`) and identifies one exact location regardless of where you are. The other three are relative to the current working directory: `.` means 'this folder' and `..` means 'the parent folder'.,"Lecture 4, slide section 'Navigation' / 'Summary'; Lab 4, section 'Files, folders, and the working directory'"
+s04-13,4,mark,cp argument order,bash,"This shell script is supposed to create a `backup` folder, copy the file `data/notes.txt` into it, and then list the folder's contents. Mark the line that contains the bug.","#!/bin/bash
+set -e
+mkdir -p backup
+cp backup/notes.txt data/notes.txt
+ls backup",,,,,4,"cp takes the source first and the destination second. Line 4 has them swapped: it tries to copy backup/notes.txt, which does not exist yet, so the command fails and (because of set -e) the script stops. It should read `cp data/notes.txt backup/notes.txt`.","Lecture 4, slide section 'Copy: cp'"
+s04-14,4,mark,Appending inside a loop,bash,This shell script is supposed to combine all `*day.csv` files in `data/` into one file `results/mealplan.csv` with a single header line followed by the data rows of every input file. Mark the line that contains the bug.,"#!/bin/bash
+mkdir -p results
+head -n 1 data/monday.csv > results/mealplan.csv
+for f in data/*day.csv
+do
+  tail -n +2 ""$f"" > results/mealplan.csv
+done",,,,,6,"Line 6 uses `>`, which overwrites results/mealplan.csv in every iteration, so the header from line 3 is lost and only the data rows of the last file survive. Inside the loop the output must be appended with `>>`. Line 3 correctly uses `>` to start the file fresh with the header.","Lecture 4, slide section 'Example 2: Combine CSVs'"
+s05-01,5,choice,HTML elements and attributes,html,The line below is an HTML element that creates a link. Which part is the **attribute value**?,"<a href=""https://www.hertie-school.org"">Hertie School</a>",`a`,`href`,`https://www.hertie-school.org`,`Hertie School`,C,"`a` is the element (tag) name, `href` is the attribute name, the URL in quotes is the attribute value, and `Hertie School` is the element's content, i.e. the visible link text.",Quiz 5 · Lecture 5
+s05-02,5,choice,Regular expressions,,What is a regular expression?,,An R function to fit a linear regression model,"A pattern that describes a set of strings, used to find, extract, or replace text",A markup language to structure the content of web pages,A shell command to list all files in a directory,B,Regular expressions are patterns that describe sets of strings. They have nothing to do with regression; HTML is the markup language and `ls` the shell command.,Quiz 5 · Lecture 5
+s05-03,5,choice,XPath,,True or false: XPath is a query language to select parts (nodes) of HTML and XML documents.,,True,False,,,A,XPath expressions describe paths through the DOM tree and return the matching nodes. This is what `html_elements(xpath = ...)` uses.,Quiz 5 · Lecture 5
+s05-04,5,choice,Regex quantifiers,,"Which of the following regular expressions matches both ""color"" and ""colour""?",,`colou+r`,`colo.r`,`colou?r`,`col*r`,C,"`?` makes the preceding character optional, so `colou?r` matches with and without the `u`. `u+` requires at least one `u`, `.` requires exactly one arbitrary character (so `color` would need a character between `o` and `r`), and `col*r` allows zero or more `l` but no `o`.",Quiz 6 · Lecture 5
+s05-05,5,mark,XPath predicates,html,"Below is the ""fortunes"" HTML document from the lecture. Mark all lines that contain an element selected by the XPath expression `//div[@lang=""english""]/p[1]`.","<html>
+<head>
+  <title>Collected R wisdoms</title>
+</head>
+<body>
+  <div id=""R Inventor"" lang=""english"" date=""June/2003"">
+    <h1>Robert Gentleman</h1>
+    <p><i>'What we have is nice, but we need something very different'</i></p>
+    <p><b>Source: </b>Statistical Computing 2003, Reisensburg</p>
+  </div>
+  <div lang=""english"" date=""October/2011"">
+    <h1>Rolf Turner</h1>
+    <p><i>'R is wonderful, but it cannot work magic'</i></p>
+    <p><b>Source: </b><a href=""https://stat.ethz.ch/mailman/listinfo/r-help"">R-help</a></p>
+  </div>
+  <address><a href=""http://www.r-datacollection.com""><i>The book homepage</i></a></address>
+</body>
+</html>",,,,,"8,13","Both `<div>` elements have the attribute `lang=""english""`. For each of them, `p[1]` selects the first `<p>` child, so the two quote paragraphs (lines 8 and 13) are selected. The source paragraphs are the second `<p>` in each `<div>`, and `<h1>` is not a `<p>`.",Quiz 6 · Lecture 5
+s05-08,5,choice,Reading XPath expressions,,What does the XPath expression `//table//tr[2]/td` select?,,All `<td>` cells of the second row of every table in the document,The second `<td>` cell of every row in every table,All `<td>` cells of the second table in the document,The header row of every table in the document,A,"`//table` finds all tables, `//tr[2]` picks the second `<tr>` row (the numeric predicate applies to `tr`), and `/td` returns the `<td>` cells that are direct children of that row.","Lecture 5, slide 'Predicates' and 'Grammar of XPath'"
+s05-10,5,choice,Regex anchors and quantifiers,,Which of the following strings matches the regular expression `^[0-9]{4}$`?,,`20245`,`year 2024`,`24`,`2024`,D,"`[0-9]{4}` requires exactly four digits, and the anchors `^` and `$` require that the whole string consists of nothing else. Only `2024` fulfils both conditions.","Lecture 5, slides 'Basic regex syntax' (anchors), 'Character classes', 'Quantifiers'"
+s05-16,5,mark,Regex matching,text,The regular expression `^[A-Z][a-z]+$` is tested against each of the strings below (one per line). Mark all lines that match.,"Berlin
+berlin
+BERLIN
+Hertie School
+R
+Paris",,,,,"1,6","The pattern requires one uppercase letter followed by one or more lowercase letters and nothing else (anchors `^` and `$`). ""berlin"" starts lowercase, ""BERLIN"" has uppercase letters after the first, ""Hertie School"" contains a space and a second capital, and ""R"" has no lowercase letters.","Lecture 5, slides 'Character classes', 'Quantifiers', 'Basic regex syntax (cont.)' (anchors)"
+s06-01,6,choice,Static vs. dynamic pages,,"True or false: When fed with the URL from a browser session, the function `read_html()` always returns the live HTML source code regardless of whether the site is dynamic or static.",,True,False,,,B,"`read_html()` fetches the raw HTML the server sends. Content that is generated by JavaScript in the browser (dynamic pages) is not included, so what you see in the browser can differ from what `read_html()` returns.",Quiz 6 · Lecture 6
+s06-03,6,choice,Content extraction with rvest,,"Which rvest function extracts the value of an attribute, such as the link target stored in `href`?",,`html_text2()`,`html_href()`,`html_elements()`,`html_attr()`,D,"`html_attr()` extracts attribute values. `html_text2()` extracts element content, `html_elements()` selects elements, and `html_href()` does not exist.",Quiz 7 · Lecture 6
+s06-04,6,choice,Scraping etiquette,,"True or false: To avoid violating copyright, it's good practice to scrape a page again every time you need its content, rather than saving a local copy.",,True,False,,,B,"Scraping etiquette says the opposite: download a page once, store it locally and parse the local copy. Repeated downloads cause unnecessary traffic; copyright concerns relate to what you do with the content, not to storing it.",Quiz 7 · Lecture 6
+s06-05,6,choice,robots.txt,,A website's `robots.txt` contains the rules shown below. What do they mean?,"User-agent: *
+Disallow: /private/
+Crawl-delay: 2",Human visitors cannot open any page under `/private/` in their browser.,All automated crawlers are asked not to access `/private/` and to wait 2 seconds between requests.,Only Google's crawler is banned from the site; everybody else may crawl at any speed.,The server will technically block any program that requests more than 2 pages.,B,"`User-agent: *` addresses all bots, `Disallow` lists paths they should not crawl, and `Crawl-delay` suggests a pause in seconds. robots.txt is not a technical barrier but a request for compliance.","Lecture 6, slide 'Consult robots.txt'"
+s06-07,6,choice,APIs vs. scraping,,What distinguishes getting data through a web API from scraping a website?,,An API is a documented interface through which the provider delivers structured data (e.g. JSON); scraping extracts data from HTML pages that were built for display.,"An API always requires payment, whereas scraping is always free.","Scraping returns clean tabular data, whereas APIs return raw HTML.","There is no difference: both send HTTP requests, so the result is the same.",A,"APIs provide regulated, documented access to clean data and imply mutual agreement with the provider. Scraping parses HTML meant for humans and requires locating and cleaning the data yourself. Both use HTTP, but the kind of resource returned differs.","Lecture 6, slides 'What are web APIs?' and 'What do APIs do?'"
+s06-08,6,choice,JSON to R,,The JSON below is parsed with `jsonlite::fromJSON()`. What R object do you get?,"{
+  ""name"": ""Lucy"",
+  ""age"": 32,
+  ""hobbies"": [""chess"", ""piano""]
+}",A single character string containing the JSON text,A data frame with three columns and two rows,"A named list with elements `name`, `age`, and `hobbies`, where `hobbies` is a character vector of length 2","A numeric vector `c(32)`, because only numbers can be imported",C,"A JSON object (curly brackets) maps to a named R list; its key-value pairs become list elements. The JSON array `[""chess"", ""piano""]` is simplified to a character vector.","Lecture 6, slides 'Basic syntax' (JSON) and 'JSON and R'"
+s06-13,6,mark,rvest table pipeline bug,r,"The code should extract the second table with class ""wikitable"" from the page as a data frame. Two steps are in the wrong order. Mark both lines.","library(rvest)
+url <- ""https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_finals""
+url_p <- read_html(url)
+tables <- url_p |>
+  html_table() |>
+  html_elements(""table.wikitable"")
+finals <- tables[[2]]
+head(finals)",,,,,"5,6",The order of the two steps is reversed: `html_elements()` locates the table nodes in the parsed HTML and must come first; `html_table()` then converts the selected `<table>` nodes into data frames. Both lines of the pipeline are in the wrong place.,"Lecture 6, slides 'Web scraping with rvest' and 'Scraping HTML tables: example (cont.)'"
+s06-15,6,mark,JSON structure,text,"In the JSON document below, mark all lines that contain an array (as opposed to a single value or an object).","{
+  ""name"": ""Peppermint, Patty"",
+  ""age"": null,
+  ""friends"": [""Marcie"", ""Charlie""],
+  ""address"": {""city"": ""Berlin"", ""zip"": ""10115""},
+  ""tags"": []
+}",,,,,"4,6","Square brackets `[ ]` enclose arrays (ordered sequences of values), curly brackets `{ }` enclose objects (key-value pairs). Line 5 is a nested object, line 3 is the single value `null`, and line 6 is an empty array.","Lecture 6, slide 'Basic syntax' (JSON: Types of brackets)"
+s07-01,7,choice,Databases vs. data frames,,What is a key difference between a table in a database and a data frame in R?,,Database tables cannot be combined with other tables.,Data frames can hold much more data than database tables.,Database tables are stored on disk and can be larger than your computer's memory.,Data frames can be opened in Excel whereas database tables cannot.,C,"Data frames live in memory, database tables live on disk, which is why databases can hold data sets that would never fit into RAM. Combining tables (joins) is the core of relational databases.","Quiz 7 · Reading: R4DS, Databases"
+s07-02,7,choice,Keys,,True or false: A primary key is a variable (or set of variables) that uniquely identifies each observation in a table.,,True,False,,,A,"That is the definition. A foreign key, in contrast, is a variable in one table that refers to the primary key of another table.",Quiz 7 · Lecture 7
+s07-03,7,choice,Joins,,"True or false: `inner_join()` keeps all rows of `x`, even those that have no match in `y`.",,True,False,,,B,An inner join keeps only rows with a match in both tables. Keeping all rows of `x` is what `left_join()` does.,Quiz 7 · Lecture 7
+s07-04,7,choice,Normalization,,What is the main goal of database normalization?,,To make the database files smaller so they can be sent by email,To reduce redundancy (duplicated information) and improve data integrity,To convert all tables into a single large spreadsheet,To protect the database with a password,B,Normalization splits data into related tables so that each fact is stored only once. That avoids inconsistencies when data are updated. It is the opposite of one big spreadsheet.,Quiz 8 · Lecture 7
+s07-05,7,choice,Normalization,text,The table below is not well normalized. What is the problem?,"nameid  firstname  birthday    favoritefood  healthy  kcalp100g
+1       Peter      01/02/1991  spaghetti     no       0.158
+2       Paul       02/03/1992  fruit salad   yes      0.043
+3       Mary       03/04/1993  chocolate     no       0.546",The table has no primary key.,The rows should be sorted alphabetically by firstname.,Some columns describe the food rather than the person.,The nameid column should contain text instead of numbers.,C,"`healthy` and `kcalp100g` are properties of the favorite food, not of the person. If two people liked chocolate, the food's facts would be stored twice. A normalized design keeps a separate food table linked by a key. `nameid` is a perfectly fine primary key, and row order is irrelevant.",Quiz 8 · Lecture 7
+s07-07,7,choice,Inner join: rows returned,,"Consider the two tables below. How many rows does `inner_join(students, grades, by = ""id"")` return?","students            grades
+id | name           id | grade
+1  | Ann            1  | A
+2  | Ben            3  | B
+3  | Cid            3  | C",2,3,4,5,B,"An inner join keeps one output row per matching key pair. id 1 matches once, id 3 matches twice (one-to-many), id 2 has no match and is dropped: 1 + 2 = 3 rows.","Lecture 7, slide section 'The logic of joins' / 'Duplicate keys'"
+s07-15,7,mark,Join by the wrong key,r,"This code is supposed to add the full airline name (from the `airlines` table, which has the columns `carrier` and `name`) to every flight. Mark the line that contains the bug.","library(nycflights13)
+library(dplyr)
+flights_small <- flights |> select(year, month, day, carrier, tailnum)
+flights_named <- left_join(flights_small, airlines, by = ""tailnum"")
+flights_named |> head()",,,,,4,"`flights` and `airlines` are linked through the key `carrier`; `airlines` has no `tailnum` column. The join must use `by = ""carrier""`.","Lecture 7, slide section 'Relational data in R (cont.)' and 'Joins in R'"
+s07-16,7,mark,collect() placed too early,r,This code is supposed to let the database do the filtering and transfer only the heavily delayed flights into R. Mark the line that contains the bug.,"con <- DBI::dbConnect(RSQLite::SQLite(), ""nycflights.sqlite"")
+flights_db <- tbl(con, ""flights"")
+late <- flights_db |>
+  collect() |>
+  filter(dep_delay > 240) |>
+  select(carrier, flight, dep_delay)
+DBI::dbDisconnect(con)",,,,,4,"`collect()` pulls the data into R. Placed before `filter()`, the entire table is downloaded and the filtering happens locally. It should come at the end so that filtering and selecting are executed as SQL in the database.","Lecture 7, slide section 'Talking to databases' / 'Querying the database'"
+s08-01,8,choice,tidymodels,,"True or false: A key idea of tidymodels is to offer one consistent interface to many different modeling packages, so that the same code works no matter which package does the estimation.",,True,False,,,A,"That is one of the four ideas behind tidymodels: specify the model type and engine, and the same workflow works across packages that otherwise all have their own syntax.",Quiz 8 · Lecture 8
+s08-02,8,choice,Specification curve analysis,,"True or false: Specification curve analysis estimates all reasonable specifications of a model and reports the full set of results, instead of a single, hand-picked specification.",,True,False,,,A,"Specification curve analysis makes the modeling choices explicit, runs all defensible combinations and shows the distribution of estimates, so that readers can see how robust a result is.",Quiz 8 · Lecture 8
+s08-03,8,choice,Systematic vs stochastic component,,A model is written as Y = f(x) + ε. What does the stochastic component ε represent?,,The part of the outcome that the model explains through the predictors,The estimated slope of the regression line,"Everything the systematic part does not capture: unmeasured influences, measurement error, and genuine randomness",The predicted values of the outcome,C,The systematic part f(x) captures what we think we can explain; the stochastic part collects everything else and is usually assumed to be random noise centered at zero.,"Lecture 8, slide 'Model building'"
+s08-04,8,choice,Formula syntax: interaction,,What does the model formula `arr_delay ~ dep_delay * origin` express?,,"Arrival delay depends on the product of departure delay and origin, computed as a single new variable","Arrival delay depends on departure delay, on origin, and on their interaction, so the slope of departure delay may differ by origin airport","Arrival delay depends only on the interaction term, without main effects","Departure delay is multiplied by origin before the model is fitted, with no separate effect of origin",B,"In formula syntax, `x1 * x2` is shorthand for `x1 + x2 + x1:x2`: both main effects plus the interaction. The interaction lets the effect of departure delay vary across origin airports.","Lecture 8, slides 'Model formulas in R' and 'Interactions'"
+s08-06,8,choice,Overfitting,,"A random forest predicting whether a flight is late reaches an ROC AUC of 0.99 when evaluated on its own training data, but only about 0.72 when evaluated via cross-validation. What does this pattern indicate?",,The cross-validation folds were constructed incorrectly,The model is underfitting and needs to be more flexible,The model has largely memorized the training data; the training-set score is not a reliable estimate of performance on new data,ROC AUC is the wrong metric for a classification problem,C,"Flexible models can memorize the training data, so evaluating on it is misleading. Resampling or a held-out test set gives a realistic estimate of performance on unseen data.","Lecture 8, slide 'Step 3: Evaluate the model'"
+s08-09,8,choice,Evaluating on training data,,True or false: Evaluating a model on the same data it was fitted on gives a reliable estimate of how well it will perform on new data.,,True,False,,,B,Training-data performance is overly optimistic because the model has already adapted to those observations. Performance on new data must be estimated with held-out data (resampling or a test set).,"Lecture 8, slide 'Step 3: Evaluate the model' and 'Summary'"
+s08-11,8,mark,Model fitted on the full data instead of the training split,r,This code is supposed to fit a model on the training split and evaluate its prediction error on held-out test data. Mark the line that contains the bug.,"set.seed(42)
+fl_split <- initial_split(fl, prop = 0.8)
+train <- training(fl_split)
+test  <- testing(fl_split)
+m <- lm(arr_delay ~ dep_delay + distance, data = fl)
+preds <- predict(m, newdata = test)
+rmse  <- sqrt(mean((test$arr_delay - preds)^2))",,,,,5,"The model is fitted on the complete data `fl`, which includes the test rows. The test set is therefore not held out, and the error estimate is too optimistic. The model must be fitted with `data = train`.","Lecture 8, slides 'Four ideas behind tidymodels' (never let the test data leak) and 'Summary'"
+s08-13,8,mark,Outcome and predictor swapped in the formula,r,This code is supposed to model arrival delay as a function of departure delay and flight distance and to show the tidied coefficients. Mark the line that contains the bug.,"library(nycflights13)
+library(broom)
+fl <- flights |> drop_na(arr_delay, dep_delay)
+m <- lm(dep_delay ~ arr_delay + distance, data = fl)
+tidy(m)",,,,,4,"In a formula the outcome stands to the left of the tilde and the predictors to the right. As written, departure delay is modeled as the outcome. It should read `arr_delay ~ dep_delay + distance`.","Lecture 8, slide 'Model formulas in R'"
