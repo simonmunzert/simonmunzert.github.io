@@ -92,7 +92,13 @@
       const inst = { q: q, display: null };
       if (q.type === 'choice') {
         const idx = q.options.map((_, k) => k);
-        inst.display = q.isTF ? idx : shuffle(idx, rnd);
+        if (q.isTF) inst.display = idx;
+        else {
+          /* "all/none of the above"-type options always go last */
+          const isCatchAll = k => /\b(all|none|both|neither) of (the above|these)\b/i.test(q.options[k]);
+          const regular = shuffle(idx.filter(k => !isCatchAll(k)), rnd);
+          inst.display = regular.concat(idx.filter(isCatchAll));
+        }
       }
       return inst;
     });
@@ -136,6 +142,11 @@
       else if (c.has(n)) st[n] = 'should';
     }
     return st;
+  }
+
+  function hasAnswer(inst, ans) {
+    if (ans === undefined || ans === null) return false;
+    return inst.q.type !== 'mark' || ans.length > 0;
   }
 
   function fmtTime(s) { const m = Math.floor(s / 60); return m + ':' + String(s % 60).padStart(2, '0'); }
@@ -216,7 +227,7 @@
         let c = 'dot';
         if (k === i) c += ' current';
         if (state.mode === 'practice' && state.checked[k]) c += isCorrect(it, state.answers[k]) ? ' right' : ' wrong';
-        else if (state.answers[k] !== undefined && (q.type !== 'mark' || state.answers[k].length)) c += ' answered';
+        else if (hasAnswer(it, state.answers[k])) c += ' answered';
         return '<button class="' + c + '" data-k="' + k + '" aria-label="Question ' + (k + 1) + '">' + (k + 1) + '</button>';
       }).join('');
       const locked = state.mode === 'practice' && state.checked[i];
@@ -238,7 +249,7 @@
       html += '</div>';
       $('question').innerHTML = html;
 
-      const answered = ans !== undefined && (q.type !== 'mark' || ans.length > 0);
+      const answered = hasAnswer(inst, ans);
       $('btn-prev').disabled = i === 0;
       $('btn-check').classList.toggle('hidden', state.mode !== 'practice' || locked);
       $('btn-check').disabled = !answered;
@@ -278,7 +289,7 @@
     $('btn-check').addEventListener('click', () => { state.checked[state.current] = true; renderQuestion(); });
     $('btn-abort').addEventListener('click', () => { if (confirm('Quit this round? Your answers will be discarded.')) { clearInterval(state.timer); history.replaceState(null, '', location.pathname); show('view-start'); } });
     $('btn-finish').addEventListener('click', () => {
-      const open = state.answers.filter((a, k) => a === undefined || (state.items[k].q.type === 'mark' && !a.length)).length;
+      const open = state.answers.filter((a, k) => !hasAnswer(state.items[k], a)).length;
       if (open && !confirm(open + ' question' + (open > 1 ? 's are' : ' is') + ' still unanswered and will count as wrong. Finish anyway?')) return;
       finish();
     });
@@ -321,9 +332,13 @@
         return '<li><span class="sn">S' + s + '</span><div class="bar ' + c + '"><span style="width:' + p + '%"></span></div><span class="lab">' + perSession[s].c + '/' + perSession[s].n + '</span></li>';
       }).join('') + '</ul><p class="small muted">Review the slides: ' + sess.map(s => '<a target="_blank" rel="noopener" href="' + SESSIONS[s].url + '">Session ' + s + '</a>').join(' · ') + '</p>';
 
+      $('result-dots').innerHTML = results.map((r, k) => {
+        const skipped = !hasAnswer(r.inst, r.ans);
+        return '<button class="dot ' + (r.ok ? 'right' : skipped ? 'skipped' : 'wrong') + '" data-k="' + k + '" aria-label="Jump to question ' + (k + 1) + '" title="Question ' + (k + 1) + ': ' + (r.ok ? 'correct' : skipped ? 'not answered' : 'wrong') + '">' + (k + 1) + '</button>';
+      }).join('');
       $('review').innerHTML = results.map((r, k) => {
-        const q = r.inst.q, skipped = r.ans === undefined || (q.type === 'mark' && !r.ans.length);
-        let h = '<li class="' + (r.ok ? 'ok' : skipped ? 'skipped' : 'nok') + '"><div class="r-head"><span class="r-num">Question ' + (k + 1) + '</span><span class="r-verdict">' + (r.ok ? 'correct' : skipped ? 'not answered' : 'wrong') + '</span><span class="r-meta">Session ' + q.session + ' · ' + esc(q.topic || SESSIONS[q.session].title) + '</span></div>';
+        const q = r.inst.q, skipped = !hasAnswer(r.inst, r.ans);
+        let h = '<li id="rev-' + k + '" class="' + (r.ok ? 'ok' : skipped ? 'skipped' : 'nok') + '"><div class="r-head"><span class="r-num">Question ' + (k + 1) + '</span><span class="r-verdict">' + (r.ok ? 'correct' : skipped ? 'not answered' : 'wrong') + '</span><span class="r-meta">Session ' + q.session + ' · ' + esc(q.topic || SESSIONS[q.session].title) + '</span></div>';
         h += '<p class="q-text">' + md(q.question) + '</p>';
         if (q.type === 'choice') {
           if (q.code) h += codeBlock(q.code, { lang: LANG_LABEL[q.lang] });
@@ -342,6 +357,12 @@
       show('view-result');
     }
 
+    $('result-dots').addEventListener('click', e => {
+      const d = e.target.closest('.dot'); if (!d) return;
+      const el = $('rev-' + d.dataset.k);
+      const top = el.getBoundingClientRect().top + window.scrollY - $('result-dots').offsetHeight - 12;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
     $('btn-again').addEventListener('click', () => startRound({ sessions: state.sessions, n: state.n, mode: state.mode, seed: newSeed() }));
     $('btn-retake').addEventListener('click', () => startRound({ sessions: state.sessions, n: state.n, mode: state.mode, seed: state.seed }));
     $('btn-home').addEventListener('click', () => { history.replaceState(null, '', location.pathname); renderStart(); show('view-start'); });

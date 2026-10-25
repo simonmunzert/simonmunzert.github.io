@@ -152,6 +152,9 @@ main.wrap { padding-top: 1.5rem; padding-bottom: 3rem; flex: 1 0 auto; }
 .dot.current { border-color: var(--orange); box-shadow: 0 0 0 2px var(--orange-soft); color: var(--dark); font-weight: 500; }
 .dot.right { background: var(--green-soft); border-color: var(--green); color: var(--green); }
 .dot.wrong { background: var(--red-soft); border-color: var(--red); color: var(--red); }
+.dot.skipped { background: var(--orange-soft); border-color: var(--orange); color: #b05e0e; }
+.dot:hover { border-color: var(--dark); cursor: pointer; }
+.result-dots { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: .6rem 0 .5rem; margin: 0 0 .6rem; border-bottom: 1px solid var(--rule); }
 
 .question { margin: 0 0 1.2rem; }
 .q-meta { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; font-size: .82rem; color: var(--muted); margin-bottom: .5rem; }
