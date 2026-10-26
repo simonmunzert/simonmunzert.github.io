@@ -592,7 +592,7 @@ def klassifikation_page():
   <div class="table-wrap"><table id="matrix" class="matrix"></table></div>
 
   <div class="merke">
-    <p><strong>Was man daran sieht.</strong> Ein Teil der Schreiben lässt sich nicht eindeutig zuordnen: Baumwurzeln, die den Gehweg anheben, sind Straßenbau und Grünflächen zugleich. Zwei Menschen kodieren solche Fälle verschieden, und ein Modell kann dort nicht „richtig“ liegen, weil es kein eindeutiges Richtig gibt. Dringlichkeit ist noch subjektiver. Wer Klassifikationsmodelle bewertet, muss zuerst wissen, wie eindeutig die Aufgabe überhaupt ist. Wie man das sauber misst, zeigt die <a href="__UEBUNG__">Übung zur Validierung</a>.</p>
+    <p><strong>Was man daran sieht.</strong> Ein Teil der Schreiben lässt sich nicht eindeutig zuordnen: Baumwurzeln, die den Gehweg anheben, sind Straßenbau und Grünflächen zugleich. Zwei Menschen kodieren solche Fälle verschieden, und ein Modell kann dort bestenfalls eine der beiden vertretbaren Antworten treffen. Dringlichkeit ist noch subjektiver. Wer Klassifikationsmodelle bewertet, muss zuerst wissen, wie eindeutig die Aufgabe überhaupt ist. Wie man das sauber misst, zeigt die <a href="__UEBUNG__">Übung zur Validierung</a>.</p>
   </div>
   <div class="btn-row"><button id="nochmal" class="btn" type="button">Noch einmal</button><a class="btn btn-ghost" href="sessions/s07.html">Zurück zu Session 7</a></div>
 </div>
