@@ -299,7 +299,7 @@ pre.code.marks.locked .cline.hit:hover, pre.code.marks.locked .cline.miss:hover,
 .sheet .pq .pq-stem { font-weight: 500; color: var(--dark); margin-bottom: .4rem; }
 .sheet .pq ul.popts { list-style: none; padding-left: .2rem; margin: 0; }
 .sheet .pq ul.popts li { margin-bottom: .25rem; }
-.sheet .pq ul.popts li::before { content: "❒"; display: inline-block; width: 1.4em; color: var(--dark); }
+.sheet .pq ul.popts li::before { content: "◯"; display: inline-block; width: 1.4em; color: var(--dark); }
 .sheet .pq ul.popts.tf { display: flex; gap: 2rem; }
 .sheet .pq pre.code { margin-bottom: .5rem; }
 .sheet .pq .pq-note { font-size: .85rem; color: var(--muted); }

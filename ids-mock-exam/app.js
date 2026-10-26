@@ -50,6 +50,8 @@
       q.options = ['option_a', 'option_b', 'option_c', 'option_d'].map(k => (raw[k] || '').trim()).filter(Boolean);
       q.answer = LETTERS.indexOf(raw.answer.trim().toUpperCase());
       q.isTF = q.options.length === 2;
+      /* the app labels true/false questions, so drop the prefix there; print.html keeps it */
+      q.display_question = q.isTF ? q.question.replace(/^true or false[:?]?\s*/i, '') : q.question;
     } else {
       q.options = [];
       q.answer = raw.answer.split(/[,; ]+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n)).sort((a, b) => a - b);
@@ -232,7 +234,7 @@
       }).join('');
       const locked = state.mode === 'practice' && state.checked[i];
       let html = '<div class="question"><div class="q-meta"><span class="tag' + (q.type === 'mark' ? ' mark' : '') + '">' + (q.type === 'mark' ? 'Mark lines' : (q.isTF ? 'True or false' : 'Single choice')) + '</span><span>Session ' + q.session + ' · ' + esc(SESSIONS[q.session].title) + '</span></div>';
-      html += '<p class="q-text">' + md(q.question) + '</p>';
+      html += '<p class="q-text">' + md(q.display_question) + '</p>';
       if (q.type === 'choice') {
         if (q.code) html += codeBlock(q.code, { lang: LANG_LABEL[q.lang] });
         html += '<ul class="options">' + inst.display.map((orig, k) => {
@@ -339,7 +341,7 @@
       $('review').innerHTML = results.map((r, k) => {
         const q = r.inst.q, skipped = !hasAnswer(r.inst, r.ans);
         let h = '<li id="rev-' + k + '" class="' + (r.ok ? 'ok' : skipped ? 'skipped' : 'nok') + '"><div class="r-head"><span class="r-num">Question ' + (k + 1) + '</span><span class="r-verdict">' + (r.ok ? 'correct' : skipped ? 'not answered' : 'wrong') + '</span><span class="r-meta">Session ' + q.session + ' · ' + esc(q.topic || SESSIONS[q.session].title) + '</span></div>';
-        h += '<p class="q-text">' + md(q.question) + '</p>';
+        h += '<p class="q-text">' + md(q.display_question) + '</p>';
         if (q.type === 'choice') {
           if (q.code) h += codeBlock(q.code, { lang: LANG_LABEL[q.lang] });
           h += '<ul class="options">' + r.inst.display.map((orig, j) => {
