@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selbst klassifizieren · Der Daten-Lifecycle</title>
+<meta name="description" content="Interaktive Aufgabe: Zwölf Bürgerschreiben einem Themenbereich und einer Dringlichkeit zuordnen, dann Precision und Recall vergleichen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fira+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-title">Der Daten-Lifecycle</span>
+      <span class="brand-sub">Modul 2 · Zertifikatsprogramm „KI und Data Science für die öffentliche Verwaltung“</span>
+    </a>
+    <nav class="site-nav" aria-label="Hauptnavigation"><a href="index.html">Überblick</a><a href="sessions.html" class="active">Sessions</a><a href="ressourcen.html">Ressourcen</a></nav>
+    <a class="logo" target="_blank" rel="noopener" href="https://www.hertie-school.org/" aria-label="Hertie School"><img src="assets/hertieschool-neg.svg" alt="Hertie School"></a>
+  </div>
+</header>
+<main class="wrap">
+
+<p class="breadcrumb"><a href="index.html">Überblick</a> › <a href="sessions/s07.html">Session 7</a> › Interaktive Aufgabe</p>
+<h1>Selbst klassifizieren</h1>
+<p class="lead">Zwölf erfundene Schreiben an den Bürgerservice von Musterstadt. Ordnet jedes einem <strong>Themenbereich</strong> und einer <strong>Dringlichkeit</strong> zu, so wie es eine Sachbearbeiterin bei der Eingangsbearbeitung tun würde. Am Ende seht Ihr, wie Eure Zuordnung zur Referenz und zu einem trainierten Textmodell passt.</p>
+<p class="muted">Alles läuft in Eurem Browser. Es wird nichts gespeichert oder übertragen; mit dem Neuladen der Seite ist alles weg.</p>
+
+<div id="aufgabe" class="task">
+  <div class="task-head"><span id="fortschritt" class="kicker"></span><span id="kennung" class="muted"></span></div>
+  <pre id="schreiben" class="schreiben"></pre>
+  <h3>Themenbereich</h3>
+  <div id="kategorien" class="choices"></div>
+  <h3>Dringlichkeit</h3>
+  <div id="dringlichkeiten" class="choices"></div>
+  <div class="task-nav">
+    <button id="zurueck" class="btn" type="button">Zurück</button>
+    <button id="weiter" class="btn btn-primary" type="button" disabled>Weiter</button>
+  </div>
+</div>
+
+<div id="ergebnis" class="ergebnis" hidden>
+  <h2>Euer Ergebnis</h2>
+  <div id="kacheln" class="tiles"></div>
+  <p id="deutung"></p>
+
+  <h3>Wo Ihr und die Referenz auseinanderliegt</h3>
+  <p class="muted">Bei mehrdeutigen Schreiben nennt die Referenz eine zweite, ebenfalls vertretbare Zuordnung. Zählt man die mit, sieht die Bilanz oft anders aus.</p>
+  <div class="table-wrap"><table id="details" class="grades"></table></div>
+
+  <h3>Precision und Recall je Themenbereich</h3>
+  <p class="muted"><strong>Precision:</strong> Von den Schreiben, die Ihr diesem Bereich zugeordnet habt, wie viele gehören laut Referenz wirklich dorthin? <strong>Recall:</strong> Von den Schreiben, die laut Referenz in diesen Bereich gehören, wie viele habt Ihr gefunden? Bei zwölf Schreiben sind das grobe Zahlen, das Prinzip ist dasselbe wie bei Hunderten.</p>
+  <div class="table-wrap"><table id="kennzahlen" class="grades"></table></div>
+
+  <h3>Konfusionsmatrix</h3>
+  <p class="muted">Zeilen: Eure Zuordnung. Spalten: Referenz. Auf der Diagonale steht Übereinstimmung.</p>
+  <div class="table-wrap"><table id="matrix" class="matrix"></table></div>
+
+  <div class="merke">
+    <p><strong>Was man daran sieht.</strong> Ein Teil der Schreiben lässt sich nicht eindeutig zuordnen: Baumwurzeln, die den Gehweg anheben, sind Straßenbau und Grünflächen zugleich. Zwei Menschen kodieren solche Fälle verschieden, und ein Modell kann dort nicht „richtig“ liegen, weil es kein eindeutiges Richtig gibt. Dringlichkeit ist noch subjektiver. Wer Klassifikationsmodelle bewertet, muss zuerst wissen, wie eindeutig die Aufgabe überhaupt ist. Wie man das sauber misst, zeigt die <a target="_blank" rel="noopener" href="https://hertie-ai-certificate.github.io/modul-2-2026/d2s7-datenverarbeitung/uebung-klassifikation/uebung-klassifikation.html">Übung zur Validierung</a>.</p>
+  </div>
+  <div class="btn-row"><button id="nochmal" class="btn" type="button">Noch einmal</button><a class="btn btn-ghost" href="sessions/s07.html">Zurück zu Session 7</a></div>
+</div>
+
+<script type="application/json" id="daten">{
+  "kategorien": ["Straßen und Verkehr", "Grünflächen und Spielplätze", "Abfall und Sauberkeit", "Beleuchtung", "Lärm", "Sonstiges"],
+  "dringlichkeiten": ["hoch", "mittel", "niedrig"],
+  "faelle": [
+    {
+      "id": "B269",
+      "text": "Hallo,\n\nSeit Monaten fahren Motorräder nachts mit Vollgas durch die Brunnenstraße 40. Bitte prüfen Sie eine Lärmkontrolle.\n\nViele Grüße\nB. Fischer",
+      "gold": "Lärm",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Lärm",
+      "sicherheit": 0.5
+    },
+    {
+      "id": "B019",
+      "text": "Hallo zusammen,\n\nSeit drei Wochen fehlt auf dem Spielplatz Bergstraße 51 der Sand im Sandkasten. Viele ältere Leute wohnen hier. Bitte füllen Sie Sand nach.\n\nFreundliche Grüße\nD. Öztürk",
+      "gold": "Grünflächen und Spielplätze",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Grünflächen und Spielplätze",
+      "sicherheit": 0.42
+    },
+    {
+      "id": "B169",
+      "text": "Sehr geehrte Frau Bürgermeisterin,\n\nFrage ich, ob für das Straßenfest in der Bergstraße 39 eine Sperrung beantragt werden muss. Bitte teilen Sie mir mit, welches Formular ich brauche.\n\nFreundliche Grüße\nB. Lehmann",
+      "gold": "Sonstiges",
+      "alternative": "Straßen und Verkehr",
+      "mehrdeutig": true,
+      "dringlichkeit": "niedrig",
+      "modell": "Sonstiges",
+      "sicherheit": 0.49
+    },
+    {
+      "id": "B173",
+      "text": "Sehr geehrte Damen und Herren,\n\nSeit Anfang des Monats wird auf dem Bolzplatz Parkallee 29 bis Mitternacht Fußball gespielt und gegrölt. Wir haben mehrfach Ratten gesehen, auch tagsüber. Bitte setzen Sie Nutzungszeiten durch.\n\nFreundliche Grüße\nH. Yilmaz",
+      "gold": "Lärm",
+      "alternative": "Grünflächen und Spielplätze",
+      "mehrdeutig": true,
+      "dringlichkeit": "hoch",
+      "modell": "Lärm",
+      "sicherheit": 0.24
+    },
+    {
+      "id": "B089",
+      "text": "Sehr geehrtes Team vom Bürgerservice,\n\nSeit gestern sind die Mülltonnen im Hinterhof Parkallee 50 voller Maden und stinken. Es wäre gut, wenn sich das in den nächsten Tagen jemand ansieht. Bitte reinigen Sie die Tonnen oder tauschen Sie sie.\n\nBeste Grüße\nN. Krüger",
+      "gold": "Abfall und Sauberkeit",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Abfall und Sauberkeit",
+      "sicherheit": 0.63
+    },
+    {
+      "id": "B517",
+      "text": "Sehr geehrte Frau Bürgermeisterin,\n\nSeit etwa einer Woche geht die Beleuchtung am Fußweg Hauptstraße 58 erst eine Stunde nach Einbruch der Dunkelheit an. Ich habe das schon einmal gemeldet, bisher ohne Reaktion. Bitte stellen Sie den Dämmerungsschalter neu ein.\n\nHochachtungsvoll\nA. Yilmaz",
+      "gold": "Beleuchtung",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Beleuchtung",
+      "sicherheit": 0.59
+    },
+    {
+      "id": "B312",
+      "text": "Liebe Stadtverwaltung,\n\nSeit etwa einer Woche wurde der Rasen im Park an der Mozartstraße 41 seit Wochen nicht gemäht. Bitte mähen Sie die Wiese.\n\nBeste Grüße\nS. Haddad",
+      "gold": "Grünflächen und Spielplätze",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "niedrig",
+      "modell": "Grünflächen und Spielplätze",
+      "sicherheit": 0.46
+    },
+    {
+      "id": "B081",
+      "text": "Hallo zusammen,\n\nSeit Monaten fehlt an der Kreuzung Feldstraße 32 das Stoppschild. Ich habe das schon einmal gemeldet, bisher ohne Reaktion. Bitte stellen Sie das Schild wieder auf.\n\nViele Grüße\nD. Rossi",
+      "gold": "Straßen und Verkehr",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Straßen und Verkehr",
+      "sicherheit": 0.55
+    },
+    {
+      "id": "B251",
+      "text": "Liebe Stadtverwaltung,\n\nMöchte ich mich bei den Mitarbeiterinnen des Bürgerbüros Hafenstraße 17 bedanken. Vielen Dank für Ihre Arbeit. Bitte geben Sie das Lob weiter.\n\nBeste Grüße\nN. Öztürk",
+      "gold": "Sonstiges",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "niedrig",
+      "modell": "Straßen und Verkehr",
+      "sicherheit": 0.23
+    },
+    {
+      "id": "B051",
+      "text": "Hallo,\n\nSeit dem Wochenende ist der Gehweg in der Schulstraße 37 voller Laub und rutschig. Viele ältere Leute wohnen hier. Bitte lassen Sie den Gehweg kehren.\n\nHochachtungsvoll\nA. Yilmaz",
+      "gold": "Abfall und Sauberkeit",
+      "alternative": "Straßen und Verkehr",
+      "mehrdeutig": true,
+      "dringlichkeit": "mittel",
+      "modell": "Abfall und Sauberkeit",
+      "sicherheit": 0.49
+    },
+    {
+      "id": "B295",
+      "text": "Sehr geehrte Damen und Herren,\n\nSeit gestern ist die Laterne am Spielplatz Talstraße 60 kaputt, abends ist es dort stockdunkel. Das sollte zeitnah behoben werden. Bitte reparieren Sie die Laterne.\n\nViele Grüße\nR. Fischer",
+      "gold": "Beleuchtung",
+      "alternative": "Grünflächen und Spielplätze",
+      "mehrdeutig": true,
+      "dringlichkeit": "mittel",
+      "modell": "Beleuchtung",
+      "sicherheit": 0.4
+    },
+    {
+      "id": "B082",
+      "text": "Liebe Stadtverwaltung,\n\nSchon länger ist die Telefonhotline des Bürgeramts nie erreichbar. Viele ältere Leute wohnen hier. Bitte verbessern Sie die Erreichbarkeit.\n\nMit besten Grüßen\nD. Yilmaz",
+      "gold": "Sonstiges",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Grünflächen und Spielplätze",
+      "sicherheit": 0.22
+    }
+  ]
+}
+</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById('daten').textContent);
+  const K = D.kategorien, U = D.dringlichkeiten, F = D.faelle;
+  let i = 0; const antworten = F.map(() => ({ k: null, d: null }));
+  const $ = id => document.getElementById(id);
+
+  function choiceButtons(container, options, key) {
+    container.innerHTML = '';
+    options.forEach(o => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'choice'; b.textContent = o;
+      b.addEventListener('click', () => { antworten[i][key] = o; render(); });
+      container.appendChild(b);
+    });
+  }
+  function render() {
+    const f = F[i], a = antworten[i];
+    $('fortschritt').textContent = 'Schreiben ' + (i + 1) + ' von ' + F.length;
+    $('kennung').textContent = 'Eingang Nr. ' + f.id;
+    $('schreiben').textContent = f.text;
+    choiceButtons($('kategorien'), K, 'k'); choiceButtons($('dringlichkeiten'), U, 'd');
+    [...$('kategorien').children].forEach(b => b.classList.toggle('selected', b.textContent === a.k));
+    [...$('dringlichkeiten').children].forEach(b => b.classList.toggle('selected', b.textContent === a.d));
+    $('zurueck').disabled = i === 0;
+    $('weiter').disabled = !(a.k && a.d);
+    $('weiter').textContent = i === F.length - 1 ? 'Auswerten' : 'Weiter';
+    window.scrollTo({ top: $('aufgabe').offsetTop - 90, behavior: 'smooth' });
+  }
+  $('zurueck').addEventListener('click', () => { if (i > 0) { i--; render(); } });
+  $('weiter').addEventListener('click', () => { if (i < F.length - 1) { i++; render(); } else auswerten(); });
+  $('nochmal').addEventListener('click', () => { i = 0; antworten.forEach(a => { a.k = null; a.d = null; }); $('ergebnis').hidden = true; $('aufgabe').hidden = false; render(); });
+
+  const pct = x => Math.round(x * 100) + ' %';
+  function auswerten() {
+    const n = F.length;
+    const treffer = F.filter((f, j) => antworten[j].k === f.gold).length;
+    const vertretbar = F.filter((f, j) => antworten[j].k === f.gold || (f.alternative && antworten[j].k === f.alternative)).length;
+    const dTreffer = F.filter((f, j) => antworten[j].d === f.dringlichkeit).length;
+    const modell = F.filter(f => f.modell === f.gold).length;
+    const modellVertretbar = F.filter(f => f.modell === f.gold || (f.alternative && f.modell === f.alternative)).length;
+    const mehrdeutig = F.filter(f => f.mehrdeutig).length;
+
+    $('kacheln').innerHTML = [
+      ['Themenbereich wie Referenz', treffer + ' von ' + n, 'Ihr'],
+      ['davon vertretbar (inkl. Alternative)', vertretbar + ' von ' + n, 'Ihr'],
+      ['Dringlichkeit wie Referenz', dTreffer + ' von ' + n, 'Ihr'],
+      ['Themenbereich wie Referenz', modell + ' von ' + n + ' (vertretbar: ' + modellVertretbar + ')', 'Textmodell']
+    ].map(t => '<div class="tile' + (t[2] === 'Textmodell' ? ' tile-model' : '') + '"><span class="fact-label">' + t[2] + '</span><span class="tile-value">' + t[1] + '</span><span class="tile-label">' + t[0] + '</span></div>').join('');
+
+    $('deutung').innerHTML = 'Von den zwölf Schreiben gelten <strong>' + mehrdeutig + '</strong> als mehrdeutig. ' +
+      (treffer === n ? 'Ihr habt alle genau wie die Referenz zugeordnet. Das heißt nicht, dass die Referenz recht hat, nur, dass Ihr gleich entschieden habt.' :
+       vertretbar === n ? 'Alle Eure Abweichungen von der Referenz liegen bei mehrdeutigen Schreiben und sind ebenso vertretbar. Ein strenger Goldstandard würde sie trotzdem als Fehler zählen.' :
+       'Ein Teil Eurer Abweichungen liegt bei eindeutigen Schreiben, ein Teil womöglich bei mehrdeutigen. Schaut in der Tabelle, welche.') +
+      ' Das Textmodell (trainiert auf rund 450 Schreiben) trifft die Referenz bei ' + modell + ' von ' + n + '.';
+
+    let rows = '<thead><tr><th>Nr.</th><th>Anliegen</th><th>Ihr</th><th>Referenz</th><th>Alternative</th><th>Textmodell</th><th>Dringlichkeit (Ihr / Referenz)</th></tr></thead><tbody>';
+    F.forEach((f, j) => {
+      const a = antworten[j];
+      const kurz = f.text.split('\n').filter(z => z.trim() && !/^(Sehr geehrte|Guten Tag|Hallo|Liebe)/.test(z) && !/Grüße|Gruß|Hochachtungsvoll/.test(z) && !/^[A-Z]\. /.test(z))[0] || '';
+      const okK = a.k === f.gold, altK = !okK && f.alternative && a.k === f.alternative;
+      const okM = f.modell === f.gold, altM = !okM && f.alternative && f.modell === f.alternative;
+      rows += '<tr' + (f.mehrdeutig ? ' class="row-ambig"' : '') + '><td>' + f.id + '</td><td class="anliegen">' + kurz.slice(0, 110) + (kurz.length > 110 ? '…' : '') + '</td>' +
+        '<td class="' + (okK ? 'ok' : altK ? 'alt' : 'nok') + '">' + a.k + '</td><td>' + f.gold + '</td><td>' + (f.alternative || '–') + '</td>' +
+        '<td class="' + (okM ? 'ok' : altM ? 'alt' : 'nok') + '">' + f.modell + ' <span class="muted">(' + Math.round(f.sicherheit * 100) + ' %)</span></td>' +
+        '<td class="' + (a.d === f.dringlichkeit ? 'ok' : 'nok') + '">' + a.d + ' / ' + f.dringlichkeit + '</td></tr>';
+    });
+    $('details').innerHTML = rows + '</tbody>';
+
+    let kz = '<thead><tr><th>Themenbereich</th><th>Referenz (n)</th><th>von Euch vergeben</th><th>Precision</th><th>Recall</th></tr></thead><tbody>';
+    K.forEach(k => {
+      const tp = F.filter((f, j) => f.gold === k && antworten[j].k === k).length;
+      const ref = F.filter(f => f.gold === k).length, verg = F.filter((f, j) => antworten[j].k === k).length;
+      kz += '<tr><td>' + k + '</td><td>' + ref + '</td><td>' + verg + '</td><td>' + (verg ? pct(tp / verg) : '–') + '</td><td>' + (ref ? pct(tp / ref) : '–') + '</td></tr>';
+    });
+    $('kennzahlen').innerHTML = kz + '</tbody>';
+
+    const kurzK = k => k.replace('Straßen und Verkehr', 'Straßen').replace('Grünflächen und Spielplätze', 'Grün').replace('Abfall und Sauberkeit', 'Abfall');
+    let m = '<thead><tr><th></th>' + K.map(k => '<th>' + kurzK(k) + '</th>').join('') + '</tr></thead><tbody>';
+    K.forEach(zeile => {
+      m += '<tr><th>' + kurzK(zeile) + '</th>' + K.map(spalte => {
+        const c = F.filter((f, j) => antworten[j].k === zeile && f.gold === spalte).length;
+        return '<td class="' + (zeile === spalte ? 'diag' : c ? 'off' : '') + '">' + (c || '') + '</td>';
+      }).join('') + '</tr>';
+    });
+    $('matrix').innerHTML = m + '</tbody>';
+
+    $('aufgabe').hidden = true; $('ergebnis').hidden = false;
+    window.scrollTo({ top: $('ergebnis').offsetTop - 90, behavior: 'smooth' });
+  }
+  render();
+})();
+</script>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <strong>Der Daten-Lifecycle</strong> · Modul 2 des Zertifikatsprogramms „KI und Data Science für die öffentliche Verwaltung“<br>
+      <a target="_blank" rel="noopener" href="https://simonmunzert.com/">Simon Munzert</a>, <a target="_blank" rel="noopener" href="https://www.hertie-school.org/">Hertie School</a>, Berlin · 26.–28. Oktober 2026
+    </div>
+    <div class="footer-links">
+      <a target="_blank" rel="noopener" href="https://github.com/hertie-ai-certificate/modul-2-2026">Materialien auf GitHub</a>
+      <a href="mailto:munzert@hertie-school.org">Kontakt</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

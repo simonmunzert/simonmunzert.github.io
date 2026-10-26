@@ -1,0 +1,126 @@
+{
+  "kategorien": ["Straßen und Verkehr", "Grünflächen und Spielplätze", "Abfall und Sauberkeit", "Beleuchtung", "Lärm", "Sonstiges"],
+  "dringlichkeiten": ["hoch", "mittel", "niedrig"],
+  "faelle": [
+    {
+      "id": "B269",
+      "text": "Hallo,\n\nSeit Monaten fahren Motorräder nachts mit Vollgas durch die Brunnenstraße 40. Bitte prüfen Sie eine Lärmkontrolle.\n\nViele Grüße\nB. Fischer",
+      "gold": "Lärm",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Lärm",
+      "sicherheit": 0.5
+    },
+    {
+      "id": "B019",
+      "text": "Hallo zusammen,\n\nSeit drei Wochen fehlt auf dem Spielplatz Bergstraße 51 der Sand im Sandkasten. Viele ältere Leute wohnen hier. Bitte füllen Sie Sand nach.\n\nFreundliche Grüße\nD. Öztürk",
+      "gold": "Grünflächen und Spielplätze",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Grünflächen und Spielplätze",
+      "sicherheit": 0.42
+    },
+    {
+      "id": "B169",
+      "text": "Sehr geehrte Frau Bürgermeisterin,\n\nFrage ich, ob für das Straßenfest in der Bergstraße 39 eine Sperrung beantragt werden muss. Bitte teilen Sie mir mit, welches Formular ich brauche.\n\nFreundliche Grüße\nB. Lehmann",
+      "gold": "Sonstiges",
+      "alternative": "Straßen und Verkehr",
+      "mehrdeutig": true,
+      "dringlichkeit": "niedrig",
+      "modell": "Sonstiges",
+      "sicherheit": 0.49
+    },
+    {
+      "id": "B173",
+      "text": "Sehr geehrte Damen und Herren,\n\nSeit Anfang des Monats wird auf dem Bolzplatz Parkallee 29 bis Mitternacht Fußball gespielt und gegrölt. Wir haben mehrfach Ratten gesehen, auch tagsüber. Bitte setzen Sie Nutzungszeiten durch.\n\nFreundliche Grüße\nH. Yilmaz",
+      "gold": "Lärm",
+      "alternative": "Grünflächen und Spielplätze",
+      "mehrdeutig": true,
+      "dringlichkeit": "hoch",
+      "modell": "Lärm",
+      "sicherheit": 0.24
+    },
+    {
+      "id": "B089",
+      "text": "Sehr geehrtes Team vom Bürgerservice,\n\nSeit gestern sind die Mülltonnen im Hinterhof Parkallee 50 voller Maden und stinken. Es wäre gut, wenn sich das in den nächsten Tagen jemand ansieht. Bitte reinigen Sie die Tonnen oder tauschen Sie sie.\n\nBeste Grüße\nN. Krüger",
+      "gold": "Abfall und Sauberkeit",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Abfall und Sauberkeit",
+      "sicherheit": 0.63
+    },
+    {
+      "id": "B517",
+      "text": "Sehr geehrte Frau Bürgermeisterin,\n\nSeit etwa einer Woche geht die Beleuchtung am Fußweg Hauptstraße 58 erst eine Stunde nach Einbruch der Dunkelheit an. Ich habe das schon einmal gemeldet, bisher ohne Reaktion. Bitte stellen Sie den Dämmerungsschalter neu ein.\n\nHochachtungsvoll\nA. Yilmaz",
+      "gold": "Beleuchtung",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Beleuchtung",
+      "sicherheit": 0.59
+    },
+    {
+      "id": "B312",
+      "text": "Liebe Stadtverwaltung,\n\nSeit etwa einer Woche wurde der Rasen im Park an der Mozartstraße 41 seit Wochen nicht gemäht. Bitte mähen Sie die Wiese.\n\nBeste Grüße\nS. Haddad",
+      "gold": "Grünflächen und Spielplätze",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "niedrig",
+      "modell": "Grünflächen und Spielplätze",
+      "sicherheit": 0.46
+    },
+    {
+      "id": "B081",
+      "text": "Hallo zusammen,\n\nSeit Monaten fehlt an der Kreuzung Feldstraße 32 das Stoppschild. Ich habe das schon einmal gemeldet, bisher ohne Reaktion. Bitte stellen Sie das Schild wieder auf.\n\nViele Grüße\nD. Rossi",
+      "gold": "Straßen und Verkehr",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Straßen und Verkehr",
+      "sicherheit": 0.55
+    },
+    {
+      "id": "B251",
+      "text": "Liebe Stadtverwaltung,\n\nMöchte ich mich bei den Mitarbeiterinnen des Bürgerbüros Hafenstraße 17 bedanken. Vielen Dank für Ihre Arbeit. Bitte geben Sie das Lob weiter.\n\nBeste Grüße\nN. Öztürk",
+      "gold": "Sonstiges",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "niedrig",
+      "modell": "Straßen und Verkehr",
+      "sicherheit": 0.23
+    },
+    {
+      "id": "B051",
+      "text": "Hallo,\n\nSeit dem Wochenende ist der Gehweg in der Schulstraße 37 voller Laub und rutschig. Viele ältere Leute wohnen hier. Bitte lassen Sie den Gehweg kehren.\n\nHochachtungsvoll\nA. Yilmaz",
+      "gold": "Abfall und Sauberkeit",
+      "alternative": "Straßen und Verkehr",
+      "mehrdeutig": true,
+      "dringlichkeit": "mittel",
+      "modell": "Abfall und Sauberkeit",
+      "sicherheit": 0.49
+    },
+    {
+      "id": "B295",
+      "text": "Sehr geehrte Damen und Herren,\n\nSeit gestern ist die Laterne am Spielplatz Talstraße 60 kaputt, abends ist es dort stockdunkel. Das sollte zeitnah behoben werden. Bitte reparieren Sie die Laterne.\n\nViele Grüße\nR. Fischer",
+      "gold": "Beleuchtung",
+      "alternative": "Grünflächen und Spielplätze",
+      "mehrdeutig": true,
+      "dringlichkeit": "mittel",
+      "modell": "Beleuchtung",
+      "sicherheit": 0.4
+    },
+    {
+      "id": "B082",
+      "text": "Liebe Stadtverwaltung,\n\nSchon länger ist die Telefonhotline des Bürgeramts nie erreichbar. Viele ältere Leute wohnen hier. Bitte verbessern Sie die Erreichbarkeit.\n\nMit besten Grüßen\nD. Yilmaz",
+      "gold": "Sonstiges",
+      "alternative": null,
+      "mehrdeutig": false,
+      "dringlichkeit": "mittel",
+      "modell": "Grünflächen und Spielplätze",
+      "sicherheit": 0.22
+    }
+  ]
+}

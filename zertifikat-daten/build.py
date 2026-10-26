@@ -151,16 +151,21 @@ SESSIONS = [
         "n": 7, "day": 2, "time": "14–16 Uhr", "praxis": True,
         "title": "Praxis-Session II: Daten weiterverarbeiten und strukturieren",
         "short": "Von Scans zu Tabellen: OCR, Sprachmodelle für Bereinigung und Klassifikation, saubere Ablage in CSVs. Keine Folien, wir arbeiten direkt an der Fallstudie.",
-        "content": "In der zweiten Praxis-Session bauen wir eine kleine Verarbeitungspipeline für einen typischen Verwaltungsfall: Eingescannte Dokumente (Briefe, Formulare, Notizen) sollen in auswertbare Tabellen überführt werden. Wir lesen die Scans mit OCR ein, lassen ein Sprachmodell den fehlerhaften Text bereinigen und die zentralen Felder extrahieren, klassifizieren die Dokumente nach Kategorie und Dringlichkeit und legen alles sauber in CSV-Dateien ab. Die Pipeline läuft wahlweise mit einem lokalen Open-Source-Modell (Ollama) oder einem Cloud-Anbieter. Am Ende prüfen wir die Ergebnisse gegen einen Goldstandard und diskutieren, wo solche Pipelines verlässlich sind und wo nicht.",
+        "content": "In der zweiten Praxis-Session bauen wir eine kleine Verarbeitungspipeline für einen typischen Verwaltungsfall: Eingescannte Bürgerschreiben sollen in auswertbare Tabellen überführt werden. Wir lesen die Scans mit OCR ein, lassen ein Sprachmodell den fehlerhaften Text bereinigen und die zentralen Felder extrahieren, klassifizieren die Schreiben nach Themenbereich und Dringlichkeit und legen alles sauber in CSV-Dateien ab. Die Pipeline läuft wahlweise mit einem lokalen Open-Source-Modell (Ollama) oder einem Cloud-Anbieter. Im zweiten Teil geht es um die Frage, wie gut so eine Klassifikation wirklich ist: Ihr ordnet zunächst selbst ein Dutzend Schreiben zu und merkt dabei, dass die Zuordnung nicht immer eindeutig ist. Dann messen wir an einem größeren Datensatz mit Precision, Recall und Kreuzvalidierung, wovon die Leistung eines Modells abhängt, und wie man sie verbessert.",
         "deck": None,
-        "primary": [("Fallstudie (HTML)", f"{PAGES}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("Ordner auf GitHub", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")],
+        "primary": [("Fallstudie OCR und Sprachmodelle", f"{PAGES}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("Interaktive Aufgabe: Selbst klassifizieren", "../klassifikation.html"), ("Übung: Klassifikation validieren", f"{PAGES}/d2s7-datenverarbeitung/uebung-klassifikation/uebung-klassifikation.html"), ("Ordner auf GitHub", f"{GH_TREE}/d2s7-datenverarbeitung")],
         "materials": [
-            {"title": "Fallstudie OCR und Sprachmodelle: Von Scans zu Tabellen", "desc": "Fallstudie mit Erläuterungen, das vollständige R-Skript, acht Beispielscans mit Goldstandard sowie die Zwischen- und Endergebnisse jedes Schritts. Das README erklärt Installation (tesseract, ellmer, Ollama) und Alternativen mit API-Schlüssel.",
+            {"title": "Fallstudie OCR und Sprachmodelle: Von Scans zu Tabellen", "desc": "Fallstudie mit Erläuterungen, das vollständige R-Skript, zehn Beispielscans (darunter ein Fax und ein Handyfoto) mit Goldstandard sowie die Zwischen- und Endergebnisse jedes Schritts. Das README erklärt Installation (tesseract, ellmer, Ollama) und Alternativen mit API-Schlüssel.",
              "links": [("Fallstudie (HTML)", f"{PAGES}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.html"), ("R-Skript", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/praxis-2-ocr-llm.R"), ("README", f"{GH_BLOB}/d2s7-datenverarbeitung/praxis-ocr-llm/README.md"), ("Ordner mit Daten", f"{GH_TREE}/d2s7-datenverarbeitung/praxis-ocr-llm")]},
+            {"title": "Interaktive Aufgabe: Zwölf Schreiben selbst zuordnen", "desc": "Ordnet zwölf Bürgerschreiben einem Themenbereich und einer Dringlichkeit zu. Am Ende seht Ihr Eure Übereinstimmung mit der Referenz und mit einem trainierten Modell, samt Precision und Recall je Bereich. Läuft im Browser, nichts wird gespeichert.",
+             "links": [("Aufgabe starten", "../klassifikation.html")]},
+            {"title": "Übung: Klassifikation validieren und verbessern", "desc": "560 synthetische Bürgerschreiben, ein einfaches Textmodell, und die Frage, woran es liegt, wenn es danebenliegt: Konfusionsmatrix, Precision und Recall je Klasse, OCR- und Label-Rauschen, Lernkurve, Kreuzvalidierung, Schwellenwerte, Vergleich mit einem Sprachmodell.",
+             "links": [("Übung (HTML)", f"{PAGES}/d2s7-datenverarbeitung/uebung-klassifikation/uebung-klassifikation.html"), ("Rmd-Quelle", f"{GH_BLOB}/d2s7-datenverarbeitung/uebung-klassifikation/uebung-klassifikation.Rmd"), ("Datensatz (CSV)", f"{GH_BLOB}/d2s7-datenverarbeitung/uebung-klassifikation/daten/buergerschreiben.csv"), ("Ordner", f"{GH_TREE}/d2s7-datenverarbeitung/uebung-klassifikation")]},
         ],
         "kern": [],
         "hoeren": [],
         "lesen": [
+            lit("Dokumentation des R-Pakets yardstick (Kennzahlen für Klassifikationsmodelle: Precision, Recall, F1, Konfusionsmatrix).", "https://yardstick.tidymodels.org/"),
             lit("Dokumentation des R-Pakets ellmer (Schnittstelle zu Sprachmodellen aus R heraus).", "https://ellmer.tidyverse.org/"),
             lit("Dokumentation des R-Pakets tesseract (OCR).", "https://docs.ropensci.org/tesseract/"),
         ],
@@ -484,7 +489,7 @@ def index_page():
   <ul class="plain">
     <li><a href="{GH}">Repository mit allen Folien und Code-Materialien</a> (HTML, PDF, Rmd, R-Skripte, Beispieldaten)</li>
     <li><a href="sessions/s04.html#materialien">Fallstudien zu Web Scraping und APIs</a> (Praxis-Session I, Session 4)</li>
-    <li><a href="sessions/s07.html#materialien">Fallstudie zu OCR und Sprachmodellen</a> (Praxis-Session II, Session 7)</li>
+    <li><a href="sessions/s07.html#materialien">Fallstudie zu OCR und Sprachmodellen</a> sowie <a href="klassifikation.html">interaktive Klassifikationsaufgabe</a> und Übung zur Validierung (Praxis-Session II, Session 7)</li>
     <li><a href="ressourcen.html">Bücher, Podcasts und Webseiten</a> zur Vertiefung</li>
   </ul>
 </section>
@@ -548,6 +553,147 @@ def ressourcen_page():
 """
     return page("Ressourcen", body, depth=0, active="ressourcen")
 
+def klassifikation_page():
+    daten = (ROOT / "data" / "klassifikation.json").read_text(encoding="utf-8")
+    body = r"""
+<p class="breadcrumb"><a href="index.html">Überblick</a> › <a href="sessions/s07.html">Session 7</a> › Interaktive Aufgabe</p>
+<h1>Selbst klassifizieren</h1>
+<p class="lead">Zwölf erfundene Schreiben an den Bürgerservice von Musterstadt. Ordnet jedes einem <strong>Themenbereich</strong> und einer <strong>Dringlichkeit</strong> zu, so wie es eine Sachbearbeiterin bei der Eingangsbearbeitung tun würde. Am Ende seht Ihr, wie Eure Zuordnung zur Referenz und zu einem trainierten Textmodell passt.</p>
+<p class="muted">Alles läuft in Eurem Browser. Es wird nichts gespeichert oder übertragen; mit dem Neuladen der Seite ist alles weg.</p>
+
+<div id="aufgabe" class="task">
+  <div class="task-head"><span id="fortschritt" class="kicker"></span><span id="kennung" class="muted"></span></div>
+  <pre id="schreiben" class="schreiben"></pre>
+  <h3>Themenbereich</h3>
+  <div id="kategorien" class="choices"></div>
+  <h3>Dringlichkeit</h3>
+  <div id="dringlichkeiten" class="choices"></div>
+  <div class="task-nav">
+    <button id="zurueck" class="btn" type="button">Zurück</button>
+    <button id="weiter" class="btn btn-primary" type="button" disabled>Weiter</button>
+  </div>
+</div>
+
+<div id="ergebnis" class="ergebnis" hidden>
+  <h2>Euer Ergebnis</h2>
+  <div id="kacheln" class="tiles"></div>
+  <p id="deutung"></p>
+
+  <h3>Wo Ihr und die Referenz auseinanderliegt</h3>
+  <p class="muted">Bei mehrdeutigen Schreiben nennt die Referenz eine zweite, ebenfalls vertretbare Zuordnung. Zählt man die mit, sieht die Bilanz oft anders aus.</p>
+  <div class="table-wrap"><table id="details" class="grades"></table></div>
+
+  <h3>Precision und Recall je Themenbereich</h3>
+  <p class="muted"><strong>Precision:</strong> Von den Schreiben, die Ihr diesem Bereich zugeordnet habt, wie viele gehören laut Referenz wirklich dorthin? <strong>Recall:</strong> Von den Schreiben, die laut Referenz in diesen Bereich gehören, wie viele habt Ihr gefunden? Bei zwölf Schreiben sind das grobe Zahlen, das Prinzip ist dasselbe wie bei Hunderten.</p>
+  <div class="table-wrap"><table id="kennzahlen" class="grades"></table></div>
+
+  <h3>Konfusionsmatrix</h3>
+  <p class="muted">Zeilen: Eure Zuordnung. Spalten: Referenz. Auf der Diagonale steht Übereinstimmung.</p>
+  <div class="table-wrap"><table id="matrix" class="matrix"></table></div>
+
+  <div class="merke">
+    <p><strong>Was man daran sieht.</strong> Ein Teil der Schreiben lässt sich nicht eindeutig zuordnen: Baumwurzeln, die den Gehweg anheben, sind Straßenbau und Grünflächen zugleich. Zwei Menschen kodieren solche Fälle verschieden, und ein Modell kann dort nicht „richtig“ liegen, weil es kein eindeutiges Richtig gibt. Dringlichkeit ist noch subjektiver. Wer Klassifikationsmodelle bewertet, muss zuerst wissen, wie eindeutig die Aufgabe überhaupt ist. Wie man das sauber misst, zeigt die <a href="__UEBUNG__">Übung zur Validierung</a>.</p>
+  </div>
+  <div class="btn-row"><button id="nochmal" class="btn" type="button">Noch einmal</button><a class="btn btn-ghost" href="sessions/s07.html">Zurück zu Session 7</a></div>
+</div>
+
+<script type="application/json" id="daten">__DATEN__</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById('daten').textContent);
+  const K = D.kategorien, U = D.dringlichkeiten, F = D.faelle;
+  let i = 0; const antworten = F.map(() => ({ k: null, d: null }));
+  const $ = id => document.getElementById(id);
+
+  function choiceButtons(container, options, key) {
+    container.innerHTML = '';
+    options.forEach(o => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'choice'; b.textContent = o;
+      b.addEventListener('click', () => { antworten[i][key] = o; render(); });
+      container.appendChild(b);
+    });
+  }
+  function render() {
+    const f = F[i], a = antworten[i];
+    $('fortschritt').textContent = 'Schreiben ' + (i + 1) + ' von ' + F.length;
+    $('kennung').textContent = 'Eingang Nr. ' + f.id;
+    $('schreiben').textContent = f.text;
+    choiceButtons($('kategorien'), K, 'k'); choiceButtons($('dringlichkeiten'), U, 'd');
+    [...$('kategorien').children].forEach(b => b.classList.toggle('selected', b.textContent === a.k));
+    [...$('dringlichkeiten').children].forEach(b => b.classList.toggle('selected', b.textContent === a.d));
+    $('zurueck').disabled = i === 0;
+    $('weiter').disabled = !(a.k && a.d);
+    $('weiter').textContent = i === F.length - 1 ? 'Auswerten' : 'Weiter';
+    window.scrollTo({ top: $('aufgabe').offsetTop - 90, behavior: 'smooth' });
+  }
+  $('zurueck').addEventListener('click', () => { if (i > 0) { i--; render(); } });
+  $('weiter').addEventListener('click', () => { if (i < F.length - 1) { i++; render(); } else auswerten(); });
+  $('nochmal').addEventListener('click', () => { i = 0; antworten.forEach(a => { a.k = null; a.d = null; }); $('ergebnis').hidden = true; $('aufgabe').hidden = false; render(); });
+
+  const pct = x => Math.round(x * 100) + ' %';
+  function auswerten() {
+    const n = F.length;
+    const treffer = F.filter((f, j) => antworten[j].k === f.gold).length;
+    const vertretbar = F.filter((f, j) => antworten[j].k === f.gold || (f.alternative && antworten[j].k === f.alternative)).length;
+    const dTreffer = F.filter((f, j) => antworten[j].d === f.dringlichkeit).length;
+    const modell = F.filter(f => f.modell === f.gold).length;
+    const modellVertretbar = F.filter(f => f.modell === f.gold || (f.alternative && f.modell === f.alternative)).length;
+    const mehrdeutig = F.filter(f => f.mehrdeutig).length;
+
+    $('kacheln').innerHTML = [
+      ['Themenbereich wie Referenz', treffer + ' von ' + n, 'Ihr'],
+      ['davon vertretbar (inkl. Alternative)', vertretbar + ' von ' + n, 'Ihr'],
+      ['Dringlichkeit wie Referenz', dTreffer + ' von ' + n, 'Ihr'],
+      ['Themenbereich wie Referenz', modell + ' von ' + n + ' (vertretbar: ' + modellVertretbar + ')', 'Textmodell']
+    ].map(t => '<div class="tile' + (t[2] === 'Textmodell' ? ' tile-model' : '') + '"><span class="fact-label">' + t[2] + '</span><span class="tile-value">' + t[1] + '</span><span class="tile-label">' + t[0] + '</span></div>').join('');
+
+    $('deutung').innerHTML = 'Von den zwölf Schreiben gelten <strong>' + mehrdeutig + '</strong> als mehrdeutig. ' +
+      (treffer === n ? 'Ihr habt alle genau wie die Referenz zugeordnet. Das heißt nicht, dass die Referenz recht hat, nur, dass Ihr gleich entschieden habt.' :
+       vertretbar === n ? 'Alle Eure Abweichungen von der Referenz liegen bei mehrdeutigen Schreiben und sind ebenso vertretbar. Ein strenger Goldstandard würde sie trotzdem als Fehler zählen.' :
+       'Ein Teil Eurer Abweichungen liegt bei eindeutigen Schreiben, ein Teil womöglich bei mehrdeutigen. Schaut in der Tabelle, welche.') +
+      ' Das Textmodell (trainiert auf rund 450 Schreiben) trifft die Referenz bei ' + modell + ' von ' + n + '.';
+
+    let rows = '<thead><tr><th>Nr.</th><th>Anliegen</th><th>Ihr</th><th>Referenz</th><th>Alternative</th><th>Textmodell</th><th>Dringlichkeit (Ihr / Referenz)</th></tr></thead><tbody>';
+    F.forEach((f, j) => {
+      const a = antworten[j];
+      const kurz = f.text.split('\n').filter(z => z.trim() && !/^(Sehr geehrte|Guten Tag|Hallo|Liebe)/.test(z) && !/Grüße|Gruß|Hochachtungsvoll/.test(z) && !/^[A-Z]\. /.test(z))[0] || '';
+      const okK = a.k === f.gold, altK = !okK && f.alternative && a.k === f.alternative;
+      const okM = f.modell === f.gold, altM = !okM && f.alternative && f.modell === f.alternative;
+      rows += '<tr' + (f.mehrdeutig ? ' class="row-ambig"' : '') + '><td>' + f.id + '</td><td class="anliegen">' + kurz.slice(0, 110) + (kurz.length > 110 ? '…' : '') + '</td>' +
+        '<td class="' + (okK ? 'ok' : altK ? 'alt' : 'nok') + '">' + a.k + '</td><td>' + f.gold + '</td><td>' + (f.alternative || '–') + '</td>' +
+        '<td class="' + (okM ? 'ok' : altM ? 'alt' : 'nok') + '">' + f.modell + ' <span class="muted">(' + Math.round(f.sicherheit * 100) + ' %)</span></td>' +
+        '<td class="' + (a.d === f.dringlichkeit ? 'ok' : 'nok') + '">' + a.d + ' / ' + f.dringlichkeit + '</td></tr>';
+    });
+    $('details').innerHTML = rows + '</tbody>';
+
+    let kz = '<thead><tr><th>Themenbereich</th><th>Referenz (n)</th><th>von Euch vergeben</th><th>Precision</th><th>Recall</th></tr></thead><tbody>';
+    K.forEach(k => {
+      const tp = F.filter((f, j) => f.gold === k && antworten[j].k === k).length;
+      const ref = F.filter(f => f.gold === k).length, verg = F.filter((f, j) => antworten[j].k === k).length;
+      kz += '<tr><td>' + k + '</td><td>' + ref + '</td><td>' + verg + '</td><td>' + (verg ? pct(tp / verg) : '–') + '</td><td>' + (ref ? pct(tp / ref) : '–') + '</td></tr>';
+    });
+    $('kennzahlen').innerHTML = kz + '</tbody>';
+
+    const kurzK = k => k.replace('Straßen und Verkehr', 'Straßen').replace('Grünflächen und Spielplätze', 'Grün').replace('Abfall und Sauberkeit', 'Abfall');
+    let m = '<thead><tr><th></th>' + K.map(k => '<th>' + kurzK(k) + '</th>').join('') + '</tr></thead><tbody>';
+    K.forEach(zeile => {
+      m += '<tr><th>' + kurzK(zeile) + '</th>' + K.map(spalte => {
+        const c = F.filter((f, j) => antworten[j].k === zeile && f.gold === spalte).length;
+        return '<td class="' + (zeile === spalte ? 'diag' : c ? 'off' : '') + '">' + (c || '') + '</td>';
+      }).join('') + '</tr>';
+    });
+    $('matrix').innerHTML = m + '</tbody>';
+
+    $('aufgabe').hidden = true; $('ergebnis').hidden = false;
+    window.scrollTo({ top: $('ergebnis').offsetTop - 90, behavior: 'smooth' });
+  }
+  render();
+})();
+</script>
+""".replace("__DATEN__", daten).replace("__UEBUNG__", f"{PAGES}/d2s7-datenverarbeitung/uebung-klassifikation/uebung-klassifikation.html")
+    return page("Selbst klassifizieren", body, depth=0, active="sessions",
+                description="Interaktive Aufgabe: Zwölf Bürgerschreiben einem Themenbereich und einer Dringlichkeit zuordnen, dann Precision und Recall vergleichen.")
+
 # ---------------------------------------------------------------------------
 
 def main():
@@ -555,9 +701,10 @@ def main():
     (ROOT / "index.html").write_text(index_page(), encoding="utf-8")
     (ROOT / "sessions.html").write_text(sessions_page(), encoding="utf-8")
     (ROOT / "ressourcen.html").write_text(ressourcen_page(), encoding="utf-8")
+    (ROOT / "klassifikation.html").write_text(klassifikation_page(), encoding="utf-8")
     for i, s in enumerate(SESSIONS):
         (ROOT / "sessions" / f"s{s['n']:02d}.html").write_text(session_page(s, i), encoding="utf-8")
-    print(f"{3 + len(SESSIONS)} Seiten geschrieben nach {ROOT}")
+    print(f"{4 + len(SESSIONS)} Seiten geschrieben nach {ROOT}")
 
 if __name__ == "__main__":
     main()

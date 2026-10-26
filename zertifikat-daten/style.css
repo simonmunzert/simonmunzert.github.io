@@ -165,6 +165,36 @@ ul.resources li:last-child { border-bottom: none; }
 .schedule-list ul a:hover { color: var(--red); text-decoration: none; }
 .li-time { float: right; color: var(--muted); font-size: .85rem; margin-left: 1rem; }
 
+/* Interaktive Klassifikationsaufgabe */
+.task { background: var(--bg-soft); border-top: 3px solid var(--red); padding: 1.2rem 1.4rem 1.4rem; margin: 1.5rem 0; }
+.task-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.task h3 { margin-top: 1.2rem; margin-bottom: .5rem; font-size: 1rem; }
+.schreiben { font-family: var(--sans); font-size: 1rem; white-space: pre-wrap; background: #fff; border: 1px solid var(--rule); padding: 1rem 1.2rem; margin: .5rem 0 0; line-height: 1.5; }
+.choices { display: flex; flex-wrap: wrap; gap: .5rem; }
+.choice { font: inherit; font-size: .95rem; font-weight: 400; padding: .45rem .9rem; border: 1.5px solid var(--blue); background: #fff; color: var(--blue); border-radius: 4px; cursor: pointer; }
+.choice:hover { background: #e9edf3; }
+.choice.selected { background: var(--blue); color: #fff; }
+.task-nav { display: flex; justify-content: space-between; margin-top: 1.4rem; }
+.task-nav .btn { font: inherit; font-size: .95rem; cursor: pointer; }
+.task-nav .btn:disabled { opacity: .4; cursor: default; }
+.btn-row button.btn { font: inherit; font-size: .95rem; cursor: pointer; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0 1.2rem; }
+.tile { background: var(--bg-soft); border-left: 3px solid var(--orange); padding: .8rem 1rem; }
+.tile-model { border-left-color: var(--blue); }
+.tile-value { display: block; font-size: 1.5rem; font-weight: 500; color: var(--dark); line-height: 1.2; margin: .2rem 0; }
+.tile-label { display: block; font-size: .9rem; color: var(--muted); }
+#details td.anliegen { color: var(--muted); font-size: .9rem; }
+#details td.ok { color: #1a7f3c; font-weight: 500; }
+#details td.alt { color: var(--orange); font-weight: 500; }
+#details td.nok { color: var(--red); font-weight: 500; }
+#details tr.row-ambig td:first-child::after { content: " *"; color: var(--orange); }
+.matrix { width: auto; font-size: .9rem; }
+.matrix th, .matrix td { border: 1px solid var(--rule); padding: .4rem .6rem; text-align: center; min-width: 3.2rem; }
+.matrix thead th { background: var(--blue); color: #fff; font-weight: 400; }
+.matrix tbody th { background: var(--bg-soft); font-weight: 500; text-align: left; }
+.matrix td.diag { background: #e6f2ea; font-weight: 500; }
+.matrix td.off { background: #fbf3f4; color: var(--red); font-weight: 500; }
+
 /* Responsive */
 @media (max-width: 1000px) {
   .header-inner { flex-wrap: wrap; gap: .4rem 1rem; }
