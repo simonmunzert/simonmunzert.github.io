@@ -176,7 +176,10 @@ SESSIONS = [
         "short": "Statistische und visuelle Kommunikation, gute Grafiken, Dashboards in der Verwaltung.",
         "content": "Wie kommuniziert man Daten und datenbasierte Entscheidungen? Wir widmen uns Kernstrategien statistischer und visueller Kommunikation. Ziel ist es, komplexe Datenerkenntnisse klar und präzise vermitteln zu können, sodass sie für unterschiedliche Zielgruppen verständlich und handlungsrelevant werden. Ein eigener Abschnitt widmet sich Dashboards in der Verwaltung: Beispiele aus der Praxis, Fragen der Governance und der Umsetzung sowie die Werkzeuge, mit denen sich Dashboards heute bauen lassen.",
         "deck": deck("d2s8-kommunikation", "d2s8-kommunikation"),
-        "materials": [],
+        "materials": [
+            {"title": "Beispiel: Das Kurs-Dashboard", "desc": "Ein kleines Dashboard über diesen Kurs selbst: Folien, Wörter, Bilder, Übungen, Literatur und Code je Session, mit Filtern, Tooltips und Tabellenansicht. Von Hand gebaut, ohne Framework, aus einer JSON-Datei, die ein Python-Skript aus dem Kurs-Repository erzeugt. Zum Nachlesen: Wie viel Dashboard braucht es wirklich, und was muss die Datenquelle liefern?",
+             "links": [("Dashboard öffnen", "../dashboard/"), ("Quelltext der Seite", "https://github.com/simonmunzert/simonmunzert.github.io/tree/master/zertifikat-daten")]},
+        ],
         "kern": [lit("Matheus, R., Janssen, M., & Maheshwari, D. (2020). Data science empowering the public: Data-driven dashboards for transparent and accountable decision-making in smart cities. Government Information Quarterly, 37(3), 101284.")],
         "hoeren": [
             lit("Data Stories Podcast, Enrico Bertini und Moritz Stefaner", "https://datastori.es/"),
@@ -310,7 +313,7 @@ def esc(s):
 def page(title, body, depth=0, active=None, description=None):
     rel = "../" * depth
     nav = [("index.html", "Überblick", "home"), ("sessions.html", "Sessions", "sessions"),
-           ("ressourcen.html", "Ressourcen", "ressourcen")]
+           ("ressourcen.html", "Ressourcen", "ressourcen"), ("dashboard/", "Dashboard", "dashboard")]
     nav_html = "".join(
         f'<a href="{rel}{href}"{" class=\"active\"" if key == active else ""}>{label}</a>' for href, label, key in nav)
     full_title = f"{title} · {SITE_TITLE}" if title != SITE_TITLE else f"{SITE_TITLE} · Modul 2"
@@ -702,9 +705,12 @@ def main():
     (ROOT / "sessions.html").write_text(sessions_page(), encoding="utf-8")
     (ROOT / "ressourcen.html").write_text(ressourcen_page(), encoding="utf-8")
     (ROOT / "klassifikation.html").write_text(klassifikation_page(), encoding="utf-8")
+    from dashboard_seite import dashboard_body
+    (ROOT / "dashboard").mkdir(exist_ok=True)
+    (ROOT / "dashboard" / "index.html").write_text(dashboard_body(page, PAGES), encoding="utf-8")
     for i, s in enumerate(SESSIONS):
         (ROOT / "sessions" / f"s{s['n']:02d}.html").write_text(session_page(s, i), encoding="utf-8")
-    print(f"{4 + len(SESSIONS)} Seiten geschrieben nach {ROOT}")
+    print(f"{5 + len(SESSIONS)} Seiten geschrieben nach {ROOT}")
 
 if __name__ == "__main__":
     main()
