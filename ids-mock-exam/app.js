@@ -50,13 +50,13 @@
       q.options = ['option_a', 'option_b', 'option_c', 'option_d'].map(k => (raw[k] || '').trim()).filter(Boolean);
       q.answer = LETTERS.indexOf(raw.answer.trim().toUpperCase());
       q.isTF = q.options.length === 2;
-      /* the app labels true/false questions, so drop the prefix there; print.html keeps it */
-      q.display_question = q.isTF ? q.question.replace(/^true or false[:?]?\s*/i, '') : q.question;
     } else {
       q.options = [];
       q.answer = raw.answer.split(/[,; ]+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n)).sort((a, b) => a - b);
       q.lines = q.code.split('\n');
     }
+    /* the app labels true/false questions, so drop the prefix there; print.html keeps it */
+    q.display_question = q.isTF ? q.question.replace(/^true or false[:?]?\s*/i, '') : q.question;
     return q;
   }
 
